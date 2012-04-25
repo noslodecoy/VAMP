@@ -7,6 +7,18 @@ public class Playlist {
   LinkedList<Song> playlist;
   private String name;
 
+  public Playlist( int userId, int playlistId ) {
+    playlist = new LinkedList();
+    // TODO: add code to load song information from database record.
+    // It should look something like the following (the session may want to be
+    // in the UserAccount class and passed to this class.
+    //
+    // SessionFactory sessionFactory = new Configuration().configure( "database/songs.cfg.xml" ).buildSessionFactory();
+    // Session newSession = sessionFactory.openSession();
+    // Transaction newTransaction = newSession.beginTransaction();
+    // library = (TreeSet)newSession.createQuery( "sql query here" ).list();
+  }
+  
   public Playlist( String nameToUse ) {
     playlist = new LinkedList();
     name = nameToUse;

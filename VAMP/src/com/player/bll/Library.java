@@ -1,6 +1,8 @@
 package com.player.bll;
 
 import java.util.*;
+import org.hibernate.*;
+import org.hibernate.cfg.Configuration;
 
 public class Library {
 
@@ -8,6 +10,14 @@ public class Library {
 
   public Library() {
     library = new TreeSet();
+    // TODO: add code to load song information from database record.
+    // It should look something like the following (the session may want to be
+    // in the UserAccount class and passed to this class.
+    //
+    // SessionFactory sessionFactory = new Configuration().configure( "database/songs.cfg.xml" ).buildSessionFactory();
+    // Session newSession = sessionFactory.openSession();
+    // Transaction newTransaction = newSession.beginTransaction();
+    // library = (TreeSet)newSession.createQuery( "sql query here" ).list();
     sortByArtist();
   }
 

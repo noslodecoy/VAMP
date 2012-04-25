@@ -33,10 +33,6 @@ public class Song {
     // Song class variables to match
   }
 
-  public Song( int inSongId ) {
-    // TODO: add code to load song information from database record.
-  }
-
   public Song( String newTitle, String newArtist ) {
     isEmpty = false;
     title = newTitle;
