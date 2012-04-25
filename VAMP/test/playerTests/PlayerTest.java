@@ -3,6 +3,7 @@ package playerTests;
 import com.player.bll.VampPlayer;
 import com.player.bll.Playlist;
 import com.player.bll.Song;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.Test;
@@ -21,9 +22,9 @@ public class PlayerTest {
   @Before
   public void setUp() {
     songs = new ArrayList<Song>();
-    songs.add( new Song( "Little Black Submarines", "The Black Keys" ) );
-    songs.add( new Song( "These Days", "Dr. Dog" ) );
-    songs.add( new Song( "Civilian", "Wye Oak" ) );
+    songs.add( new Song( new File( "test/testResources/The Black Keys - El Camino - 04 - Little Black Submarines.mp3" ) ) );
+    songs.add( new Song( new File( "test/testResources/Dr. Dog - Be The Void - 03 - These Days.mp3" ) ) );
+    songs.add( new Song( new File( "test/testResources/Wye Oak - Civilian - 05 - Civilian.mp3" ) ) );
     playlist = new Playlist( "untitled" );
     playlist.addAll( songs );
     player = new VampPlayer( playlist );
@@ -38,7 +39,12 @@ public class PlayerTest {
   @Test
   public void playSongTest() {
     player.play();
+    // cause main thread to sleep for a 5 seconds (5000 nanoseconds) so song can play to test
+    try {
+      Thread.sleep(5000);
+    } catch( Exception e ) { }
     assertTrue( player.isPlaying() );
+    player.stop();
   }
 
   @Test

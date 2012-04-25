@@ -1,7 +1,14 @@
 package com.player.bll;
 
+import java.io.File;
 import java.sql.Time;
 import java.util.Comparator;
+
+import org.jaudiotagger.audio.AudioFile;
+import org.jaudiotagger.audio.AudioFileIO;
+import org.jaudiotagger.audio.AudioHeader;
+import org.jaudiotagger.tag.FieldKey;
+import org.jaudiotagger.tag.Tag;
 
 public class Song {
 
@@ -21,7 +28,7 @@ public class Song {
     isEmpty = true;
   }
   
-  public Song( String inFilename ) {
+  public Song( File inFile ) {
     // TODO: add code to load mp3 tag information from a filename and set
     // Song class variables to match
   }
