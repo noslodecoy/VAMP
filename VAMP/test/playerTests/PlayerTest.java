@@ -6,6 +6,7 @@ import com.player.bll.Song;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import org.junit.After;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import org.junit.Before;
@@ -29,6 +30,11 @@ public class PlayerTest {
     playlist.addAll( songs );
     player = new VampPlayer( playlist );
   }
+  
+  @After
+  public void setDown() {
+    player.stop();
+  }
 
   @Test
   public void getCurrentSongTest() {
@@ -40,13 +46,16 @@ public class PlayerTest {
   public void playSongTest() {
     player.play();
     // cause main thread to sleep for a 5 seconds (5000 nanoseconds) so song can play to test
+    System.out.println( "start playing track" );
     try {
       Thread.sleep(5000);
     } catch( Exception e ) { }
+    System.out.println( "stop playing track.  Did you hear it?" );
     assertTrue( player.isPlaying() );
-    player.stop();
   }
 
+  
+  
   @Test
   public void playingFirstSongTest() {
     player.play();
@@ -106,6 +115,10 @@ public class PlayerTest {
   public void stopSongAfterPlayingTest() {
     player.play();
     player.stop();
+    System.out.println( "started playing track and stopped.  You should NOT hear anything at this point." );
+    try {
+      Thread.sleep(5000);
+    } catch( Exception e ) { }
     assertFalse( player.isPlaying() );
   }
   
@@ -123,7 +136,12 @@ public class PlayerTest {
   public void pauseTest() {
     player.play();
     player.pause();
-    assertFalse( player.isPlaying() );
+    System.out.println( "pausing track" );
+    try {
+      Thread.sleep(2000);
+    } catch( Exception e ) { }
+    System.out.println( "resuming track. Did it pick up?" );
+    player.play();
   }
 
   @Test

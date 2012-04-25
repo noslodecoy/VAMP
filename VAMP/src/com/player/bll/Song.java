@@ -12,25 +12,41 @@ import org.jaudiotagger.tag.Tag;
 
 public class Song {
 
-  boolean isEmpty;
+  private boolean isEmpty;
+  private File file;
 
   //song info from database
   public int id;
-  String title;
-  String artist;
+  public String title;
+  public String artist;
   public String album;
   public String genre;
   public int track;
   public String filename;
-  public Time length;
+  public int length;
 
   public Song() {
     isEmpty = true;
   }
   
   public Song( File inFile ) {
-    // TODO: add code to load mp3 tag information from a filename and set
-    // Song class variables to match
+    try {
+      AudioFile f = AudioFileIO.read( inFile );
+
+      isEmpty = false;
+      this.file = inFile;
+
+      Tag tag = f.getTag();
+      AudioHeader header = f.getAudioHeader();
+      this.artist = tag.getFirst(FieldKey.ARTIST);
+      this.album = tag.getFirst(FieldKey.ALBUM);
+      this.title = tag.getFirst(FieldKey.TITLE);
+      this.track = Integer.parseInt( tag.getFirst(FieldKey.TRACK) );
+      this.length = header.getTrackLength();
+      //tag.getFirst(FieldKey.COMMENT);
+      //tag.getFirst(FieldKey.YEAR);
+    } catch ( Exception e ) {
+    }
   }
 
   public Song( String newTitle, String newArtist ) {
@@ -38,6 +54,11 @@ public class Song {
     title = newTitle;
     artist = newArtist;
   }
+
+  public File getFile() {
+    return file;
+  }
+
   
   public String getTitle() {
     return title;
@@ -80,5 +101,5 @@ public class Song {
       return songName1.compareTo( songName2 );
     }
   };
-
+  
 }
