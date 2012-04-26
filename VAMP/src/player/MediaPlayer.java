@@ -28,6 +28,16 @@ public class MediaPlayer extends javax.swing.JFrame {
 
         jTabbedPane2 = new javax.swing.JTabbedPane();
         playerPanel = new javax.swing.JPanel();
+        jPanel1 = new javax.swing.JPanel();
+        currentTrackPlaying = new javax.swing.JLabel();
+        songProgressBar = new javax.swing.JProgressBar();
+        rewindButton = new javax.swing.JButton();
+        stopButton = new javax.swing.JButton();
+        playButton = new javax.swing.JButton();
+        pauseButton = new javax.swing.JButton();
+        fastForwardButton = new javax.swing.JButton();
+        volumeLabel = new javax.swing.JLabel();
+        volumeSlider = new javax.swing.JSlider();
         playlistPanel = new javax.swing.JPanel();
         libraryPanel = new javax.swing.JPanel();
         libraryScrollPane = new javax.swing.JScrollPane();
@@ -40,20 +50,98 @@ public class MediaPlayer extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        jTabbedPane2.setBackground(new java.awt.Color(102, 102, 102));
         jTabbedPane2.setToolTipText("");
+
+        playerPanel.setBackground(new java.awt.Color(51, 51, 51));
+
+        jPanel1.setBackground(new java.awt.Color(102, 102, 102));
+
+        currentTrackPlaying.setText("Current Track: ");
+
+        rewindButton.setText("Rewind");
+        rewindButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rewindButtonActionPerformed(evt);
+            }
+        });
+
+        stopButton.setText("Stop");
+
+        playButton.setText("Play");
+
+        pauseButton.setText("Pause");
+
+        fastForwardButton.setText("Fast Forward");
+
+        volumeLabel.setText("Volume");
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(currentTrackPlaying, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(songProgressBar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(rewindButton)
+                        .addGap(18, 18, 18)
+                        .addComponent(stopButton)
+                        .addGap(18, 18, 18)
+                        .addComponent(playButton)
+                        .addGap(18, 18, 18)
+                        .addComponent(pauseButton)
+                        .addGap(18, 18, 18)
+                        .addComponent(fastForwardButton)
+                        .addGap(85, 85, 85)
+                        .addComponent(volumeLabel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(volumeSlider, javax.swing.GroupLayout.DEFAULT_SIZE, 339, Short.MAX_VALUE)
+                        .addGap(5, 5, 5)))
+                .addContainerGap())
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(currentTrackPlaying, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(songProgressBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(rewindButton)
+                        .addComponent(stopButton)
+                        .addComponent(playButton)
+                        .addComponent(pauseButton)
+                        .addComponent(fastForwardButton)
+                        .addComponent(volumeLabel))
+                    .addComponent(volumeSlider, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(34, Short.MAX_VALUE))
+        );
 
         javax.swing.GroupLayout playerPanelLayout = new javax.swing.GroupLayout(playerPanel);
         playerPanel.setLayout(playerPanelLayout);
         playerPanelLayout.setHorizontalGroup(
             playerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 918, Short.MAX_VALUE)
+            .addGroup(playerPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         playerPanelLayout.setVerticalGroup(
             playerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 483, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, playerPanelLayout.createSequentialGroup()
+                .addContainerGap(303, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(51, 51, 51))
         );
 
         jTabbedPane2.addTab("Player", playerPanel);
+
+        playlistPanel.setBackground(new java.awt.Color(51, 51, 51));
 
         javax.swing.GroupLayout playlistPanelLayout = new javax.swing.GroupLayout(playlistPanel);
         playlistPanel.setLayout(playlistPanelLayout);
@@ -68,7 +156,11 @@ public class MediaPlayer extends javax.swing.JFrame {
 
         jTabbedPane2.addTab("Playlist", playlistPanel);
 
+        libraryPanel.setBackground(new java.awt.Color(51, 51, 51));
+
         libraryTable.setAutoCreateRowSorter(true);
+        libraryTable.setBackground(new java.awt.Color(153, 153, 153));
+        libraryTable.setForeground(new java.awt.Color(204, 204, 204));
         libraryTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null},
@@ -165,7 +257,7 @@ public class MediaPlayer extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jTabbedPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 511, Short.MAX_VALUE))
+                .addComponent(jTabbedPane2))
         );
 
         jTabbedPane2.getAccessibleContext().setAccessibleName("");
@@ -176,6 +268,10 @@ public class MediaPlayer extends javax.swing.JFrame {
     private void exitApplicationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitApplicationActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_exitApplicationActionPerformed
+
+    private void rewindButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rewindButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_rewindButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -220,15 +316,25 @@ public class MediaPlayer extends javax.swing.JFrame {
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuBar applicationMenuBar;
+    private javax.swing.JLabel currentTrackPlaying;
     private javax.swing.JMenuItem exitApplication;
+    private javax.swing.JButton fastForwardButton;
     private javax.swing.JMenu fileMenuItem;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JTabbedPane jTabbedPane2;
     private javax.swing.JPanel libraryPanel;
     private javax.swing.JScrollPane libraryScrollPane;
     private javax.swing.JTable libraryTable;
+    private javax.swing.JButton pauseButton;
+    private javax.swing.JButton playButton;
     private javax.swing.JPanel playerPanel;
     private javax.swing.JPanel playlistPanel;
+    private javax.swing.JButton rewindButton;
+    private javax.swing.JProgressBar songProgressBar;
+    private javax.swing.JButton stopButton;
     private javax.swing.JMenuItem viewEditAccount;
+    private javax.swing.JLabel volumeLabel;
+    private javax.swing.JSlider volumeSlider;
     // End of variables declaration//GEN-END:variables
 }
