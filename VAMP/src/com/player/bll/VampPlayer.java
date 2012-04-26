@@ -24,7 +24,7 @@ public class VampPlayer {
 
   public void play() {
     mp3Task = new Mp3Task( this.getCurrentSong() );
-    mp3Thread = mp3Task.play();
+    mp3Thread = mp3Task.createThread();
   }
 
   public void stop() {
