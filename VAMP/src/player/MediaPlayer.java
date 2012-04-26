@@ -28,13 +28,15 @@ public class MediaPlayer extends javax.swing.JFrame {
 
         jTabbedPane2 = new javax.swing.JTabbedPane();
         playerPanel = new javax.swing.JPanel();
+        playerScrollPane = new javax.swing.JScrollPane();
+        playerTable = new javax.swing.JTable();
         playlistPanel = new javax.swing.JPanel();
         playlistScrollPanel = new javax.swing.JScrollPane();
         playlistTable = new javax.swing.JTable();
         libraryPanel = new javax.swing.JPanel();
         libraryScrollPane = new javax.swing.JScrollPane();
         libraryTable = new javax.swing.JTable();
-        jPanel1 = new javax.swing.JPanel();
+        mediaStreamPanel = new javax.swing.JPanel();
         currentTrackPlaying = new javax.swing.JLabel();
         songProgressBar = new javax.swing.JProgressBar();
         rewindButton = new javax.swing.JButton();
@@ -57,15 +59,73 @@ public class MediaPlayer extends javax.swing.JFrame {
 
         playerPanel.setBackground(new java.awt.Color(51, 51, 51));
 
+        playerTable.setAutoCreateRowSorter(true);
+        playerTable.setBackground(new java.awt.Color(153, 153, 153));
+        playerTable.setForeground(new java.awt.Color(204, 204, 204));
+        playerTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
+            },
+            new String [] {
+                "Title", "Artist", "Track Length", "Album", "Track Number"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        playerTable.setSelectionBackground(new java.awt.Color(204, 204, 204));
+        playerTable.setSelectionForeground(new java.awt.Color(153, 153, 153));
+        playerScrollPane.setViewportView(playerTable);
+
         javax.swing.GroupLayout playerPanelLayout = new javax.swing.GroupLayout(playerPanel);
         playerPanel.setLayout(playerPanelLayout);
         playerPanelLayout.setHorizontalGroup(
             playerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 918, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, playerPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(playerScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 898, Short.MAX_VALUE)
+                .addContainerGap())
         );
         playerPanelLayout.setVerticalGroup(
             playerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 502, Short.MAX_VALUE)
+            .addGroup(playerPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(playerScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 503, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         jTabbedPane2.addTab("Player", playerPanel);
@@ -137,7 +197,7 @@ public class MediaPlayer extends javax.swing.JFrame {
             playlistPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(playlistPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(playlistScrollPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 480, Short.MAX_VALUE)
+                .addComponent(playlistScrollPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 503, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -210,14 +270,14 @@ public class MediaPlayer extends javax.swing.JFrame {
             libraryPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(libraryPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(libraryScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 480, Short.MAX_VALUE)
+                .addComponent(libraryScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 503, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
         jTabbedPane2.addTab("Library", libraryPanel);
 
-        jPanel1.setBackground(new java.awt.Color(102, 102, 102));
-        jPanel1.setForeground(new java.awt.Color(204, 204, 204));
+        mediaStreamPanel.setBackground(new java.awt.Color(102, 102, 102));
+        mediaStreamPanel.setForeground(new java.awt.Color(204, 204, 204));
 
         currentTrackPlaying.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         currentTrackPlaying.setForeground(new java.awt.Color(204, 204, 204));
@@ -242,16 +302,16 @@ public class MediaPlayer extends javax.swing.JFrame {
         volumeLabel.setForeground(new java.awt.Color(204, 204, 204));
         volumeLabel.setText("Volume");
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        javax.swing.GroupLayout mediaStreamPanelLayout = new javax.swing.GroupLayout(mediaStreamPanel);
+        mediaStreamPanel.setLayout(mediaStreamPanelLayout);
+        mediaStreamPanelLayout.setHorizontalGroup(
+            mediaStreamPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(mediaStreamPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(mediaStreamPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(currentTrackPlaying, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(songProgressBar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
+                    .addGroup(mediaStreamPanelLayout.createSequentialGroup()
                         .addComponent(rewindButton)
                         .addGap(18, 18, 18)
                         .addComponent(stopButton)
@@ -268,16 +328,16 @@ public class MediaPlayer extends javax.swing.JFrame {
                         .addGap(5, 5, 5)))
                 .addContainerGap())
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        mediaStreamPanelLayout.setVerticalGroup(
+            mediaStreamPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(mediaStreamPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(currentTrackPlaying, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(songProgressBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(mediaStreamPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(mediaStreamPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(rewindButton)
                         .addComponent(stopButton)
                         .addComponent(playButton)
@@ -285,7 +345,7 @@ public class MediaPlayer extends javax.swing.JFrame {
                         .addComponent(fastForwardButton)
                         .addComponent(volumeLabel))
                     .addComponent(volumeSlider, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(55, Short.MAX_VALUE))
+                .addContainerGap(43, Short.MAX_VALUE))
         );
 
         fileMenuItem.setText("File");
@@ -311,14 +371,14 @@ public class MediaPlayer extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jTabbedPane2)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(mediaStreamPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(mediaStreamPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTabbedPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 530, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jTabbedPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 553, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -382,15 +442,17 @@ public class MediaPlayer extends javax.swing.JFrame {
     private javax.swing.JMenuItem exitApplication;
     private javax.swing.JButton fastForwardButton;
     private javax.swing.JMenu fileMenuItem;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JTabbedPane jTabbedPane2;
     private javax.swing.JPanel libraryPanel;
     private javax.swing.JScrollPane libraryScrollPane;
     private javax.swing.JTable libraryTable;
+    private javax.swing.JPanel mediaStreamPanel;
     private javax.swing.JButton pauseButton;
     private javax.swing.JButton playButton;
     private javax.swing.JPanel playerPanel;
+    private javax.swing.JScrollPane playerScrollPane;
+    private javax.swing.JTable playerTable;
     private javax.swing.JPanel playlistPanel;
     private javax.swing.JScrollPane playlistScrollPanel;
     private javax.swing.JTable playlistTable;
