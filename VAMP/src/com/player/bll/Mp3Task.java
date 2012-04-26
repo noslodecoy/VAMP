@@ -3,14 +3,20 @@ package com.player.bll;
 import javazoom.jl.player.Player;
 
 // TODO: add code to play an MP3 thread
-public class MP3Thread extends Thread {
+public class Mp3Task implements Runnable {
   
-  private Player player;
+  private Song song;
   
-  public MP3Thread( Player inPlayer ) {
+  public Mp3Task( Song inSong ) {
     super();
     // Takes a JLayer Player object in as a parameter.
-    this.player = inPlayer;
+    this.song = inSong;
+  }
+  
+  public Thread play() {
+    Thread thread = new Thread( this );
+    thread.start();
+    return thread;
   }
   
   public void run() {

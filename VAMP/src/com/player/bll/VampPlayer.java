@@ -9,9 +9,9 @@ public class VampPlayer {
   private Playlist playlist;
   private int playlistIndex;
   private boolean isPlaying;
-  private Player player;
-  private Thread thread;
-  
+  private Mp3Task mp3Task;
+  private Thread mp3Thread;
+
   public VampPlayer( Playlist playlistToUse ) {
     playlist = playlistToUse;
     playlistIndex = 0;
@@ -21,26 +21,10 @@ public class VampPlayer {
   public Song getCurrentSong() {
     return playlist.get( playlistIndex );
   }
-  
+
   public void play() {
-    isPlaying = true;
-    // TODO: run mp3 player thread
-    String filename = this.getCurrentSong().filename;
-    if ( filename != null ) { 
-      try {
-        FileInputStream fis = new FileInputStream( filename );
-        BufferedInputStream bis = new BufferedInputStream( fis );
-        player = new Player( bis );
-        thread = new MP3Thread( player );
-        thread.start();
-      } catch ( Exception e ) {
-        //TODO: file cannot play error.
-        System.out.println( "Problem playing file " + filename );
-        System.out.println(e);
-      }
-    } else {
-      //TODO: no file loaded error.
-    }
+    mp3Task = new Mp3Task( this.getCurrentSong() );
+    mp3Thread = mp3Task.play();
   }
 
   public void stop() {
@@ -71,6 +55,9 @@ public class VampPlayer {
 
   public void pause() {
     isPlaying = false;
+  }
+  
+  public void seekToTimePosition( int time ) {
   }
 
 }

@@ -44,13 +44,13 @@ public class PlayerTest {
   
   @Test
   public void playSongTest() {
+    System.out.println( "starting track" );
     player.play();
-    // cause main thread to sleep for a 5 seconds (5000 nanoseconds) so song can play to test
-    System.out.println( "start playing track" );
+    // sleep main thread for a 2 seconds (2000 nanoseconds) so song can play to test
     try {
-      Thread.sleep(5000);
+      Thread.sleep(2000);
     } catch( Exception e ) { }
-    System.out.println( "stop playing track.  Did you hear it?" );
+    System.out.println( "stopping track." );
     assertTrue( player.isPlaying() );
   }
 
@@ -134,14 +134,25 @@ public class PlayerTest {
   
   @Test
   public void pauseTest() {
+    System.out.println( "starting pauseTest" );
+    System.out.println( "playing track for 2 seconds and then pausing" );
     player.play();
-    player.pause();
-    System.out.println( "pausing track" );
     try {
-      Thread.sleep(2000);
+      Thread.sleep(1000);
     } catch( Exception e ) { }
+
+    System.out.println( "pausing track" );
+    player.pause();
+    try {
+      Thread.sleep(1000);
+    } catch( Exception e ) { }
+
     System.out.println( "resuming track. Did it pick up?" );
     player.play();
+    try {
+      Thread.sleep(1000);
+    } catch( Exception e ) { }
+    System.out.println( "finished pauseTest" );
   }
 
   @Test
@@ -150,5 +161,16 @@ public class PlayerTest {
     player.skipForward();
     player.pause();
     assertEquals( songs.get(1), player.getCurrentSong() );
+  }
+
+  @Test
+  public void seekTest() {
+    System.out.println( "Playing track 50 seconds in" );
+    player.seekToTimePosition( 50000 );
+    player.play();
+    try {
+      Thread.sleep(2000);
+    } catch( Exception e ) { }
+    System.out.println( "finished with seek test." );
   }
 }
