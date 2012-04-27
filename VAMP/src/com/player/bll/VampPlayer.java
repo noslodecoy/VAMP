@@ -29,12 +29,13 @@ public class VampPlayer {
 
   public void stop() {
     //TODO: add code to check if thread is active.  If so, stop thread.
-    isPlaying = false;
-    playlistIndex = 0;
+    if (mp3Task != null) {
+        mp3Task.closeThread();
+    }
   }
   
   public boolean isPlaying() {
-    return isPlaying;
+    return mp3Thread.isAlive();
   }
   
   public void skipForward() {

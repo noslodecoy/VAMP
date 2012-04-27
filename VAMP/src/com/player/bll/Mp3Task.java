@@ -35,6 +35,10 @@ public class Mp3Task implements Runnable {
         thread.start();
         return thread;
     }
+    
+    public void closeThread() {
+        player.close();
+    }
 
     public void run() {
         try {
