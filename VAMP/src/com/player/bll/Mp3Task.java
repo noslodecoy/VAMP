@@ -39,7 +39,7 @@ public class Mp3Task implements Runnable {
     public void closeThread() {
         player.close();
     }
-
+    
     public void run() {
         try {
             player.play();

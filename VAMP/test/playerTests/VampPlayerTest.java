@@ -123,7 +123,7 @@ public class VampPlayerTest {
   }
   
   @Test
-  public void QueueNewlyAddedSongInPlaylistTest() {
+  public void queueNewlyAddedSongInPlaylistTest() {
     player.play();
     Song testSong = new Song( "New Title", "New Artist" );
     playlist.add( 1, testSong );

@@ -35,7 +35,7 @@ public class VampPlayer {
   }
   
   public boolean isPlaying() {
-    return mp3Thread.isAlive();
+      return mp3Thread.isAlive();
   }
   
   public void skipForward() {
@@ -55,7 +55,7 @@ public class VampPlayer {
   }
 
   public void pause() {
-    isPlaying = false;
+    mp3Thread.interrupt();
   }
   
   public void seekToTimePosition( int time ) {
