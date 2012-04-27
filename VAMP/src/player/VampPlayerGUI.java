@@ -8,12 +8,12 @@ package PlayerGUI;
  *
  * @author Jamie
  */
-public class MediaPlayer extends javax.swing.JFrame {
+public class VampPlayerGUI extends javax.swing.JFrame {
 
     /**
      * Creates new form MediaPlayer
      */
-    public MediaPlayer() {
+    public VampPlayerGUI() {
         initComponents();
     }
 
@@ -416,13 +416,13 @@ public class MediaPlayer extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(MediaPlayer.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VampPlayerGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(MediaPlayer.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VampPlayerGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(MediaPlayer.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VampPlayerGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(MediaPlayer.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VampPlayerGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
@@ -432,7 +432,7 @@ public class MediaPlayer extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
 
             public void run() {
-                new MediaPlayer().setVisible(true);
+                new VampPlayerGUI().setVisible(true);
             }
         });
     }

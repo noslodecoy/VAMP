@@ -11,13 +11,13 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 import org.junit.Before;
 
-public class PlayerTest {
+public class VampPlayerTest {
   
   Playlist playlist;
   VampPlayer player;
   List<Song> songs;
     
-  public PlayerTest() {
+  public VampPlayerTest() {
   }
 
   @Before
