@@ -1,18 +1,7 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package player;
 
-/**
- *
- * @author Jamie
- */
 public class VAMPLoginScreen extends javax.swing.JFrame {
 
-    /**
-     * Creates new form VAMPLoginScreen
-     */
     public VAMPLoginScreen() {
         initComponents();
     }
@@ -28,15 +17,17 @@ public class VAMPLoginScreen extends javax.swing.JFrame {
 
         welcomeLabel = new javax.swing.JLabel();
         userNameLabel = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
+        passwordLabel = new javax.swing.JLabel();
         userNameTextField = new javax.swing.JTextField();
         jPasswordField1 = new javax.swing.JPasswordField();
         loginButton = new javax.swing.JButton();
-        jLabel2 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        newUserLabel = new javax.swing.JLabel();
+        createNewAccountButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setBackground(new java.awt.Color(102, 102, 102));
+        setBackground(new java.awt.Color(51, 51, 51));
+        setResizable(false);
+        setType(java.awt.Window.Type.POPUP);
 
         welcomeLabel.setFont(new java.awt.Font("PMingLiU", 1, 36)); // NOI18N
         welcomeLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -45,8 +36,8 @@ public class VAMPLoginScreen extends javax.swing.JFrame {
         userNameLabel.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         userNameLabel.setText("User Name");
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jLabel1.setText("Password");
+        passwordLabel.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        passwordLabel.setText("Password");
 
         userNameTextField.setToolTipText("");
 
@@ -59,10 +50,15 @@ public class VAMPLoginScreen extends javax.swing.JFrame {
             }
         });
 
-        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel2.setText("New to VAMP? ");
+        newUserLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        newUserLabel.setText("New to VAMP? ");
 
-        jButton1.setText("Create New Account");
+        createNewAccountButton.setText("Create New Account");
+        createNewAccountButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                createNewAccountButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -70,25 +66,24 @@ public class VAMPLoginScreen extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(welcomeLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 354, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(10, 10, 10)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(userNameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel1))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(userNameTextField)
-                            .addComponent(jPasswordField1)))
+                    .addComponent(welcomeLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 445, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(loginButton)
-                        .addGap(0, 0, Short.MAX_VALUE))
+                        .addComponent(newUserLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(createNewAccountButton, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(35, 35, 35))
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(23, 23, 23)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(userNameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(passwordLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(loginButton, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(userNameTextField)
+                            .addComponent(jPasswordField1, javax.swing.GroupLayout.DEFAULT_SIZE, 316, Short.MAX_VALUE))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -102,14 +97,14 @@ public class VAMPLoginScreen extends javax.swing.JFrame {
                     .addComponent(userNameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
+                    .addComponent(passwordLabel)
                     .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
-                .addComponent(loginButton)
                 .addGap(18, 18, 18)
+                .addComponent(loginButton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(jButton1))
+                    .addComponent(newUserLabel)
+                    .addComponent(createNewAccountButton))
                 .addGap(36, 36, 36))
         );
 
@@ -119,6 +114,13 @@ public class VAMPLoginScreen extends javax.swing.JFrame {
     private void loginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginButtonActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_loginButtonActionPerformed
+
+    private void createNewAccountButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createNewAccountButtonActionPerformed
+        // TODO add code to populate Create New Account GUI
+        CreateUserAccountGUI create = new CreateUserAccountGUI();
+        create.setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_createNewAccountButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -162,11 +164,11 @@ public class VAMPLoginScreen extends javax.swing.JFrame {
         });
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
+    private javax.swing.JButton createNewAccountButton;
     private javax.swing.JPasswordField jPasswordField1;
     private javax.swing.JButton loginButton;
+    private javax.swing.JLabel newUserLabel;
+    private javax.swing.JLabel passwordLabel;
     private javax.swing.JLabel userNameLabel;
     private javax.swing.JTextField userNameTextField;
     private javax.swing.JLabel welcomeLabel;
