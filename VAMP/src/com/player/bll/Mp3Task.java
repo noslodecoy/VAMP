@@ -48,4 +48,11 @@ public class Mp3Task implements Runnable {
             //TODO: ERROR Message(POP UP)
         }
     }
+    public void skipBuffered(Long BufferedSkip) {
+        try {
+            bis.skip(BufferedSkip);
+    }
+        catch (Exception e){
+        }
+        }
 }
