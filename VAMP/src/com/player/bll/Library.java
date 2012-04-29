@@ -7,6 +7,9 @@ import org.hibernate.cfg.Configuration;
 public class Library {
 
   TreeSet<Song> library;
+  UserAccount user;
+  SessionFactory sessionFactory;
+  Session session;
 
   public Library() {
     library = new TreeSet();
@@ -18,6 +21,19 @@ public class Library {
     // Session newSession = sessionFactory.openSession();
     // Transaction newTransaction = newSession.beginTransaction();
     // library = (TreeSet)newSession.createQuery( "sql query here" ).list();
+    sortByArtist();
+  }
+
+  public Library( UserAccount user ) {
+    this.user = user;
+    sessionFactory = new Configuration().configure( "database/hibernate.cfg.xml" ).buildSessionFactory();
+    session = sessionFactory.openSession();
+    library = new TreeSet();
+    
+    Query query = session.createQuery( "FROM Song WHERE user_id = :user" );
+    query.setParameter( "user", user.getId() );
+    List<Song> libraryList = query.list();
+    Set<Song> library = new HashSet<Song>(libraryList);
     sortByArtist();
   }
 
@@ -34,9 +50,13 @@ public class Library {
   }
   
   public void add( Song s ) {
+    s.setUser( user );
+    Transaction tx = session.beginTransaction();
+    session.save( s );
+    tx.commit();
     library.add( s );
   }
-  
+
   public void remove( Song s ) {
     library.remove( s );
   }
@@ -50,11 +70,15 @@ public class Library {
   }
   
   public void addAll( Collection<Song> collectionToAdd ) {
-    library.addAll( collectionToAdd );
+    for( Song s : collectionToAdd ) {
+      add( s );
+    }
   }
 
   public void addAll( List<Song> listToAdd ) {
-    library.addAll( listToAdd );
+    for( Song s : listToAdd ) {
+      add( s );
+    }
   }
 
   public Collection<Song> getAll() {

@@ -2,6 +2,8 @@ package playerTests;
 
 import com.player.bll.Library;
 import com.player.bll.Song;
+import com.player.bll.UserAccount;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
@@ -16,6 +18,7 @@ public class LibraryTest {
   
   Library library;
   List<Song> songs;
+  UserAccount user;
     
   public LibraryTest() {
   }
@@ -30,11 +33,12 @@ public class LibraryTest {
 
   @Before
   public void setUp() {
+    user = new UserAccount( "bolson", "123456".toCharArray() );
     songs = new ArrayList<Song>();
-    songs.add( new Song( "Little Black Submarines", "The Black Keys" ) );
-    songs.add( new Song( "These Days", "Dr. Dog" ) );
-    songs.add( new Song( "Civilian", "Wye Oak" ) );
-    library = new Library( );
+    songs.add( new Song( new File( "test/testResources/The Black Keys - El Camino - 04 - Little Black Submarines.mp3" ) ) );
+    songs.add( new Song( new File( "test/testResources/Dr. Dog - Be The Void - 03 - These Days.mp3" ) ) );
+    songs.add( new Song( new File( "test/testResources/Wye Oak - Civilian - 05 - Civilian.mp3" ) ) );
+    library = new Library( user );
     library.addAll( songs );
   }
 

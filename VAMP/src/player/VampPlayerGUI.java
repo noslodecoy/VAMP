@@ -1,18 +1,7 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-package PlayerGUI;
+package player;
 
-/**
- *
- * @author Jamie
- */
 public class VampPlayerGUI extends javax.swing.JFrame {
 
-    /**
-     * Creates new form MediaPlayer
-     */
     public VampPlayerGUI() {
         initComponents();
     }
@@ -48,9 +37,9 @@ public class VampPlayerGUI extends javax.swing.JFrame {
         volumeSlider = new javax.swing.JSlider();
         applicationMenuBar = new javax.swing.JMenuBar();
         fileMenuItem = new javax.swing.JMenu();
-        viewEditAccount = new javax.swing.JMenuItem();
+        createNewAccountMenuItem = new javax.swing.JMenuItem();
         jSeparator1 = new javax.swing.JPopupMenu.Separator();
-        exitApplication = new javax.swing.JMenuItem();
+        exitApplicationMenuItem = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -350,17 +339,17 @@ public class VampPlayerGUI extends javax.swing.JFrame {
 
         fileMenuItem.setText("File");
 
-        viewEditAccount.setText("View/Edit Account ");
-        fileMenuItem.add(viewEditAccount);
+        createNewAccountMenuItem.setText("Create New Account ");
+        fileMenuItem.add(createNewAccountMenuItem);
         fileMenuItem.add(jSeparator1);
 
-        exitApplication.setText("Exit VAMP");
-        exitApplication.addActionListener(new java.awt.event.ActionListener() {
+        exitApplicationMenuItem.setText("Exit VAMP");
+        exitApplicationMenuItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                exitApplicationActionPerformed(evt);
+                exitApplicationMenuItemActionPerformed(evt);
             }
         });
-        fileMenuItem.add(exitApplication);
+        fileMenuItem.add(exitApplicationMenuItem);
 
         applicationMenuBar.add(fileMenuItem);
 
@@ -387,9 +376,9 @@ public class VampPlayerGUI extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void exitApplicationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitApplicationActionPerformed
+    private void exitApplicationMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitApplicationMenuItemActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_exitApplicationActionPerformed
+    }//GEN-LAST:event_exitApplicationMenuItemActionPerformed
 
     private void rewindButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rewindButtonActionPerformed
         // TODO add your handling code here:
@@ -438,8 +427,9 @@ public class VampPlayerGUI extends javax.swing.JFrame {
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuBar applicationMenuBar;
+    private javax.swing.JMenuItem createNewAccountMenuItem;
     private javax.swing.JLabel currentTrackPlaying;
-    private javax.swing.JMenuItem exitApplication;
+    private javax.swing.JMenuItem exitApplicationMenuItem;
     private javax.swing.JButton fastForwardButton;
     private javax.swing.JMenu fileMenuItem;
     private javax.swing.JPopupMenu.Separator jSeparator1;
@@ -459,7 +449,6 @@ public class VampPlayerGUI extends javax.swing.JFrame {
     private javax.swing.JButton rewindButton;
     private javax.swing.JProgressBar songProgressBar;
     private javax.swing.JButton stopButton;
-    private javax.swing.JMenuItem viewEditAccount;
     private javax.swing.JLabel volumeLabel;
     private javax.swing.JSlider volumeSlider;
     // End of variables declaration//GEN-END:variables

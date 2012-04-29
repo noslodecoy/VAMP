@@ -9,19 +9,19 @@
             <Property name="text" type="java.lang.String" value="File"/>
           </Properties>
           <SubComponents>
-            <MenuItem class="javax.swing.JMenuItem" name="viewEditAccount">
+            <MenuItem class="javax.swing.JMenuItem" name="createNewAccountMenuItem">
               <Properties>
-                <Property name="text" type="java.lang.String" value="View/Edit Account "/>
+                <Property name="text" type="java.lang.String" value="Create New Account "/>
               </Properties>
             </MenuItem>
             <MenuItem class="javax.swing.JPopupMenu$Separator" name="jSeparator1">
             </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="exitApplication">
+            <MenuItem class="javax.swing.JMenuItem" name="exitApplicationMenuItem">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Exit VAMP"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="exitApplicationActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="exitApplicationMenuItemActionPerformed"/>
               </Events>
             </MenuItem>
           </SubComponents>
