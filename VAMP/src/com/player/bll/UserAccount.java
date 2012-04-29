@@ -41,6 +41,10 @@ public class UserAccount {
     session.save( this );
     tx.commit();
   }
+  
+  public boolean validate() {
+    return ( this.username != null && this.password != null );
+  }
 
   
   public long getId() {

@@ -33,7 +33,7 @@ public class LibraryTest {
 
   @Before
   public void setUp() {
-    user = new UserAccount( "bolson", "123456" );
+    user = new UserAccount( "bolson", "123456".toCharArray() );
     songs = new ArrayList<Song>();
     songs.add( new Song( new File( "test/testResources/The Black Keys - El Camino - 04 - Little Black Submarines.mp3" ) ) );
     songs.add( new Song( new File( "test/testResources/Dr. Dog - Be The Void - 03 - These Days.mp3" ) ) );
