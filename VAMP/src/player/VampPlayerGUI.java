@@ -377,7 +377,11 @@ public class VampPlayerGUI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void exitApplicationMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitApplicationMenuItemActionPerformed
-        // TODO add your handling code here:
+        // TODO add your handling code here:        
+        
+        this.setVisible(false);
+        dispose(); 
+         
     }//GEN-LAST:event_exitApplicationMenuItemActionPerformed
 
     private void rewindButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rewindButtonActionPerformed
