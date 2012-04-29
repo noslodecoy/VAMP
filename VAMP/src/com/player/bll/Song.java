@@ -16,14 +16,18 @@ public class Song {
   private File file;
 
   //song info from database
-  public int id;
-  public String title;
-  public String artist;
-  public String album;
-  public String genre;
-  public int track;
-  public String filename;
-  public int length;
+  private Long id;
+  private String title;
+  private String artist;
+  private String album;
+  private String genre;
+  private int track;
+  private String filename;
+  private int songLength;
+  private long bitrate;
+  private long mp3StartByte;
+  
+  private UserAccount user;
 
   public Song() {
     isEmpty = true;
@@ -42,7 +46,7 @@ public class Song {
       this.album = tag.getFirst(FieldKey.ALBUM);
       this.title = tag.getFirst(FieldKey.TITLE);
       this.track = Integer.parseInt( tag.getFirst(FieldKey.TRACK) );
-      this.length = header.getTrackLength();
+      this.songLength = header.getTrackLength();
       //tag.getFirst(FieldKey.COMMENT);
       //tag.getFirst(FieldKey.YEAR);
     } catch ( Exception e ) {
@@ -55,17 +59,72 @@ public class Song {
     artist = newArtist;
   }
 
-  public File getFile() {
-    return file;
+  public void setId( Long id ) {
+    this.id = id;
+  }
+  
+  public Long getId() {
+    return id;
   }
 
+  public void setArtist( String artist ) {
+    this.artist = artist;
+  }
+
+  public String getArtist() {
+    return artist;
+  }  
+
+  public String getAlbum() {
+    return album;
+  }
+  
+  public void setAlbum( String album ) {
+    this.album = album;
+  }
+  
+  public int getTrack() {
+    return track;
+  }
+  
+  public void setTrack( int track ) {
+    this.track = track;
+  }
   
   public String getTitle() {
     return title;
   }
   
-  public String getArtist() {
-    return artist;
+  public void setTitle( String title ) {
+    this.title = title;
+  }
+  
+  public int getLength() {
+    return songLength;
+  }
+
+  public void setLength( int length ) {
+    this.songLength = length;
+  }
+
+  public String getFileName() {
+    return filename;
+  }
+  
+  public void setFileName( String filename ) {
+    this.filename = filename;
+  }
+  
+  public void setUser( UserAccount user ) {
+    this.user = user;
+  }
+  
+  public UserAccount getUser() {
+    return user;
+  }
+  
+  public File getFile() {
+    return file;
   }
 
   public boolean equals( Song songToCompare ) {
