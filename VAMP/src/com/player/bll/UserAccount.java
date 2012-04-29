@@ -10,13 +10,13 @@ public class UserAccount {
   
   private long id;
   private String username;
-  private String password;
+  private char[] password;
   private String email;
   
   public UserAccount() {
   }
 
-  public UserAccount( String username, String password ) {
+  public UserAccount( String username, char[] password ) {
     SessionFactory sessionFactory = new Configuration().configure( "database/hibernate.cfg.xml" ).buildSessionFactory();
     Session session = sessionFactory.openSession();
     UserAccount returnedUser = (UserAccount)session
@@ -31,7 +31,7 @@ public class UserAccount {
   }
 
   
-  public UserAccount( String username, String password, String email ) {
+  public UserAccount( String username, char[] password, String email ) {
     this.username = username;
     this.password = password;
     this.email = email;
@@ -59,11 +59,11 @@ public class UserAccount {
     this.username = username;
   }
   
-  public String getPassword() {
+  public char[] getPassword() {
     return password;
   }
   
-  public void setPassword( String password ) {
+  public void setPassword( char[] password ) {
     this.password = password;
   }
   
