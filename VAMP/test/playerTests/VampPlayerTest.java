@@ -6,10 +6,12 @@ import com.player.bll.Song;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import javazoom.jl.decoder.JavaLayerException;
 import org.junit.After;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import org.junit.Before;
+import org.junit.Ignore;
 
 public class VampPlayerTest {
   
@@ -96,6 +98,7 @@ public class VampPlayerTest {
     assertTrue( player.isPlaying() );
   }
 
+  @Ignore
   @Test
   public void skipWithoutPlayingTest() {
     player.skipForward();
@@ -164,9 +167,9 @@ public class VampPlayerTest {
   }
 
   @Test
-  public void seekTest() {
+  public void seekTest() throws JavaLayerException {
     System.out.println( "Playing track 50 seconds in" );
-    player.seekToTimePosition( 50000 );
+    player.seekToTime(.5);
     player.play();
     try {
       Thread.sleep(2000);

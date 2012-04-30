@@ -11,11 +11,14 @@ public class VampPlayer {
   private boolean isPlaying;
   private Mp3Task mp3Task;
   private Thread mp3Thread;
+  private Object bis;
+  private Object song;
 
   public VampPlayer( Playlist playlistToUse ) {
     playlist = playlistToUse;
     playlistIndex = 0;
     isPlaying = false;
+    mp3Task = new Mp3Task( this.getCurrentSong() );
   }
 
   public Song getCurrentSong() {
@@ -23,7 +26,6 @@ public class VampPlayer {
   }
 
   public void play() {
-    mp3Task = new Mp3Task( this.getCurrentSong() );
     mp3Thread = mp3Task.createThread();
   }
 
@@ -58,7 +60,14 @@ public class VampPlayer {
     mp3Thread.interrupt();
   }
   
-  public void seekToTimePosition( int time ) {
+  public void seekToTime( double percent ) 
+      throws javazoom.jl.decoder.JavaLayerException{
+      
+      mp3Task.closeThread();
+      getCurrentSong().getFile().length();
+      long fileSize = getCurrentSong().getFile().length();
+      long bufferedPosition = (long)(percent*fileSize);
+      mp3Task.skipBuffered(bufferedPosition);
   }
 
 }
