@@ -176,6 +176,9 @@ public class CreateUserAccountGUI extends javax.swing.JFrame {
 
     private void returntoLoginPageButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_returntoLoginPageButtonActionPerformed
         // TODO add your handling code here:
+        VAMPLoginScreen login = new VAMPLoginScreen(); 
+        this.setVisible(false);
+        login.setVisible(true);
         
         
     }//GEN-LAST:event_returntoLoginPageButtonActionPerformed
