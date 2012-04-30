@@ -1,6 +1,7 @@
 package player;
 
 import com.player.bll.UserAccount;
+import javax.swing.JOptionPane;
 
 public class CreateUserAccountGUI extends javax.swing.JFrame {
 
@@ -155,19 +156,26 @@ public class CreateUserAccountGUI extends javax.swing.JFrame {
         
         // TODO Validate User Name, Password, and Email Address         
         String userName = userNameTextField.getText();
-        char[] password = jPasswordField1.getPassword();
-        char[] password2 = jPasswordField2.getPassword();
+        String password = String.valueOf( jPasswordField1.getPassword() );
+        String password2 = String.valueOf( jPasswordField2.getPassword() );
         String email = emailAddressTextField.getText(); 
-        
-        UserAccount newAccount = new UserAccount();
-        
-        // TODO Add new user to database
-        
 
-        // TODO Include code to go back to VampPlayerGUI after account created
-        VampPlayerGUI player = new VampPlayerGUI();
-        player.setVisible(true);
-        this.setVisible(false);
+        if ( UserAccount.userExists( userName ) ) {
+          System.out.println("Invalid Login");
+          JOptionPane.showMessageDialog(this, "User already exists.",
+                  "Error", JOptionPane.ERROR_MESSAGE);
+        } else {
+          if ( password.equals( password2 ) ) {
+            UserAccount newAccount = new UserAccount( userName, password, email );
+            VampPlayerGUI player = new VampPlayerGUI();
+            player.newUser( newAccount );
+            this.setVisible(false);
+          } else {
+            System.out.println("Invalid Login");
+            JOptionPane.showMessageDialog(this, "Passwords do not match.",
+                  "Error", JOptionPane.ERROR_MESSAGE);
+          }
+        }
     }//GEN-LAST:event_createNewAccountButtonActionPerformed
 
     private void userNameTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_userNameTextFieldActionPerformed

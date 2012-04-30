@@ -18,7 +18,6 @@ public class VAMPLoginScreen extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        panel1 = new java.awt.Panel();
         panel2 = new java.awt.Panel();
         welcomeLabel = new javax.swing.JLabel();
         userNameTextField = new javax.swing.JTextField();
@@ -29,21 +28,9 @@ public class VAMPLoginScreen extends javax.swing.JFrame {
         newUserLabel = new javax.swing.JLabel();
         passwordField = new javax.swing.JPasswordField();
 
-        javax.swing.GroupLayout panel1Layout = new javax.swing.GroupLayout(panel1);
-        panel1.setLayout(panel1Layout);
-        panel1Layout.setHorizontalGroup(
-            panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 100, Short.MAX_VALUE)
-        );
-        panel1Layout.setVerticalGroup(
-            panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 100, Short.MAX_VALUE)
-        );
-
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(102, 102, 102));
         setResizable(false);
-        setType(java.awt.Window.Type.POPUP);
 
         panel2.setBackground(new java.awt.Color(153, 153, 153));
 
@@ -148,17 +135,23 @@ public class VAMPLoginScreen extends javax.swing.JFrame {
         // TODO add your handling code here:
 
         String userName = userNameTextField.getText();
-        char[] password = passwordField.getPassword();
+        String password = String.valueOf( passwordField.getPassword() );
+        System.out.println( "username: " + userName + ", password: " + password );
+        boolean validUser = false;
 
         // TODO Add logic to validate userName and password
+         if ( userName != null && password != null ) {
+          UserAccount user = new UserAccount( userName, password );
 
-        if (userName.equals(UserAccount.username) && password.equals(UserAccount.password)) {
-            VampPlayerGUI player = new VampPlayerGUI();
-            this.setVisible(false);
-            player.setVisible(true);
-            } 
-        
-        else {
+          if ( user.validate() ) {
+              validUser = true;
+              
+              VampPlayerGUI player = new VampPlayerGUI();
+              player.newUser( user );
+              this.setVisible(false);
+          } 
+        }
+        if ( !validUser) {
             System.out.println("Invalid Login");
             JOptionPane.showMessageDialog(this, "Invalid User Name and/ or Password",
                     "Error", JOptionPane.ERROR_MESSAGE);
@@ -218,7 +211,6 @@ public class VAMPLoginScreen extends javax.swing.JFrame {
     private javax.swing.JButton createNewAccountButton;
     private javax.swing.JButton loginButton;
     private javax.swing.JLabel newUserLabel;
-    private java.awt.Panel panel1;
     private java.awt.Panel panel2;
     private javax.swing.JPasswordField passwordField;
     private javax.swing.JLabel passwordLabel;

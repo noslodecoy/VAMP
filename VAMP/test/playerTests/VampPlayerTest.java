@@ -169,7 +169,7 @@ public class VampPlayerTest {
   @Test
   public void seekTest() throws JavaLayerException {
     System.out.println( "Playing track 50 seconds in" );
-    player.seekToTime(.5);
+    player.seekToPosition(.5);
     player.play();
     try {
       Thread.sleep(2000);

@@ -1,6 +1,6 @@
 package com.player.bll;
 
-import java.util.TreeSet;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -8,30 +8,34 @@ import org.hibernate.cfg.Configuration;
 
 public class UserAccount {
   
-  private long id;
-  public static String username;
-  public static char[] password;
-  public static char[] password2; 
-  private String email;
+  public long id;
+  public String username;
+  public String password;
+  public String password2; 
+  public String email;
   
   public UserAccount() {
   }
 
-  public UserAccount( String username, char[] password ) {
+  public UserAccount( String username, String password ) {
+    System.out.println( "USERNAME: "+username+", PASSWORD: "+password );
     SessionFactory sessionFactory = new Configuration().configure( "database/hibernate.cfg.xml" ).buildSessionFactory();
     Session session = sessionFactory.openSession();
-    UserAccount returnedUser = (UserAccount)session
-            .createQuery( "FROM UserAccount WHERE username = :username AND password = :password")
+    Query query = session.createQuery( "FROM UserAccount WHERE username = :username AND password = :password");
+    
+    UserAccount returnedUser = (UserAccount)query
             .setParameter( "username", username )
             .setParameter( "password", password )
             .uniqueResult();
-    this.id = returnedUser.getId();
-    this.username = returnedUser.getUsername();
-    this.password = returnedUser.getPassword();
-    this.email = returnedUser.getEmail();
+    if (returnedUser != null ) {
+      this.id = returnedUser.getId();
+      this.username = returnedUser.getUsername();
+      this.password = returnedUser.getPassword();
+      this.email = returnedUser.getEmail();
+    }
   }
   
-  public UserAccount( String username, char[] password, String email ) {
+  public UserAccount( String username, String password, String email ) {
     this.username = username;
     this.password = password;
     this.password2 = password2;
@@ -42,13 +46,22 @@ public class UserAccount {
     session.save( this );
     tx.commit();
   }
+
+  
+  public static boolean userExists( String username ) {
+    SessionFactory sessionFactory = new Configuration().configure( "database/hibernate.cfg.xml" ).buildSessionFactory();
+    Session session = sessionFactory.openSession();
+    Query query = session.createQuery( "FROM UserAccount WHERE username = :username");
+    query.setParameter( "username", username );
+    return ( query.list().size() > 0 );
+  }
   
   public boolean validate() {
     return ( this.username != null && this.password != null );
   }
   
   public boolean passwordMatch() {
-      return ( this.password == this.password2 ); 
+      return ( this.password.equals( this.password2 ) ); 
   }
   
   public long getId() {
@@ -67,11 +80,11 @@ public class UserAccount {
     this.username = username;
   }
   
-  public char[] getPassword() {
+  public String getPassword() {
     return password;
   }
   
-  public void setPassword( char[] password ) {
+  public void setPassword( String password ) {
     this.password = password;
   }
   
