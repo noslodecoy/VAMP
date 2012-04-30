@@ -520,8 +520,7 @@ public class VampPlayerGUI extends javax.swing.JFrame {
 
     private void playlistSongsTableMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_playlistSongsTableMouseReleased
         TableMouseListenerInterface rightClick = new TableRightClick(); 
-        rightClick.mouseReleased(evt);
-        
+        rightClick.mouseReleased(evt);        
     }//GEN-LAST:event_playlistSongsTableMouseReleased
 
     private void playlistNamesTableMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_playlistNamesTableMouseReleased
