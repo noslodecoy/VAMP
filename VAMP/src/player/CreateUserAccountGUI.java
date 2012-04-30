@@ -137,6 +137,9 @@ public class CreateUserAccountGUI extends javax.swing.JFrame {
 
     private void createNewAccountButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createNewAccountButtonActionPerformed
         // TODO add your handling code here:
+        
+        
+        // TODO Include code to go back to VampPlayerGUI after account created
     }//GEN-LAST:event_createNewAccountButtonActionPerformed
 
     private void userNameTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_userNameTextFieldActionPerformed
