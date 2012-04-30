@@ -9,8 +9,9 @@ import org.hibernate.cfg.Configuration;
 public class UserAccount {
   
   private long id;
-  private String username;
-  private char[] password;
+  public static String username;
+  public static char[] password;
+  public static char[] password2; 
   private String email;
   
   public UserAccount() {
@@ -29,11 +30,11 @@ public class UserAccount {
     this.password = returnedUser.getPassword();
     this.email = returnedUser.getEmail();
   }
-
   
   public UserAccount( String username, char[] password, String email ) {
     this.username = username;
     this.password = password;
+    this.password2 = password2;
     this.email = email;
     SessionFactory sessionFactory = new Configuration().configure( "database/hibernate.cfg.xml" ).buildSessionFactory();
     Session session = sessionFactory.openSession();
@@ -45,7 +46,10 @@ public class UserAccount {
   public boolean validate() {
     return ( this.username != null && this.password != null );
   }
-
+  
+  public boolean passwordMatch() {
+      return ( this.password == this.password2 ); 
+  }
   
   public long getId() {
     return id;

@@ -1,5 +1,7 @@
 package player;
 
+import com.player.bll.UserAccount;
+
 public class VampPlayerGUI extends javax.swing.JFrame {
 
     public VampPlayerGUI() {
@@ -15,6 +17,7 @@ public class VampPlayerGUI extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPopupMenu1 = new javax.swing.JPopupMenu();
         jTabbedPane2 = new javax.swing.JTabbedPane();
         playerPanel = new javax.swing.JPanel();
         playerScrollPane = new javax.swing.JScrollPane();
@@ -37,6 +40,7 @@ public class VampPlayerGUI extends javax.swing.JFrame {
         fastForwardButton = new javax.swing.JButton();
         volumeLabel = new javax.swing.JLabel();
         volumeSlider = new javax.swing.JSlider();
+        welcomeUserLabel = new javax.swing.JLabel();
         applicationMenuBar = new javax.swing.JMenuBar();
         fileMenuItem = new javax.swing.JMenu();
         createNewAccountMenuItem = new javax.swing.JMenuItem();
@@ -108,7 +112,7 @@ public class VampPlayerGUI extends javax.swing.JFrame {
             playerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, playerPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(playerScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 981, Short.MAX_VALUE)
+                .addComponent(playerScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 745, Short.MAX_VALUE)
                 .addContainerGap())
         );
         playerPanelLayout.setVerticalGroup(
@@ -222,7 +226,7 @@ public class VampPlayerGUI extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(playlistScrollPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 710, Short.MAX_VALUE)
+                .addComponent(playlistScrollPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 474, Short.MAX_VALUE)
                 .addContainerGap())
         );
         playlistPanelLayout.setVerticalGroup(
@@ -297,7 +301,7 @@ public class VampPlayerGUI extends javax.swing.JFrame {
             libraryPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, libraryPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(libraryScrollPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 981, Short.MAX_VALUE)
+                .addComponent(libraryScrollPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 745, Short.MAX_VALUE)
                 .addContainerGap())
         );
         libraryPanelLayout.setVerticalGroup(
@@ -336,6 +340,11 @@ public class VampPlayerGUI extends javax.swing.JFrame {
         volumeLabel.setForeground(new java.awt.Color(204, 204, 204));
         volumeLabel.setText("Volume");
 
+        welcomeUserLabel.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        welcomeUserLabel.setForeground(new java.awt.Color(204, 204, 204));
+        welcomeUserLabel.setText("Welcome " + UserAccount.username);
+        welcomeUserLabel.setToolTipText("");
+
         javax.swing.GroupLayout mediaStreamPanelLayout = new javax.swing.GroupLayout(mediaStreamPanel);
         mediaStreamPanel.setLayout(mediaStreamPanelLayout);
         mediaStreamPanelLayout.setHorizontalGroup(
@@ -343,7 +352,9 @@ public class VampPlayerGUI extends javax.swing.JFrame {
             .addGroup(mediaStreamPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(mediaStreamPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(currentTrackPlaying, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(mediaStreamPanelLayout.createSequentialGroup()
+                        .addComponent(currentTrackPlaying, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(40, 40, 40))
                     .addComponent(songProgressBar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(mediaStreamPanelLayout.createSequentialGroup()
                         .addComponent(rewindButton)
@@ -355,31 +366,35 @@ public class VampPlayerGUI extends javax.swing.JFrame {
                         .addComponent(pauseButton)
                         .addGap(18, 18, 18)
                         .addComponent(fastForwardButton)
-                        .addGap(85, 85, 85)
+                        .addGap(82, 82, 82)
                         .addComponent(volumeLabel)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(volumeSlider, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(5, 5, 5)))
+                        .addGap(18, 18, 18)
+                        .addComponent(volumeSlider, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, mediaStreamPanelLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(welcomeUserLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         mediaStreamPanelLayout.setVerticalGroup(
             mediaStreamPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(mediaStreamPanelLayout.createSequentialGroup()
                 .addContainerGap()
+                .addComponent(welcomeUserLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(currentTrackPlaying, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(songProgressBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(songProgressBar, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addGroup(mediaStreamPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(mediaStreamPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(rewindButton)
+                    .addComponent(volumeSlider, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(mediaStreamPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(rewindButton)
                         .addComponent(stopButton)
                         .addComponent(playButton)
                         .addComponent(pauseButton)
                         .addComponent(fastForwardButton)
-                        .addComponent(volumeLabel))
-                    .addComponent(volumeSlider, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(43, Short.MAX_VALUE))
+                        .addComponent(volumeLabel)))
+                .addContainerGap())
         );
 
         fileMenuItem.setText("File");
@@ -427,11 +442,8 @@ public class VampPlayerGUI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void exitApplicationMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitApplicationMenuItemActionPerformed
-        // TODO add your handling code here:        
-        
         this.setVisible(false);
-        dispose(); 
-         
+        dispose();        
     }//GEN-LAST:event_exitApplicationMenuItemActionPerformed
 
     private void rewindButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rewindButtonActionPerformed
@@ -493,6 +505,7 @@ public class VampPlayerGUI extends javax.swing.JFrame {
     private javax.swing.JMenuItem exitApplicationMenuItem;
     private javax.swing.JButton fastForwardButton;
     private javax.swing.JMenu fileMenuItem;
+    private javax.swing.JPopupMenu jPopupMenu1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JTabbedPane jTabbedPane2;
@@ -514,5 +527,6 @@ public class VampPlayerGUI extends javax.swing.JFrame {
     private javax.swing.JButton stopButton;
     private javax.swing.JLabel volumeLabel;
     private javax.swing.JSlider volumeSlider;
+    private javax.swing.JLabel welcomeUserLabel;
     // End of variables declaration//GEN-END:variables
 }

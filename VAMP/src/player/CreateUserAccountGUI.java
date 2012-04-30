@@ -1,5 +1,6 @@
-
 package player;
+
+import com.player.bll.UserAccount;
 
 public class CreateUserAccountGUI extends javax.swing.JFrame {
 
@@ -37,7 +38,7 @@ public class CreateUserAccountGUI extends javax.swing.JFrame {
 
         userNameLabel.setText("User Name");
 
-        jPasswordField1.setText("jPasswordField1");
+        jPasswordField1.setToolTipText("");
 
         userNameTextField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -56,7 +57,7 @@ public class CreateUserAccountGUI extends javax.swing.JFrame {
 
         password2Label.setText("Re-Type Password");
 
-        jPasswordField2.setText("jPasswordField2");
+        jPasswordField2.setToolTipText("");
 
         createUserAccountTitleLabel.setFont(new java.awt.Font("PMingLiU", 1, 36)); // NOI18N
         createUserAccountTitleLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -75,22 +76,23 @@ public class CreateUserAccountGUI extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addGroup(panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(panel1Layout.createSequentialGroup()
-                                .addGroup(panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(userNameLabel)
-                                    .addComponent(emailAddressLabel)
-                                    .addComponent(password1Label))
-                                .addGap(42, 42, 42)
-                                .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(panel1Layout.createSequentialGroup()
                                 .addGap(86, 86, 86)
                                 .addGroup(panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(userNameTextField)
                                     .addComponent(emailAddressTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 313, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(panel1Layout.createSequentialGroup()
-                                .addComponent(password2Label)
-                                .addGap(18, 18, 18)
-                                .addComponent(jPasswordField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(createNewAccountButton))))
+                            .addComponent(createNewAccountButton)
+                            .addGroup(panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, panel1Layout.createSequentialGroup()
+                                    .addComponent(password2Label)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(jPasswordField2))
+                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, panel1Layout.createSequentialGroup()
+                                    .addGroup(panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(userNameLabel)
+                                        .addComponent(emailAddressLabel)
+                                        .addComponent(password1Label))
+                                    .addGap(42, 42, 42)
+                                    .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE))))))
                 .addContainerGap(16, Short.MAX_VALUE))
         );
         panel1Layout.setVerticalGroup(
@@ -136,10 +138,22 @@ public class CreateUserAccountGUI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void createNewAccountButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createNewAccountButtonActionPerformed
-        // TODO add your handling code here:
         
+        // TODO Validate User Name, Password, and Email Address         
+        String userName = userNameTextField.getText();
+        char[] password = jPasswordField1.getPassword();
+        char[] password2 = jPasswordField2.getPassword();
+        String email = emailAddressTextField.getText(); 
         
+        UserAccount newAccount = new UserAccount();
+        
+        // TODO Add new user to database
+        
+
         // TODO Include code to go back to VampPlayerGUI after account created
+        VampPlayerGUI player = new VampPlayerGUI();
+        player.setVisible(true);
+        this.setVisible(false);
     }//GEN-LAST:event_createNewAccountButtonActionPerformed
 
     private void userNameTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_userNameTextFieldActionPerformed

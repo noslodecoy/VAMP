@@ -1,6 +1,7 @@
 package player;
 
 import com.player.bll.UserAccount;
+import javax.swing.JOptionPane;
 
 public class VAMPLoginScreen extends javax.swing.JFrame {
 
@@ -76,7 +77,7 @@ public class VAMPLoginScreen extends javax.swing.JFrame {
         newUserLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         newUserLabel.setText("New to VAMP? ");
 
-        passwordField.setText("jPasswordField1");
+        passwordField.setToolTipText("");
 
         javax.swing.GroupLayout panel2Layout = new javax.swing.GroupLayout(panel2);
         panel2.setLayout(panel2Layout);
@@ -145,22 +146,24 @@ public class VAMPLoginScreen extends javax.swing.JFrame {
 
     private void loginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginButtonActionPerformed
         // TODO add your handling code here:
-              
-        String userName = userNameTextField.getText(); 
-        char[] password = passwordField.getPassword(); 
-        
+
+        String userName = userNameTextField.getText();
+        char[] password = passwordField.getPassword();
+
         // TODO Add logic to validate userName and password
+
+        if (userName.equals(UserAccount.username) && password.equals(UserAccount.password)) {
+            VampPlayerGUI player = new VampPlayerGUI();
+            player.setVisible(true);
+            this.setVisible(false);
+        } 
         
-        // If user is vaidated: 
-        VampPlayerGUI player = new VampPlayerGUI(); 
-        player.setVisible(true);
-        this.setVisible(false);
-        
-        
-        
-        // Else message box for "Invalid User Name and/or Password" 
-        
-        
+        else {
+            System.out.println("enter the valid username and password");
+            JOptionPane.showMessageDialog(this, "Invalid User Name and/ or Password",
+                    "Error", JOptionPane.ERROR_MESSAGE);
+        }
+   
     }//GEN-LAST:event_loginButtonActionPerformed
 
     private void createNewAccountButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createNewAccountButtonActionPerformed
