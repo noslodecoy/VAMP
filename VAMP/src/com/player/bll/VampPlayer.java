@@ -10,7 +10,6 @@ public class VampPlayer {
   private int playlistIndex;
   private boolean isPlaying;
   private Mp3Task mp3Task;
-  private Thread mp3Thread;
   private Object bis;
   private Object song;
 
@@ -26,7 +25,7 @@ public class VampPlayer {
   }
 
   public void play() {
-    mp3Thread = mp3Task.createThread();
+    mp3Task.createThread();
   }
 
   public void stop() {
@@ -37,7 +36,7 @@ public class VampPlayer {
   }
   
   public boolean isPlaying() {
-      return mp3Thread.isAlive();
+      return mp3Task.isAlive();
   }
   
   public void skipForward() {
@@ -57,10 +56,10 @@ public class VampPlayer {
   }
 
   public void pause() {
-    mp3Thread.interrupt();
+    mp3Task.interrupt();
   }
   
-  public void seekToTime( double percent ) 
+  public void seekToPosition( double percent ) 
       throws javazoom.jl.decoder.JavaLayerException{
       
       mp3Task.closeThread();

@@ -6,9 +6,22 @@ import java.awt.event.MouseListener;
 import javax.swing.JTable;
 
 public class VampPlayerGUI extends javax.swing.JFrame {
+  
+    UserAccount user;
 
     public VampPlayerGUI() {
+        user = new UserAccount();
         initComponents();
+    }
+    
+    public void setUserAccount( UserAccount user ) {
+      this.user = user;
+    }
+    
+    public void newUser( UserAccount user ) {
+      setUserAccount( user );
+      welcomeUserLabel.setText( "Welcome, " + user.getUsername() + "!" );
+      setVisible(true);
     }
 
     /**
@@ -401,7 +414,7 @@ public class VampPlayerGUI extends javax.swing.JFrame {
 
         welcomeUserLabel.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         welcomeUserLabel.setForeground(new java.awt.Color(204, 204, 204));
-        welcomeUserLabel.setText("Welcome, " + UserAccount.username + "!");
+        welcomeUserLabel.setText("Welcome");
         welcomeUserLabel.setToolTipText("");
 
         songTimeLabel.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
