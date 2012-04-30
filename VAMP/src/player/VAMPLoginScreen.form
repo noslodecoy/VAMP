@@ -91,7 +91,7 @@
                           </Group>
                       </Group>
                   </Group>
-                  <EmptySpace min="37" max="32767" attributes="0"/>
+                  <EmptySpace min="37" pref="10" max="32767" attributes="0"/>
               </Group>
               <Group type="102" alignment="1" attributes="0">
                   <Component id="welcomeLabel" max="32767" attributes="0"/>

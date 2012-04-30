@@ -101,7 +101,7 @@ public class VAMPLoginScreen extends javax.swing.JFrame {
                                     .addComponent(passwordField)
                                     .addComponent(userNameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 259, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addComponent(loginButton, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap())
+                .addGap(10, 10, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel2Layout.createSequentialGroup()
                 .addComponent(welcomeLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
@@ -154,12 +154,12 @@ public class VAMPLoginScreen extends javax.swing.JFrame {
 
         if (userName.equals(UserAccount.username) && password.equals(UserAccount.password)) {
             VampPlayerGUI player = new VampPlayerGUI();
-            player.setVisible(true);
             this.setVisible(false);
-        } 
+            player.setVisible(true);
+            } 
         
         else {
-            System.out.println("enter the valid username and password");
+            System.out.println("Invalid Login");
             JOptionPane.showMessageDialog(this, "Invalid User Name and/ or Password",
                     "Error", JOptionPane.ERROR_MESSAGE);
         }
