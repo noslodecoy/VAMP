@@ -342,7 +342,7 @@ public class VampPlayerGUI extends javax.swing.JFrame {
 
         welcomeUserLabel.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         welcomeUserLabel.setForeground(new java.awt.Color(204, 204, 204));
-        welcomeUserLabel.setText("Welcome " + UserAccount.username);
+        welcomeUserLabel.setText("Welcome, " + UserAccount.username + "!");
         welcomeUserLabel.setToolTipText("");
 
         javax.swing.GroupLayout mediaStreamPanelLayout = new javax.swing.GroupLayout(mediaStreamPanel);
