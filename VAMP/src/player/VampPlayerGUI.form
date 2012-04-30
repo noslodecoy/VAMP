@@ -2,52 +2,11 @@
 
 <Form version="1.3" maxVersion="1.8" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
   <NonVisualComponents>
-    <Container class="javax.swing.JPopupMenu" name="rightClickPopupMenu">
+    <Container class="javax.swing.JPopupMenu" name="jPopupMenu1">
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout">
         <Property name="useNullLayout" type="boolean" value="true"/>
       </Layout>
-      <SubComponents>
-        <MenuItem class="javax.swing.JMenuItem" name="addSongRightClickMenuItem">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Add Song"/>
-            <Property name="toolTipText" type="java.lang.String" value=""/>
-          </Properties>
-        </MenuItem>
-        <MenuItem class="javax.swing.JMenuItem" name="deleteSongRightClickMenuItem">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Delete Song"/>
-          </Properties>
-        </MenuItem>
-        <Component class="javax.swing.JPopupMenu$Separator" name="jSeparator2">
-        </Component>
-        <MenuItem class="javax.swing.JMenuItem" name="newPlaylistRightClickMenuItem">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="New Playlist"/>
-          </Properties>
-        </MenuItem>
-        <MenuItem class="javax.swing.JMenuItem" name="deletePlaylistRightClickMenuItem">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Delete Playlist"/>
-            <Property name="toolTipText" type="java.lang.String" value=""/>
-          </Properties>
-        </MenuItem>
-        <Component class="javax.swing.JPopupMenu$Separator" name="jSeparator3">
-        </Component>
-        <MenuItem class="javax.swing.JMenuItem" name="addPlaylistToPlayerRightClickMenuItem">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Load Playlist"/>
-          </Properties>
-        </MenuItem>
-        <Component class="javax.swing.JPopupMenu$Separator" name="jSeparator4">
-        </Component>
-        <MenuItem class="javax.swing.JMenuItem" name="renamePlaylistRightClickMenuItem">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Rename Playlist"/>
-            <Property name="toolTipText" type="java.lang.String" value=""/>
-          </Properties>
-        </MenuItem>
-      </SubComponents>
     </Container>
     <Menu class="javax.swing.JMenuBar" name="applicationMenuBar">
       <SubComponents>
@@ -197,9 +156,6 @@
                       <Color blue="99" green="99" red="99" type="rgb"/>
                     </Property>
                   </Properties>
-                  <Events>
-                    <EventHandler event="mouseReleased" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="playerTableMouseReleased"/>
-                  </Events>
                 </Component>
               </SubComponents>
             </Container>
@@ -224,9 +180,9 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="1" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="playlistNamesScrollPanel" min="-2" pref="253" max="-2" attributes="0"/>
+                      <Component id="jScrollPane1" min="-2" pref="253" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="playlistSongsScrollPanel" pref="474" max="32767" attributes="0"/>
+                      <Component id="playlistScrollPanel" pref="474" max="32767" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
@@ -236,8 +192,8 @@
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="playlistSongsScrollPanel" pref="513" max="32767" attributes="0"/>
-                          <Component id="playlistNamesScrollPanel" max="32767" attributes="0"/>
+                          <Component id="playlistScrollPanel" pref="513" max="32767" attributes="0"/>
+                          <Component id="jScrollPane1" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
@@ -245,14 +201,14 @@
             </DimensionLayout>
           </Layout>
           <SubComponents>
-            <Container class="javax.swing.JScrollPane" name="playlistSongsScrollPanel">
+            <Container class="javax.swing.JScrollPane" name="playlistScrollPanel">
               <AuxValues>
                 <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
               </AuxValues>
 
               <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
               <SubComponents>
-                <Component class="javax.swing.JTable" name="playlistSongsTable">
+                <Component class="javax.swing.JTable" name="playlistTable">
                   <Properties>
                     <Property name="autoCreateRowSorter" type="boolean" value="true"/>
                     <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
@@ -277,20 +233,17 @@
                       <Color blue="99" green="99" red="99" type="rgb"/>
                     </Property>
                   </Properties>
-                  <Events>
-                    <EventHandler event="mouseReleased" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="playlistSongsTableMouseReleased"/>
-                  </Events>
                 </Component>
               </SubComponents>
             </Container>
-            <Container class="javax.swing.JScrollPane" name="playlistNamesScrollPanel">
+            <Container class="javax.swing.JScrollPane" name="jScrollPane1">
               <AuxValues>
                 <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
               </AuxValues>
 
               <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
               <SubComponents>
-                <Component class="javax.swing.JTable" name="playlistNamesTable">
+                <Component class="javax.swing.JTable" name="jTable1">
                   <Properties>
                     <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
                       <Table columnCount="1" rowCount="30">
@@ -298,9 +251,6 @@
                       </Table>
                     </Property>
                   </Properties>
-                  <Events>
-                    <EventHandler event="mouseReleased" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="playlistNamesTableMouseReleased"/>
-                  </Events>
                 </Component>
               </SubComponents>
             </Container>
@@ -373,9 +323,6 @@
                       <Color blue="99" green="99" red="99" type="rgb"/>
                     </Property>
                   </Properties>
-                  <Events>
-                    <EventHandler event="mouseReleased" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="libraryTableMouseReleased"/>
-                  </Events>
                 </Component>
               </SubComponents>
             </Container>
