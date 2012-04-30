@@ -28,6 +28,7 @@ public class CreateUserAccountGUI extends javax.swing.JFrame {
         password2Label = new javax.swing.JLabel();
         jPasswordField2 = new javax.swing.JPasswordField();
         createUserAccountTitleLabel = new javax.swing.JLabel();
+        returntoLoginPageButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Create User Account");
@@ -64,13 +65,20 @@ public class CreateUserAccountGUI extends javax.swing.JFrame {
         createUserAccountTitleLabel.setText("Create New User Account");
         createUserAccountTitleLabel.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
+        returntoLoginPageButton.setText("Return to Login Page");
+        returntoLoginPageButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                returntoLoginPageButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout panel1Layout = new javax.swing.GroupLayout(panel1);
         panel1.setLayout(panel1Layout);
         panel1Layout.setHorizontalGroup(
             panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(createUserAccountTitleLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 483, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(panel1Layout.createSequentialGroup()
                         .addGap(18, 18, 18)
@@ -80,7 +88,6 @@ public class CreateUserAccountGUI extends javax.swing.JFrame {
                                 .addGroup(panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(userNameTextField)
                                     .addComponent(emailAddressTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 313, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addComponent(createNewAccountButton)
                             .addGroup(panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                 .addGroup(javax.swing.GroupLayout.Alignment.LEADING, panel1Layout.createSequentialGroup()
                                     .addComponent(password2Label)
@@ -92,8 +99,13 @@ public class CreateUserAccountGUI extends javax.swing.JFrame {
                                         .addComponent(emailAddressLabel)
                                         .addComponent(password1Label))
                                     .addGap(42, 42, 42)
-                                    .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE))))))
-                .addContainerGap(16, Short.MAX_VALUE))
+                                    .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(panel1Layout.createSequentialGroup()
+                                .addComponent(createNewAccountButton)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(returntoLoginPageButton)
+                                .addGap(34, 34, 34)))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         panel1Layout.setVerticalGroup(
             panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -117,7 +129,9 @@ public class CreateUserAccountGUI extends javax.swing.JFrame {
                     .addComponent(password2Label)
                     .addComponent(jPasswordField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(45, 45, 45)
-                .addComponent(createNewAccountButton)
+                .addGroup(panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(createNewAccountButton)
+                    .addComponent(returntoLoginPageButton))
                 .addGap(63, 63, 63))
         );
 
@@ -159,6 +173,12 @@ public class CreateUserAccountGUI extends javax.swing.JFrame {
     private void userNameTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_userNameTextFieldActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_userNameTextFieldActionPerformed
+
+    private void returntoLoginPageButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_returntoLoginPageButtonActionPerformed
+        // TODO add your handling code here:
+        
+        
+    }//GEN-LAST:event_returntoLoginPageButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -211,6 +231,7 @@ public class CreateUserAccountGUI extends javax.swing.JFrame {
     private java.awt.Panel panel1;
     private javax.swing.JLabel password1Label;
     private javax.swing.JLabel password2Label;
+    private javax.swing.JButton returntoLoginPageButton;
     private javax.swing.JLabel userNameLabel;
     private javax.swing.JTextField userNameTextField;
     // End of variables declaration//GEN-END:variables
