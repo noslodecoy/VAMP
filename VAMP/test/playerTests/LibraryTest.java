@@ -50,7 +50,6 @@ public class LibraryTest {
     session.createSQLQuery( "DELETE FROM MusicLibrary WHERE user_id = '"+user.getId()+"'").executeUpdate();
     session.createSQLQuery( "DELETE FROM UserAccount WHERE username = 'staticuser';" ).executeUpdate();
     session.createSQLQuery( "DELETE FROM UserAccount WHERE username = 'testuser';" ).executeUpdate();
-
   }
 
   @Before

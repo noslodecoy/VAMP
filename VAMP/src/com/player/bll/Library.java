@@ -53,6 +53,13 @@ public class Library {
 
   public void remove( Song s ) {
     library.remove( s );
+    session.delete( s );
+    Transaction tx = session.beginTransaction();
+    tx.commit();
+  }
+  
+  public void remove( int i ) {
+    remove( library.get( i ) );
   }
   
   public boolean contains( Song s ) {
@@ -83,9 +90,7 @@ public class Library {
     int arraySize = library.size();
     Object[][] objectToReturn = new Object[arraySize][5];
     for ( int i = 0; i < arraySize; i++ ) {
-      System.out.println( "New: "+i );
       Song song = library.get( i );
-      //objectToReturn[i] = library.get( i ).getSongRow();
       objectToReturn[i] = new Object[]{
         song.getTitle(),
         song.getArtist(),
