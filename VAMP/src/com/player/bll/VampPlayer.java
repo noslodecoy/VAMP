@@ -17,11 +17,19 @@ public class VampPlayer {
         playlist = playlistToUse;
         playlistIndex = 0;
         isPlaying = false;
-        mp3Task = new Mp3Task(this.getCurrentSong());
+        getTask();
+    }
+    
+    public Mp3Task getTask() {
+      if ( mp3Task == null && playlist.size() > 0 ) {
+        System.out.println( "CREATE TASK! Size:"+playlist.size() );
+        mp3Task = new Mp3Task( this.getCurrentSong() );
+      }
+      return mp3Task;
     }
 
     public Song getCurrentSong() {
-        return playlist.get(playlistIndex);
+           return playlist.get(playlistIndex);
     }
     
     public String getSongTitleOfCurrentTrack() {
@@ -30,18 +38,24 @@ public class VampPlayer {
     }
     
     public void play() {
-        mp3Task.createThread();
+      if ( getTask() != null && isPlaying == false ) {
+        getTask().setSong( getCurrentSong() );
+        System.out.println( "Set song: "+getCurrentSong().getTitle()+": "+getCurrentSong().getFileName()  );
+        getTask().createThread();
+        isPlaying = true;
+      }
     }
 
     public void stop() {
         //TODO: add code to check if thread is active.  If so, stop thread.
-        if (mp3Task != null) {
-            mp3Task.closeThread();
+        if (getTask() != null) {
+            getTask().closeThread();
+            isPlaying = false;
         }
     }
 
     public boolean isPlaying() {
-        return mp3Task.isAlive();
+        return ( getTask().isAlive() && isPlaying );
     }
 
     public void skipForward() {
@@ -61,16 +75,20 @@ public class VampPlayer {
     }
 
     public void pause() {
-        mp3Task.interrupt();
+      if ( getTask() != null ) {
+        getTask().interrupt();
+        isPlaying = false;
+      }
     }
 
     public void seekToPosition(double percent)
             throws javazoom.jl.decoder.JavaLayerException {
-
-        mp3Task.closeThread();
+      if ( getTask() != null ) {
+        getTask().closeThread();
         getCurrentSong().getFile().length();
         long fileSize = getCurrentSong().getFile().length();
         long bufferedPosition = (long) (percent * fileSize);
-        mp3Task.skipBuffered(bufferedPosition);
+        getTask().skipBuffered(bufferedPosition);
+      }
     }
 }

@@ -16,17 +16,25 @@ public class Mp3Task implements Runnable {
   private Song song;
   Thread thread;
 
-  public Mp3Task(Song inSong) {
-    this.song = inSong;
-    try {
-      fis = new FileInputStream(song.getFile());// Takes a JLayer Player object in as a parameter.
-      bis = new BufferedInputStream(fis);
-      player = new Player(bis);
-    } 
-    catch (Exception e) {
-        //TODO: ERROR Message(POP UP)
-    }
+  public Mp3Task() {
+  }
 
+  public Mp3Task(Song inSong) {
+    setSong( inSong );
+  }
+  
+  public void setSong( Song inSong ) {
+    this.song = inSong;
+    if ( song.getFileName() != null ) {
+      try {
+        fis = new FileInputStream(song.getFile());// Takes a JLayer Player object in as a parameter.
+        bis = new BufferedInputStream(fis);
+        player = new Player(bis);
+      } 
+      catch (Exception e) {
+          //TODO: ERROR Message(POP UP)
+      }
+    }
   }
   
   public void interrupt() {
@@ -38,6 +46,7 @@ public class Mp3Task implements Runnable {
   }
 
   public void createThread() {
+    System.out.println( song.getFileName() );
     thread = new Thread(this);
     thread.start();
   }
@@ -47,6 +56,7 @@ public class Mp3Task implements Runnable {
   }
 
   public void run() {
+    System.out.println( song.getFileName() );
     try {
         player.play();
     } 

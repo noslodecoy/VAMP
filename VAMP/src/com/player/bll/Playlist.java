@@ -60,4 +60,19 @@ public class Playlist {
     playlist.remove( songToRemove );
   }
 
+    public Object[][] getDataVector() {
+    int arraySize = playlist.size();
+    Object[][] objectToReturn = new Object[arraySize][5];
+    for ( int i = 0; i < arraySize; i++ ) {
+      Song song = playlist.get( i );
+      objectToReturn[i] = new Object[]{
+        song.getTitle(),
+        song.getArtist(),
+        String.valueOf( song.getLength() ),
+        song.getAlbum(),
+        String.valueOf( song.getTrack() )
+      };
+    }
+    return objectToReturn;
+  }
 }

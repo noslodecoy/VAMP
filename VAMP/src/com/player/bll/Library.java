@@ -57,11 +57,15 @@ public class Library {
     Transaction tx = session.beginTransaction();
     tx.commit();
   }
-  
+
   public void remove( int i ) {
     remove( library.get( i ) );
   }
-  
+
+  public Song get ( int i ) {
+    return library.get(i);
+  }
+
   public boolean contains( Song s ) {
     return library.contains( s );
   }

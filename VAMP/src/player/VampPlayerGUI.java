@@ -1,8 +1,6 @@
 package player;
 
-import com.player.bll.Library;
-import com.player.bll.Song;
-import com.player.bll.UserAccount;
+import com.player.bll.*;
 import java.awt.event.MouseEvent;
 import java.io.File;
 import javax.swing.JFileChooser;
@@ -13,11 +11,15 @@ public class VampPlayerGUI extends javax.swing.JFrame {
 
     UserAccount user;
     Library library;
+    Playlist currentlyPlaying;
+    VampPlayer player;
 
     public VampPlayerGUI() {
         user = new UserAccount();
         initComponents();
         library = new Library();
+        currentlyPlaying = new Playlist( "Now Playing");
+        player = new VampPlayer( currentlyPlaying );
     }
 
     public void setUserAccount(UserAccount user) {
@@ -40,6 +42,15 @@ public class VampPlayerGUI extends javax.swing.JFrame {
           "Title", "Artist", "Track Length", "Album", "Track Number"
         } );
       }
+ 
+      public void updateCurrentlyPlaying() {
+      DefaultTableModel model = (DefaultTableModel)playerTable.getModel();
+           
+      model.setDataVector( currentlyPlaying.getDataVector(), new String [] {
+          "Title", "Artist", "Track Length", "Album", "Track Number"
+        } );
+      }
+    
     
     public void addSongToLibrary(){
       JFileChooser fc = new JFileChooser();
@@ -78,6 +89,7 @@ public class VampPlayerGUI extends javax.swing.JFrame {
         addPlaylistToPlayerRightClickMenuItem = new javax.swing.JMenuItem();
         jSeparator4 = new javax.swing.JPopupMenu.Separator();
         renamePlaylistRightClickMenuItem = new javax.swing.JMenuItem();
+        addSongToPlayerMenuItem = new javax.swing.JMenuItem();
         jTabbedPane = new javax.swing.JTabbedPane();
         playerPanel = new javax.swing.JPanel();
         playerScrollPane = new javax.swing.JScrollPane();
@@ -144,6 +156,14 @@ public class VampPlayerGUI extends javax.swing.JFrame {
         renamePlaylistRightClickMenuItem.setText("Rename Playlist");
         renamePlaylistRightClickMenuItem.setToolTipText("");
         rightClickPopupMenu.add(renamePlaylistRightClickMenuItem);
+
+        addSongToPlayerMenuItem.setText("Add Song to Now Playing");
+        addSongToPlayerMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addSongToPlayerMenuItemActionPerformed(evt);
+            }
+        });
+        rightClickPopupMenu.add(addSongToPlayerMenuItem);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -447,12 +467,32 @@ public class VampPlayerGUI extends javax.swing.JFrame {
         });
 
         stopButton.setText("Stop");
+        stopButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                stopButtonActionPerformed(evt);
+            }
+        });
 
         playButton.setText("Play");
+        playButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                playButtonActionPerformed(evt);
+            }
+        });
 
         pauseButton.setText("Pause");
+        pauseButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                pauseButtonActionPerformed(evt);
+            }
+        });
 
         fastForwardButton.setText("Fast Forward");
+        fastForwardButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                fastForwardButtonActionPerformed(evt);
+            }
+        });
 
         volumeLabel.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         volumeLabel.setForeground(new java.awt.Color(204, 204, 204));
@@ -462,7 +502,7 @@ public class VampPlayerGUI extends javax.swing.JFrame {
 
         welcomeUserLabel.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         welcomeUserLabel.setForeground(new java.awt.Color(204, 204, 204));
-        welcomeUserLabel.setText("Welcome");
+        welcomeUserLabel.setText("Welcome, " + user.getUsername() + "!");
         welcomeUserLabel.setToolTipText("");
 
         songTimeLabel.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
@@ -593,7 +633,7 @@ public class VampPlayerGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_exitApplicationMenuItemActionPerformed
 
     private void rewindButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rewindButtonActionPerformed
-        // TODO add your handling code here:
+        player.skipBackward();
     }//GEN-LAST:event_rewindButtonActionPerformed
 
     private void createNewAccountMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createNewAccountMenuItemActionPerformed
@@ -641,6 +681,27 @@ public class VampPlayerGUI extends javax.swing.JFrame {
     addSongToLibrary();
   }//GEN-LAST:event_addSongRightClickMenuItemActionPerformed
 
+  private void addSongToPlayerMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addSongToPlayerMenuItemActionPerformed
+    currentlyPlaying.add( library.get( libraryTable.getSelectedRow() ) );
+    updateCurrentlyPlaying();
+  }//GEN-LAST:event_addSongToPlayerMenuItemActionPerformed
+
+  private void playButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_playButtonActionPerformed
+    player.play();
+  }//GEN-LAST:event_playButtonActionPerformed
+
+  private void stopButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_stopButtonActionPerformed
+    player.stop();
+  }//GEN-LAST:event_stopButtonActionPerformed
+
+  private void fastForwardButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fastForwardButtonActionPerformed
+    player.skipForward();
+  }//GEN-LAST:event_fastForwardButtonActionPerformed
+
+  private void pauseButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pauseButtonActionPerformed
+    player.pause();
+  }//GEN-LAST:event_pauseButtonActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -686,6 +747,7 @@ public class VampPlayerGUI extends javax.swing.JFrame {
     private javax.swing.JMenuItem addPlaylistToPlayerRightClickMenuItem;
     private javax.swing.JMenuItem addSongRightClickMenuItem;
     private javax.swing.JMenuItem addSongToLibraryMenuItem;
+    private javax.swing.JMenuItem addSongToPlayerMenuItem;
     private javax.swing.JMenuBar applicationMenuBar;
     private javax.swing.JMenuItem createNewAccountMenuItem;
     private javax.swing.JLabel currentTrackLabel;

@@ -47,6 +47,7 @@ public class Song {
       this.title = tag.getFirst(FieldKey.TITLE);
       this.track = Integer.parseInt( tag.getFirst(FieldKey.TRACK) );
       this.songLength = header.getTrackLength();
+      this.filename = file.getAbsolutePath();
       //tag.getFirst(FieldKey.COMMENT);
       //tag.getFirst(FieldKey.YEAR);
     } catch ( Exception e ) {
@@ -112,7 +113,10 @@ public class Song {
   }
   
   public void setFileName( String filename ) {
+    
+    System.out.println("set file name: "+filename);
     this.filename = filename;
+    System.out.println("check file name: "+this.filename);
   }
   
   public void setUser( UserAccount user ) {
@@ -124,6 +128,9 @@ public class Song {
   }
   
   public File getFile() {
+    if ( file == null ) {
+      file = new File( getFileName() );
+    }
     return file;
   }
 
