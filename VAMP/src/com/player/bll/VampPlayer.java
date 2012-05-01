@@ -23,7 +23,12 @@ public class VampPlayer {
     public Song getCurrentSong() {
         return playlist.get(playlistIndex);
     }
-
+    
+    public String getSongTitleOfCurrentTrack() {
+        String songTitle = getCurrentSong().getTitle();        
+        return songTitle; 
+    }
+    
     public void play() {
         mp3Task.createThread();
     }
