@@ -29,7 +29,10 @@ public class VampPlayer {
     }
 
     public Song getCurrentSong() {
-           return playlist.get(playlistIndex);
+      if ( playlist.size() > 0 && playlistIndex < playlist.size() ) {
+        return playlist.get(playlistIndex);
+      }
+      return null;
     }
     
     public String getSongTitleOfCurrentTrack() {
@@ -90,5 +93,12 @@ public class VampPlayer {
         long bufferedPosition = (long) (percent * fileSize);
         getTask().skipBuffered(bufferedPosition);
       }
+    }
+    
+    public int getTime() {
+      if ( getTask() != null ) {
+        return mp3Task.getTime();
+      }
+      return 0;
     }
 }

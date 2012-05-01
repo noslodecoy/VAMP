@@ -70,4 +70,8 @@ public class Mp3Task implements Runnable {
     } catch (Exception e) {
     }
   }
+  
+  public int getTime() {
+    return player.getPosition();
+  }
 }
