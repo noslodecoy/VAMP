@@ -59,14 +59,24 @@ public class VampPlayer {
     }
 
     public void skipForward() {
+      boolean wasPlaying = isPlaying();
+      stop();
         if ((playlistIndex + 1) < playlist.size()) {
             ++playlistIndex;
+        }
+        if ( wasPlaying ) {
+          play();
         }
     }
 
     public void skipBackward() {
+      boolean wasPlaying = isPlaying();
+      stop();
         if ((playlistIndex - 1) >= 0) {
             --playlistIndex;
+        }
+        if ( wasPlaying ) {
+          play();
         }
     }
 
