@@ -1,6 +1,7 @@
 package player;
 
 import com.player.bll.UserAccount;
+import com.player.bll.VampPlayer;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import javax.swing.JPopupMenu;
@@ -9,7 +10,8 @@ import javax.swing.JTable;
 public class VampPlayerGUI extends javax.swing.JFrame {
 
     UserAccount user;
-
+    VampPlayer player;
+    
     public VampPlayerGUI() {
         user = new UserAccount();
         initComponents();
@@ -24,7 +26,7 @@ public class VampPlayerGUI extends javax.swing.JFrame {
         welcomeUserLabel.setText("Welcome, " + user.getUsername() + "!");
         setVisible(true);
     }
-
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -416,7 +418,7 @@ public class VampPlayerGUI extends javax.swing.JFrame {
 
         welcomeUserLabel.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         welcomeUserLabel.setForeground(new java.awt.Color(204, 204, 204));
-        welcomeUserLabel.setText("Welcome");
+        welcomeUserLabel.setText("Welcome, " + user.getUsername() + "!");
         welcomeUserLabel.setToolTipText("");
 
         songTimeLabel.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
@@ -527,7 +529,8 @@ public class VampPlayerGUI extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+   
+  
     private void exitApplicationMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitApplicationMenuItemActionPerformed
         this.setVisible(false);
         dispose();
@@ -554,7 +557,7 @@ public class VampPlayerGUI extends javax.swing.JFrame {
         rightClick.mouseReleased(evt);
 
         if (evt.getSource() == playlistSongsTable) {
-        renamePlaylistRightClickMenuItem.setVisible(false);
+            renamePlaylistRightClickMenuItem.setVisible(false);
         }
     }//GEN-LAST:event_playlistSongsTableMouseReleased
 

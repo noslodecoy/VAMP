@@ -534,7 +534,7 @@
               <Color blue="cc" green="cc" red="cc" type="rgb"/>
             </Property>
             <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-              <Connection code="&quot;Welcome&quot;" type="code"/>
+              <Connection code="&quot;Welcome, &quot; + user.getUsername() + &quot;!&quot;" type="code"/>
             </Property>
             <Property name="toolTipText" type="java.lang.String" value=""/>
           </Properties>
