@@ -36,8 +36,9 @@ public class UserAccountTest {
   public static void setUpClass() throws Exception {
     SessionFactory sessionFactory = new Configuration().configure( "database/hibernate.cfg.xml" ).buildSessionFactory();
     Session session = sessionFactory.openSession();
-    SQLQuery query = session.createSQLQuery( "TRUNCATE UserAccount");
-    query.executeUpdate();
+    session.createSQLQuery( "DELETE FROM UserAccount WHERE username = 'staticuser'").executeUpdate();
+    session.createSQLQuery( "DELETE FROM UserAccount WHERE username = 'testuser2'").executeUpdate();
+    
     staticUser = new UserAccount( "staticuser", "1234567890", "noslodecoy@gmail.com" );
   }
 
@@ -45,8 +46,8 @@ public class UserAccountTest {
   public static void tearDownClass() throws Exception {
     SessionFactory sessionFactory = new Configuration().configure( "database/hibernate.cfg.xml" ).buildSessionFactory();
     Session session = sessionFactory.openSession();
-    SQLQuery query = session.createSQLQuery( "TRUNCATE UserAccount");
-    query.executeUpdate();
+    session.createSQLQuery( "DELETE FROM UserAccount WHERE username = 'staticuser'").executeUpdate();
+    session.createSQLQuery( "DELETE FROM UserAccount WHERE username = 'testuser2'").executeUpdate();
   }
   
   @Before

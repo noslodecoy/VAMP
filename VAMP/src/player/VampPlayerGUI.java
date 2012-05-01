@@ -1,17 +1,23 @@
 package player;
 
+import com.player.bll.Library;
+import com.player.bll.Song;
 import com.player.bll.UserAccount;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
+import java.util.Collection;
+import java.util.List;
 import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 
 public class VampPlayerGUI extends javax.swing.JFrame {
   
     UserAccount user;
+    Library library;
 
     public VampPlayerGUI() {
         user = new UserAccount();
         initComponents();
+        library = new Library();
     }
     
     public void setUserAccount( UserAccount user ) {
@@ -21,8 +27,19 @@ public class VampPlayerGUI extends javax.swing.JFrame {
     public void newUser( UserAccount user ) {
       setUserAccount( user );
       welcomeUserLabel.setText( "Welcome, " + user.getUsername() + "!" );
+      library = new Library( user );
+
       setVisible(true);
+      updateLibrary();
     }
+    
+    public void updateLibrary() {
+      DefaultTableModel model = (DefaultTableModel)libraryTable.getModel();
+           
+      model.setDataVector( library.getLibraryVector(), new String [] {
+          "Title", "Artist", "Track Length", "Album", "Track Number"
+        } );
+      }
 
     /**
      * This method is called from within the constructor to initialize the form.

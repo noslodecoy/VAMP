@@ -6,47 +6,41 @@ import org.hibernate.cfg.Configuration;
 
 public class Library {
 
-  TreeSet<Song> library;
+  List<Song> library;
   UserAccount user;
   SessionFactory sessionFactory;
   Session session;
 
   public Library() {
-    library = new TreeSet();
-    // TODO: add code to load song information from database record.
-    // It should look something like the following (the session may want to be
-    // in the UserAccount class and passed to this class.
-    //
-    // SessionFactory sessionFactory = new Configuration().configure( "database/songs.cfg.xml" ).buildSessionFactory();
-    // Session newSession = sessionFactory.openSession();
-    // Transaction newTransaction = newSession.beginTransaction();
-    // library = (TreeSet)newSession.createQuery( "sql query here" ).list();
-    sortByArtist();
+    library = new ArrayList();
+    //sortByArtist();
   }
 
   public Library( UserAccount user ) {
     this.user = user;
     sessionFactory = new Configuration().configure( "database/hibernate.cfg.xml" ).buildSessionFactory();
     session = sessionFactory.openSession();
-    library = new TreeSet();
     
     Query query = session.createQuery( "FROM Song WHERE user_id = :user" );
     query.setParameter( "user", user.getId() );
-    List<Song> libraryList = query.list();
-    Set<Song> library = new HashSet<Song>(libraryList);
-    sortByArtist();
+    library = query.list();
+
+    //library = new TreeSet();
+    //library.addAll( libraryList );
+
+    //sortByArtist();
   }
 
   public void sortByArtist() {
-    TreeSet<Song> oldLibrary = library;
-    library = new TreeSet( Song.CompareByArtist );
-    library.addAll( oldLibrary );
+//    TreeSet<Song> oldLibrary = library;
+//    library = new TreeSet( Song.CompareByArtist );
+//    library.addAll( oldLibrary );
   }
 
   public void sortByTitle() {
-    TreeSet<Song> oldLibrary = library;
-    library = new TreeSet( Song.CompareByTitle );
-    library.addAll( oldLibrary );
+//    TreeSet<Song> oldLibrary = library;
+//    library = new TreeSet( Song.CompareByTitle );
+//    library.addAll( oldLibrary );
   }
   
   public void add( Song s ) {
@@ -83,6 +77,24 @@ public class Library {
 
   public Collection<Song> getAll() {
     return Collections.unmodifiableCollection( library );
+  }
+  
+  public Object[][] getLibraryVector() {
+    int arraySize = library.size();
+    Object[][] objectToReturn = new Object[arraySize][5];
+    for ( int i = 0; i < arraySize; i++ ) {
+      System.out.println( "New: "+i );
+      Song song = library.get( i );
+      //objectToReturn[i] = library.get( i ).getSongRow();
+      objectToReturn[i] = new Object[]{
+        song.getTitle(),
+        song.getArtist(),
+        String.valueOf( song.getLength() ),
+        song.getAlbum(),
+        String.valueOf( song.getTrack() )
+      };
+    }
+    return objectToReturn;
   }
 
 }

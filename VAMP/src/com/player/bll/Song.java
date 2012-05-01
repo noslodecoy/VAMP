@@ -1,7 +1,7 @@
 package com.player.bll;
 
 import java.io.File;
-import java.sql.Time;
+import java.util.ArrayList;
 import java.util.Comparator;
 
 import org.jaudiotagger.audio.AudioFile;
@@ -132,15 +132,15 @@ public class Song {
       return true;
     }
     return (
-      this.getTitle().equals( songToCompare.getTitle() ) &&
-      this.getArtist().equals( songToCompare.getArtist() )
+      this.getTitle().equals( songToCompare.getFileName() ) &&
+      this.getArtist().equals( songToCompare.getFileName() )
     );
   }
 
   public boolean isEmpty() {
     return isEmpty;
   }
-
+  
   public static Comparator<Song> CompareByTitle = new Comparator<Song>() {
 
     @Override

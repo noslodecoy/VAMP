@@ -12,8 +12,6 @@
     <property name="title" column="title"/>
     <property name="length" column="track_length"/>
     <property name="fileName" column="filename"/>
-    <!--
     <many-to-one name="user" class="com.player.bll.UserAccount" column="user_id" cascade="all" not-null="true" />
-    //-->
   </class>
 </hibernate-mapping>
