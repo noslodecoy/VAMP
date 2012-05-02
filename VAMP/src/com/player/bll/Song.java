@@ -143,10 +143,7 @@ public class Song {
   }
   
   public void setFileName( String filename ) {
-    
-    System.out.println("set file name: "+filename);
     this.filename = filename;
-    System.out.println("check file name: "+this.filename);
   }
   
   public void setUser( UserAccount user ) {

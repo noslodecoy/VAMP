@@ -2,7 +2,7 @@ package com.player.bll;
 
 import java.util.*;
 
-public class Playlist {
+public class Playlist implements VampMediaCollection {
   
   LinkedList<Song> playlist;
   private String name;

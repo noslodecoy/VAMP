@@ -11,7 +11,6 @@ public class VampPlayer {
     private boolean isPlaying;
     private Mp3Task mp3Task;
     
-    private double startPosition;
     private long startTime;
 
     public VampPlayer(Playlist playlistToUse) {
@@ -24,7 +23,7 @@ public class VampPlayer {
     
     public Mp3Task getTask() {
       if ( mp3Task == null && playlist.size() > 0 ) {
-        mp3Task = new Mp3Task( this.getCurrentSong() );
+        mp3Task = new Mp3Task( this, this.getCurrentSong() );
       }
       return mp3Task;
     }
@@ -46,7 +45,6 @@ public class VampPlayer {
         getTask().setSong( getCurrentSong() );
         getTask().setStartTime( startTime );
         getTask().createThread();
-        System.out.println( mp3Task.getTime() );
         isPlaying = true;
       }
     }

@@ -1,10 +1,11 @@
 package com.player.bll;
 
+import java.lang.reflect.Method;
 import java.util.*;
 import org.hibernate.*;
 import org.hibernate.cfg.Configuration;
 
-public class Library {
+public class Library implements VampMediaCollection {
 
   List<Song> library;
   UserAccount user;
@@ -100,10 +101,11 @@ public class Library {
         song.getArtist(),
         String.valueOf( song.getLength() ),
         song.getAlbum(),
-        String.valueOf( song.getTrack() )
+        String.valueOf( song.getTrack() ),
+        String.valueOf( i )
       };
     }
     return objectToReturn;
   }
-
+  
 }

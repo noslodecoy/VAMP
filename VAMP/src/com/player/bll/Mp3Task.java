@@ -19,36 +19,26 @@ public class Mp3Task implements Runnable {
   
   int startFrame;
   int totalFrames;
+  
+  VampPlayer playerControl;
 
-  public Mp3Task() {
+  public Mp3Task( VampPlayer playerControl ) {
+    this.playerControl = playerControl;
     startFrame = 0;
   }
 
-  public Mp3Task(Song inSong) {
+  public Mp3Task(VampPlayer playerControl, Song inSong) {
+    this.playerControl = playerControl;
     startFrame = 0;
     setSong( inSong );
   }
   
   public void setSong( Song inSong ) {
     this.song = inSong;
-    //totalFrames = song.getHeader().num
     if ( song.getFileName() != null ) {
       audioDevice = new JavaSoundAudioDevice();
-      
       try {
-        //bytes = seconds * sample rate * channels * (bits per sample / 8)
-        //bytes = seconds * sample rate * frame size
-        
-//		AudioFormat playbackFormat = new AudioFormat(44100, 16, 2, true, false);
-//
-//		AudioInputStream source = AudioSystem.getAudioInputStream(new File(
-//				"test.mp3"));
-//		source = AudioSystem.getAudioInputStream(playbackFormat, source);
-//
-//		player = new Player(source);
-        
-        
-        fis = new FileInputStream( song.getFile() );// Takes a JLayer Player object in as a parameter.
+        fis = new FileInputStream( song.getFile() );
         bis = new BufferedInputStream(fis);
         player = new AdvancedPlayer( bis, audioDevice );
       } 
@@ -67,7 +57,6 @@ public class Mp3Task implements Runnable {
   }
 
   public void createThread() {
-    System.out.println( song.getFileName() );
     thread = new Thread(this);
     thread.start();
   }
@@ -77,9 +66,8 @@ public class Mp3Task implements Runnable {
   }
 
   public void run() {
-    System.out.println( song.getFileName() );
     try {
-        player.play( startFrame, 9999999 );
+      player.play( startFrame, 9999999 );
     } 
     catch (JavaLayerException ex) {
         //TODO: ERROR Message(POP UP)
@@ -97,7 +85,6 @@ public class Mp3Task implements Runnable {
   }
   
   public int getTime() {
-    System.out.println( "Time: " + audioDevice.getPosition() + ( startFrame * 26 ) );
     return audioDevice.getPosition() + ( startFrame * 26 );
   }
 }
