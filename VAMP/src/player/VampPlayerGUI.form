@@ -2,31 +2,47 @@
 
 <Form version="1.3" maxVersion="1.8" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
   <NonVisualComponents>
-    <Container class="javax.swing.JPopupMenu" name="rightClickPopupMenu">
+    <Container class="javax.swing.JPopupMenu" name="playlistSongsRightClickPopupMenu">
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout">
         <Property name="useNullLayout" type="boolean" value="true"/>
       </Layout>
       <SubComponents>
-        <MenuItem class="javax.swing.JMenuItem" name="addSongRightClickMenuItem">
+        <MenuItem class="javax.swing.JMenuItem" name="addPLaylistSongRightClickMenuItem">
           <Properties>
             <Property name="text" type="java.lang.String" value="Add Song"/>
             <Property name="toolTipText" type="java.lang.String" value=""/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="addSongRightClickMenuItemActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="addPLaylistSongRightClickMenuItemActionPerformed"/>
           </Events>
         </MenuItem>
-        <MenuItem class="javax.swing.JMenuItem" name="deleteSongRightClickMenuItem">
+        <MenuItem class="javax.swing.JMenuItem" name="deletePlaylistSongRightClickMenuItem">
           <Properties>
             <Property name="text" type="java.lang.String" value="Delete Song"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="deleteSongRightClickMenuItemActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="deletePlaylistSongRightClickMenuItemActionPerformed"/>
           </Events>
         </MenuItem>
         <Component class="javax.swing.JPopupMenu$Separator" name="jSeparator2">
         </Component>
+        <MenuItem class="javax.swing.JMenuItem" name="addSongToPlayerMenuItem">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Add Song to Now Playing"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="addSongToPlayerMenuItemActionPerformed"/>
+          </Events>
+        </MenuItem>
+      </SubComponents>
+    </Container>
+    <Container class="javax.swing.JPopupMenu" name="playlistNamesRightClickPopupMenu">
+
+      <Layout class="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout">
+        <Property name="useNullLayout" type="boolean" value="true"/>
+      </Layout>
+      <SubComponents>
         <MenuItem class="javax.swing.JMenuItem" name="newPlaylistRightClickMenuItem">
           <Properties>
             <Property name="text" type="java.lang.String" value="New Playlist"/>
@@ -55,12 +71,20 @@
             <Property name="toolTipText" type="java.lang.String" value=""/>
           </Properties>
         </MenuItem>
-        <MenuItem class="javax.swing.JMenuItem" name="addSongToPlayerMenuItem">
+      </SubComponents>
+    </Container>
+    <Container class="javax.swing.JPopupMenu" name="libraryRightClickPopupMenu">
+
+      <Layout class="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout">
+        <Property name="useNullLayout" type="boolean" value="true"/>
+      </Layout>
+      <SubComponents>
+        <MenuItem class="javax.swing.JMenuItem" name="deleteLibrarySongRightClickMenuItem">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Add Song to Now Playing"/>
+            <Property name="text" type="java.lang.String" value="Delete Song"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="addSongToPlayerMenuItemActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="deleteLibrarySongRightClickMenuItemActionPerformed"/>
           </Events>
         </MenuItem>
       </SubComponents>
@@ -180,7 +204,7 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="1" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="playerScrollPane" pref="812" max="32767" attributes="0"/>
+                      <Component id="playerScrollPane" pref="745" max="32767" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
@@ -228,9 +252,6 @@
                       <Color blue="99" green="99" red="99" type="rgb"/>
                     </Property>
                   </Properties>
-                  <Events>
-                    <EventHandler event="mouseReleased" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="playerTableMouseReleased"/>
-                  </Events>
                 </Component>
               </SubComponents>
             </Container>
@@ -257,7 +278,7 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="playlistNamesScrollPanel" min="-2" pref="253" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="playlistSongsScrollPanel" pref="541" max="32767" attributes="0"/>
+                      <Component id="playlistSongsScrollPanel" pref="474" max="32767" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
@@ -356,7 +377,7 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="1" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="libraryScrollPanel" pref="812" max="32767" attributes="0"/>
+                      <Component id="libraryScrollPanel" pref="745" max="32767" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
@@ -427,10 +448,10 @@
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" alignment="0" attributes="0">
+              <Group type="102" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="trackPositionSlider" max="32767" attributes="0"/>
+                      <Component id="songProgressBar" alignment="0" max="32767" attributes="0"/>
                       <Group type="102" alignment="0" attributes="0">
                           <Component id="rewindButton" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
@@ -446,14 +467,17 @@
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Component id="volumeSlider" max="32767" attributes="0"/>
                       </Group>
-                      <Group type="102" alignment="0" attributes="0">
-                          <Component id="currentTrackLabel" min="-2" pref="716" max="-2" attributes="0"/>
-                          <EmptySpace max="32767" attributes="0"/>
-                          <Component id="songTimeLabel" min="-2" pref="65" max="-2" attributes="0"/>
+                      <Group type="102" attributes="0">
+                          <Component id="currentTrackLabel" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Component id="titleOfCurrentTrackPlaying" max="32767" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="1" attributes="0">
                           <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                          <Component id="welcomeUserLabel" min="-2" pref="182" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="welcomeUserLabel" alignment="1" min="-2" pref="182" max="-2" attributes="0"/>
+                              <Component id="songTimeLabel" alignment="1" min="-2" pref="65" max="-2" attributes="0"/>
+                          </Group>
                       </Group>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
@@ -465,13 +489,20 @@
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="welcomeUserLabel" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="currentTrackLabel" alignment="3" min="-2" pref="23" max="-2" attributes="0"/>
-                      <Component id="songTimeLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                      <Group type="102" attributes="0">
+                          <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
+                          <Component id="currentTrackLabel" min="-2" pref="23" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="102" attributes="0">
+                          <EmptySpace max="32767" attributes="0"/>
+                          <Component id="titleOfCurrentTrackPlaying" min="-2" pref="18" max="-2" attributes="0"/>
+                      </Group>
                   </Group>
-                  <EmptySpace pref="32" max="32767" attributes="0"/>
-                  <Component id="trackPositionSlider" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace max="32767" attributes="0"/>
+                  <Component id="songTimeLabel" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="songProgressBar" min="-2" pref="21" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="1" attributes="0">
                       <Component id="rewindButton" min="-2" max="-2" attributes="0"/>
@@ -500,6 +531,8 @@
             </Property>
             <Property name="text" type="java.lang.String" value="Current Track: "/>
           </Properties>
+        </Component>
+        <Component class="javax.swing.JProgressBar" name="songProgressBar">
         </Component>
         <Component class="javax.swing.JButton" name="rewindButton">
           <Properties>
@@ -560,6 +593,9 @@
               </Border>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="volumeSliderStateChanged"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="welcomeUserLabel">
           <Properties>
@@ -591,16 +627,7 @@
             <Property name="horizontalTextPosition" type="int" value="0"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JSlider" name="trackPositionSlider">
-          <Properties>
-            <Property name="maximum" type="int" value="1000"/>
-            <Property name="snapToTicks" type="boolean" value="true"/>
-            <Property name="value" type="int" value="0"/>
-          </Properties>
-          <Events>
-            <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="trackPositionSliderStateChanged"/>
-            <EventHandler event="caretPositionChanged" listener="java.awt.event.InputMethodListener" parameters="java.awt.event.InputMethodEvent" handler="trackPositionSliderCaretPositionChanged"/>
-          </Events>
+        <Component class="javax.swing.JLabel" name="titleOfCurrentTrackPlaying">
         </Component>
       </SubComponents>
     </Container>
