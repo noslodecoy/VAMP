@@ -53,7 +53,10 @@ public class Mp3Task implements Runnable {
   }
   
   public boolean isAlive() {
-    return thread.isAlive();
+    if ( thread != null ) {
+      thread.isAlive();
+    }
+    return false;
   }
 
   public void createThread() {

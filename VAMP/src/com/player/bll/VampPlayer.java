@@ -29,8 +29,8 @@ public class VampPlayer {
     }
 
     public Song getCurrentSong() {
-      if ( playlist.size() > 0 && playlistIndex < playlist.size() ) {
-        return playlist.get(playlistIndex);
+      if ( playlist.size() > 0 && getPosition() < playlist.size() && getPosition() >= 0 ) {
+        return playlist.get( playlistIndex );
       }
       return null;
     }
@@ -41,7 +41,8 @@ public class VampPlayer {
     }
     
     public void play() {
-      if ( getTask() != null && isPlaying == false ) {
+      if ( getCurrentSong() != null && getTask() != null && isPlaying == false ) {
+        
         getTask().setSong( getCurrentSong() );
         getTask().setStartTime( startTime );
         getTask().createThread();
@@ -58,7 +59,7 @@ public class VampPlayer {
     }
 
     public boolean isPlaying() {
-        return ( getTask().isAlive() && isPlaying );
+      return ( isPlaying & getTask() != null & getTask().isAlive() );
     }
 
     public void skipForward() {
@@ -72,6 +73,28 @@ public class VampPlayer {
       }
     }
 
+    public void skipToEnd() {
+      boolean wasPlaying = isPlaying();
+      stop();
+      playlistIndex = playlist.size() - 1;
+      if ( wasPlaying ) {
+        play();
+      }
+    }
+    
+    public void setPosition( int i ) {
+      playlistIndex = i;
+    }
+    
+    public int getPosition()  {
+      if ( playlistIndex < 0 || playlistIndex >= playlist.size() ) {
+        playlistIndex = 0;
+      }
+      return playlistIndex;
+    }
+
+    
+    
     public void skipBackward() {
       boolean wasPlaying = isPlaying();
       stop();

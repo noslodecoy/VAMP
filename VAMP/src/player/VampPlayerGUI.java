@@ -72,6 +72,11 @@ public class VampPlayerGUI extends javax.swing.JFrame {
                     "Title", "Artist", "Track Length", "Album", "Track Number"
                 });
     }
+    
+    public void addSongToQueueUI( Song song) {
+      queue.add( song );
+      updateQueueUI();
+    }
 
     public void addSongToLibrary() {
         JFileChooser fc = new JFileChooser();
@@ -270,6 +275,11 @@ public class VampPlayerGUI extends javax.swing.JFrame {
         });
         playerTable.setSelectionBackground(new java.awt.Color(204, 204, 204));
         playerTable.setSelectionForeground(new java.awt.Color(153, 153, 153));
+        playerTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                playerTableMouseClicked(evt);
+            }
+        });
         playerScrollPane.setViewportView(playerTable);
 
         javax.swing.GroupLayout playerPanelLayout = new javax.swing.GroupLayout(playerPanel);
@@ -470,6 +480,9 @@ public class VampPlayerGUI extends javax.swing.JFrame {
         libraryTable.setSelectionBackground(new java.awt.Color(204, 204, 204));
         libraryTable.setSelectionForeground(new java.awt.Color(153, 153, 153));
         libraryTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                libraryTableMouseClicked(evt);
+            }
             public void mouseReleased(java.awt.event.MouseEvent evt) {
                 libraryTableMouseReleased(evt);
             }
@@ -776,8 +789,7 @@ public class VampPlayerGUI extends javax.swing.JFrame {
   }//GEN-LAST:event_songPositionSliderCaretPositionChanged
 
   private void addLibrarySongToQueueRightClickMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addLibrarySongToQueueRightClickMenuItemActionPerformed
-    queue.add(library.get(libraryTable.getSelectedRow()));
-    updateQueueUI();
+    addSongToQueueUI( library.get(libraryTable.getSelectedRow()) );
   }//GEN-LAST:event_addLibrarySongToQueueRightClickMenuItemActionPerformed
 
   private void songPositionSliderStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_songPositionSliderStateChanged
@@ -790,6 +802,22 @@ public class VampPlayerGUI extends javax.swing.JFrame {
       }
     }
   }//GEN-LAST:event_songPositionSliderStateChanged
+
+  private void libraryTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_libraryTableMouseClicked
+    if (evt.getClickCount() == 2) {
+      addSongToQueueUI( library.get(libraryTable.getSelectedRow()) );
+      player.skipToEnd();
+      player.play();
+    }
+  }//GEN-LAST:event_libraryTableMouseClicked
+
+  private void playerTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_playerTableMouseClicked
+    if (evt.getClickCount() == 2) {
+      player.stop();
+      player.setPosition( playerTable.getSelectedRow() );
+      player.play();
+    }
+  }//GEN-LAST:event_playerTableMouseClicked
 
     /**
      * @param args the command line arguments
@@ -826,9 +854,8 @@ public class VampPlayerGUI extends javax.swing.JFrame {
          * Create and display the form
          */
         java.awt.EventQueue.invokeLater(new Runnable() {
-
             public void run() {
-                new VampPlayerGUI().setVisible(true);
+              new VampPlayerGUI().setVisible(true);
             }
         });
     }
