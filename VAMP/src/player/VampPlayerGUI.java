@@ -40,6 +40,7 @@ public class VampPlayerGUI extends javax.swing.JFrame {
       if ( player.getCurrentSong() != null ) {
         currentTrackLabel.setText( "Current Track: " + player.getCurrentSong().getArtist() + " - " + player.getCurrentSong().getTitle() );
         songTimeLabel.setText( String.valueOf( player.getTime() ) );
+        trackPositionSlider.setValue( (int)(player.getProgressPercent()*1000) );
       }
     }
 
@@ -125,7 +126,6 @@ public class VampPlayerGUI extends javax.swing.JFrame {
         libraryTable = new javax.swing.JTable();
         mediaStreamPanel = new javax.swing.JPanel();
         currentTrackLabel = new javax.swing.JLabel();
-        songProgressBar = new javax.swing.JProgressBar();
         rewindButton = new javax.swing.JButton();
         stopButton = new javax.swing.JButton();
         playButton = new javax.swing.JButton();
@@ -135,7 +135,7 @@ public class VampPlayerGUI extends javax.swing.JFrame {
         volumeSlider = new javax.swing.JSlider();
         welcomeUserLabel = new javax.swing.JLabel();
         songTimeLabel = new javax.swing.JLabel();
-        titleOfCurrentTrackPlaying = new javax.swing.JLabel();
+        trackPositionSlider = new javax.swing.JSlider();
         applicationMenuBar = new javax.swing.JMenuBar();
         fileMenuItem = new javax.swing.JMenu();
         createNewAccountMenuItem = new javax.swing.JMenuItem();
@@ -533,6 +533,22 @@ public class VampPlayerGUI extends javax.swing.JFrame {
         songTimeLabel.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         songTimeLabel.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
+        trackPositionSlider.setMaximum(1000);
+        trackPositionSlider.setSnapToTicks(true);
+        trackPositionSlider.setValue(0);
+        trackPositionSlider.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                trackPositionSliderStateChanged(evt);
+            }
+        });
+        trackPositionSlider.addInputMethodListener(new java.awt.event.InputMethodListener() {
+            public void caretPositionChanged(java.awt.event.InputMethodEvent evt) {
+                trackPositionSliderCaretPositionChanged(evt);
+            }
+            public void inputMethodTextChanged(java.awt.event.InputMethodEvent evt) {
+            }
+        });
+
         javax.swing.GroupLayout mediaStreamPanelLayout = new javax.swing.GroupLayout(mediaStreamPanel);
         mediaStreamPanel.setLayout(mediaStreamPanelLayout);
         mediaStreamPanelLayout.setHorizontalGroup(
@@ -540,7 +556,7 @@ public class VampPlayerGUI extends javax.swing.JFrame {
             .addGroup(mediaStreamPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(mediaStreamPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(songProgressBar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(trackPositionSlider, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(mediaStreamPanelLayout.createSequentialGroup()
                         .addComponent(rewindButton)
                         .addGap(18, 18, 18)
@@ -555,15 +571,10 @@ public class VampPlayerGUI extends javax.swing.JFrame {
                         .addComponent(volumeLabel)
                         .addGap(18, 18, 18)
                         .addComponent(volumeSlider, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(mediaStreamPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(mediaStreamPanelLayout.createSequentialGroup()
-                            .addGap(259, 259, 259)
-                            .addComponent(titleOfCurrentTrackPlaying, javax.swing.GroupLayout.PREFERRED_SIZE, 558, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(0, 0, Short.MAX_VALUE))
-                        .addGroup(mediaStreamPanelLayout.createSequentialGroup()
-                            .addComponent(currentTrackLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 716, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(songTimeLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(mediaStreamPanelLayout.createSequentialGroup()
+                        .addComponent(currentTrackLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 716, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(songTimeLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, mediaStreamPanelLayout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(welcomeUserLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -578,10 +589,8 @@ public class VampPlayerGUI extends javax.swing.JFrame {
                 .addGroup(mediaStreamPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(currentTrackLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(songTimeLabel))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(titleOfCurrentTrackPlaying, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(songProgressBar, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
+                .addComponent(trackPositionSlider, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(mediaStreamPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(rewindButton)
@@ -726,6 +735,20 @@ public class VampPlayerGUI extends javax.swing.JFrame {
     player.pause();
   }//GEN-LAST:event_pauseButtonActionPerformed
 
+  private void trackPositionSliderCaretPositionChanged(java.awt.event.InputMethodEvent evt) {//GEN-FIRST:event_trackPositionSliderCaretPositionChanged
+  }//GEN-LAST:event_trackPositionSliderCaretPositionChanged
+
+  private void trackPositionSliderStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_trackPositionSliderStateChanged
+    final int buffersize = 10;
+    if ( (int)(player.getProgressPercent() * 1000) > trackPositionSlider.getValue() + buffersize || (int)(player.getProgressPercent() * 1000) < trackPositionSlider.getValue() - buffersize ) {
+      System.out.println( "Change song position to: "+trackPositionSlider.getValue() );
+      try {
+        player.seekToPosition( (double)trackPositionSlider.getValue() / 1000 );
+      } catch ( Exception e ) {
+      }
+    }
+  }//GEN-LAST:event_trackPositionSliderStateChanged
+
     /**
      * @param args the command line arguments
      */
@@ -804,10 +827,9 @@ public class VampPlayerGUI extends javax.swing.JFrame {
     private javax.swing.JMenuItem renamePlaylistRightClickMenuItem;
     private javax.swing.JButton rewindButton;
     private javax.swing.JPopupMenu rightClickPopupMenu;
-    private javax.swing.JProgressBar songProgressBar;
     private javax.swing.JLabel songTimeLabel;
     private javax.swing.JButton stopButton;
-    private javax.swing.JLabel titleOfCurrentTrackPlaying;
+    private javax.swing.JSlider trackPositionSlider;
     private javax.swing.JLabel volumeLabel;
     private javax.swing.JSlider volumeSlider;
     private javax.swing.JLabel welcomeUserLabel;

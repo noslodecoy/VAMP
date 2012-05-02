@@ -427,10 +427,10 @@
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" attributes="0">
+              <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="songProgressBar" alignment="0" max="32767" attributes="0"/>
+                      <Component id="trackPositionSlider" max="32767" attributes="0"/>
                       <Group type="102" alignment="0" attributes="0">
                           <Component id="rewindButton" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
@@ -446,17 +446,10 @@
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Component id="volumeSlider" max="32767" attributes="0"/>
                       </Group>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" attributes="0">
-                              <EmptySpace min="-2" pref="259" max="-2" attributes="0"/>
-                              <Component id="titleOfCurrentTrackPlaying" min="-2" pref="558" max="-2" attributes="0"/>
-                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                          </Group>
-                          <Group type="102" alignment="0" attributes="0">
-                              <Component id="currentTrackLabel" min="-2" pref="716" max="-2" attributes="0"/>
-                              <EmptySpace max="32767" attributes="0"/>
-                              <Component id="songTimeLabel" min="-2" pref="65" max="-2" attributes="0"/>
-                          </Group>
+                      <Group type="102" alignment="0" attributes="0">
+                          <Component id="currentTrackLabel" min="-2" pref="716" max="-2" attributes="0"/>
+                          <EmptySpace max="32767" attributes="0"/>
+                          <Component id="songTimeLabel" min="-2" pref="65" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="1" attributes="0">
                           <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
@@ -477,10 +470,8 @@
                       <Component id="currentTrackLabel" alignment="3" min="-2" pref="23" max="-2" attributes="0"/>
                       <Component id="songTimeLabel" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace max="32767" attributes="0"/>
-                  <Component id="titleOfCurrentTrackPlaying" min="-2" pref="18" max="-2" attributes="0"/>
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Component id="songProgressBar" min="-2" pref="21" max="-2" attributes="0"/>
+                  <EmptySpace pref="32" max="32767" attributes="0"/>
+                  <Component id="trackPositionSlider" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="1" attributes="0">
                       <Component id="rewindButton" min="-2" max="-2" attributes="0"/>
@@ -509,8 +500,6 @@
             </Property>
             <Property name="text" type="java.lang.String" value="Current Track: "/>
           </Properties>
-        </Component>
-        <Component class="javax.swing.JProgressBar" name="songProgressBar">
         </Component>
         <Component class="javax.swing.JButton" name="rewindButton">
           <Properties>
@@ -602,7 +591,16 @@
             <Property name="horizontalTextPosition" type="int" value="0"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JLabel" name="titleOfCurrentTrackPlaying">
+        <Component class="javax.swing.JSlider" name="trackPositionSlider">
+          <Properties>
+            <Property name="maximum" type="int" value="1000"/>
+            <Property name="snapToTicks" type="boolean" value="true"/>
+            <Property name="value" type="int" value="0"/>
+          </Properties>
+          <Events>
+            <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="trackPositionSliderStateChanged"/>
+            <EventHandler event="caretPositionChanged" listener="java.awt.event.InputMethodListener" parameters="java.awt.event.InputMethodEvent" handler="trackPositionSliderCaretPositionChanged"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>

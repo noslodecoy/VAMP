@@ -28,6 +28,11 @@ public class Song {
   private long mp3StartByte;
   
   private UserAccount user;
+  
+  private long numberOfFrames;
+  
+  private AudioHeader header;
+  private Tag tag;
 
   public Song() {
     isEmpty = true;
@@ -40,8 +45,8 @@ public class Song {
       isEmpty = false;
       this.file = inFile;
 
-      Tag tag = f.getTag();
-      AudioHeader header = f.getAudioHeader();
+      tag = f.getTag();
+      header = f.getAudioHeader();
       this.artist = tag.getFirst(FieldKey.ARTIST);
       this.album = tag.getFirst(FieldKey.ALBUM);
       this.title = tag.getFirst(FieldKey.TITLE);
@@ -58,6 +63,31 @@ public class Song {
     isEmpty = false;
     title = newTitle;
     artist = newArtist;
+  }
+  
+  
+  public AudioHeader getHeader() {
+    if ( header == null ) {
+      try {
+        AudioFile f = AudioFileIO.read( getFile() );
+        header = f.getAudioHeader();
+        tag = f.getTag();
+      } catch ( Exception e ) {
+      }
+    }
+    return header;
+  }
+  
+  public Tag getTag() {
+    if ( header == null ) {
+      try {
+        AudioFile f = AudioFileIO.read( getFile() );
+        header = f.getAudioHeader();
+        tag = f.getTag();
+      } catch ( Exception e ) {
+      }
+    }
+    return tag;
   }
 
   public void setId( Long id ) {

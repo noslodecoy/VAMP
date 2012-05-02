@@ -10,19 +10,20 @@ public class VampPlayer {
     private int playlistIndex;
     private boolean isPlaying;
     private Mp3Task mp3Task;
-    private Object bis;
-    private Object song;
+    
+    private double startPosition;
+    private long startTime;
 
     public VampPlayer(Playlist playlistToUse) {
         playlist = playlistToUse;
         playlistIndex = 0;
         isPlaying = false;
+        startTime = 0;
         getTask();
     }
     
     public Mp3Task getTask() {
       if ( mp3Task == null && playlist.size() > 0 ) {
-        System.out.println( "CREATE TASK! Size:"+playlist.size() );
         mp3Task = new Mp3Task( this.getCurrentSong() );
       }
       return mp3Task;
@@ -43,14 +44,15 @@ public class VampPlayer {
     public void play() {
       if ( getTask() != null && isPlaying == false ) {
         getTask().setSong( getCurrentSong() );
-        System.out.println( "Set song: "+getCurrentSong().getTitle()+": "+getCurrentSong().getFileName()  );
+        getTask().setStartTime( startTime );
         getTask().createThread();
+        System.out.println( mp3Task.getTime() );
         isPlaying = true;
       }
     }
-
     public void stop() {
-        //TODO: add code to check if thread is active.  If so, stop thread.
+        startTime = 0;
+        getTask().setStartTime( startTime );
         if (getTask() != null) {
             getTask().closeThread();
             isPlaying = false;
@@ -64,23 +66,23 @@ public class VampPlayer {
     public void skipForward() {
       boolean wasPlaying = isPlaying();
       stop();
-        if ((playlistIndex + 1) < playlist.size()) {
-            ++playlistIndex;
-        }
-        if ( wasPlaying ) {
-          play();
-        }
+      if ((playlistIndex + 1) < playlist.size()) {
+          ++playlistIndex;
+      }
+      if ( wasPlaying ) {
+        play();
+      }
     }
 
     public void skipBackward() {
       boolean wasPlaying = isPlaying();
       stop();
-        if ((playlistIndex - 1) >= 0) {
-            --playlistIndex;
-        }
-        if ( wasPlaying ) {
-          play();
-        }
+      if ((playlistIndex - 1) >= 0) {
+          --playlistIndex;
+      }
+      if ( wasPlaying ) {
+        play();
+      }
     }
 
     public Playlist getPlaylist() {
@@ -89,26 +91,51 @@ public class VampPlayer {
 
     public void pause() {
       if ( getTask() != null ) {
-        getTask().interrupt();
-        isPlaying = false;
+        long resumeTime = getTime();
+        stop();
+        startTime = resumeTime;
+        mp3Task.setStartTime( resumeTime );
       }
     }
 
     public void seekToPosition(double percent)
             throws javazoom.jl.decoder.JavaLayerException {
       if ( getTask() != null ) {
-        getTask().closeThread();
-        getCurrentSong().getFile().length();
-        long fileSize = getCurrentSong().getFile().length();
-        long bufferedPosition = (long) (percent * fileSize);
-        getTask().skipBuffered(bufferedPosition);
+        double length = getCurrentSong().getHeader().getTrackLength() * 1000;
+        long time = (long)(length * percent);
+        seekToTime( time );
       }
     }
+
+    public void seekToTime( long time )
+            throws javazoom.jl.decoder.JavaLayerException {
+      if ( getTask() != null ) {
+        boolean wasPlaying = isPlaying;
+        getTask().setStartTime( startTime );
+        startTime = time;
+        if ( wasPlaying ) {
+          getTask().closeThread();
+          getTask().setSong( getCurrentSong() );
+          getTask().setStartTime( startTime );
+          getTask().createThread();
+          isPlaying = true;
+          //play();
+        } else {
+          getTask().setStartTime( startTime );
+        }
+      }
+    }
+    
     
     public int getTime() {
       if ( getTask() != null ) {
         return mp3Task.getTime();
       }
       return 0;
+    }
+    
+    public double getProgressPercent() {
+      double percent = ( Double.valueOf( getTime() ) / Double.valueOf( getCurrentSong().getLength() * 1000 ) );
+      return percent;
     }
 }
