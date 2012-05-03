@@ -39,13 +39,12 @@ public class VampPlayerGUI extends javax.swing.JFrame {
                 }
             }
         }.start();
-
     }
 
     public void updatePlayerData() {
         if (player.getCurrentSong() != null) {
             titleOfCurrentTrackPlaying.setText(player.getCurrentSong().getArtist() + " - " + player.getCurrentSong().getTitle());
-            songTimeLabel.setText(String.valueOf(player.getTime()));
+            songTimeLabel.setText( player.getFormatedTime() );
             songPositionSlider.setValue((int) (player.getProgressPercent() * 1000));
         }
     }

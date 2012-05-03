@@ -96,7 +96,7 @@ public class Library implements VampMediaCollection {
       objectToReturn[i] = new Object[]{
         song.getTitle(),
         song.getArtist(),
-        String.valueOf( song.getLength() ),
+        String.valueOf( song.getFormatedLength() ),
         song.getAlbum(),
         String.valueOf( song.getTrack() ),
         String.valueOf( i )
