@@ -13,7 +13,6 @@ public class Playlist implements VampMediaCollection {
   
   LinkedList<Song> playlist;
   private String name;
-  private SessionFactory sf;
   private Session session;
   private UserAccount user;
   private long id;
@@ -57,7 +56,8 @@ public class Playlist implements VampMediaCollection {
   }
   
   public void getSongs() {
-    Query query = DataAccess.getSession().createQuery( "FROM PlaylistSong WHERE playlist_id = :playlistId" );
+    session = DataAccess.getSessionFactory().openSession();
+    Query query = session.createQuery( "FROM PlaylistSong WHERE playlist_id = :playlistId" );
     query.setParameter( "playlistId", this.getId() );
     pSongs = query.list();
   }
