@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated May 2, 2012 10:25:42 AM by Hibernate Tools 3.2.1.GA -->
+<hibernate-mapping>
+  <class catalog="VAMP" name="com.player.bll.Playlist" table="Playlist">
+    <id name="id" column="playlist_id">
+      <generator class="native"/>
+    </id>
+    <property name="name" type="string">
+      <column length="45" name="name"/>
+    </property>
+    <many-to-one name="user" class="com.player.bll.UserAccount" column="user_id" cascade="none" not-null="true" />
+  </class>
+</hibernate-mapping>

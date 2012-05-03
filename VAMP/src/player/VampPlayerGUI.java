@@ -3,8 +3,8 @@ package player;
 import com.player.bll.*;
 import java.awt.event.MouseEvent;
 import java.io.File;
+import java.util.ArrayList;
 import javax.swing.JFileChooser;
-import javax.swing.JSlider;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
@@ -12,14 +12,15 @@ public class VampPlayerGUI extends javax.swing.JFrame {
 
     UserAccount user;
     Library library;
-    Playlist queue;
+    Queue queue;
     VampPlayer player;
+    ArrayList<Playlist> playlists;
 
     public VampPlayerGUI() {
         user = new UserAccount();
         initComponents();
         library = new Library();
-        queue = new Playlist("Now Playing");
+        queue = new Queue();
         player = new VampPlayer(queue);
 
         new Thread() {
@@ -53,9 +54,11 @@ public class VampPlayerGUI extends javax.swing.JFrame {
         setUserAccount(user);
         welcomeUserLabel.setText("Welcome, " + user.getUsername() + "!");
         library = new Library(user);
+        playlists = (ArrayList)user.getPlaylists();
 
         setVisible(true);
         updateLibraryUI();
+        updatePlaylistsUI();
     }
 
     public void updateLibraryUI() {
@@ -72,6 +75,20 @@ public class VampPlayerGUI extends javax.swing.JFrame {
         model.setDataVector(queue.getDataVector(), new String[]{
                     "Title", "Artist", "Track Length", "Album", "Track Number"
                 });
+    }
+    
+    public void updatePlaylistsUI() {
+        DefaultTableModel model = (DefaultTableModel) playlistNamesTable.getModel();
+        model.setDataVector( user.getPlaylistsVector( playlists ), new String[]{
+          "Playlists"
+        });
+    }
+    
+    public void updatePlaylistSongsUI( Playlist p ) {
+        DefaultTableModel model = (DefaultTableModel) playlistSongsTable.getModel();
+        model.setDataVector( p.getDataVector(), new String[]{
+          "Title", "Artist", "Track Length", "Album", "Track Number"
+        });
     }
 
     public void addSongToQueueUI(Song song) {
@@ -183,6 +200,11 @@ public class VampPlayerGUI extends javax.swing.JFrame {
         playlistNamesRightClickPopupMenu.add(jSeparator3);
 
         addPlaylistToQueueRightClickMenuItem.setText("Queue Playlist");
+        addPlaylistToQueueRightClickMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addPlaylistToQueueRightClickMenuItemActionPerformed(evt);
+            }
+        });
         playlistNamesRightClickPopupMenu.add(addPlaylistToQueueRightClickMenuItem);
         playlistNamesRightClickPopupMenu.add(jSeparator4);
 
@@ -406,6 +428,9 @@ public class VampPlayerGUI extends javax.swing.JFrame {
             }
         ));
         playlistNamesTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                playlistNamesTableMouseClicked(evt);
+            }
             public void mouseReleased(java.awt.event.MouseEvent evt) {
                 playlistNamesTableMouseReleased(evt);
             }
@@ -585,10 +610,10 @@ public class VampPlayerGUI extends javax.swing.JFrame {
             }
         });
         songPositionSlider.addInputMethodListener(new java.awt.event.InputMethodListener() {
-            public void inputMethodTextChanged(java.awt.event.InputMethodEvent evt) {
-            }
             public void caretPositionChanged(java.awt.event.InputMethodEvent evt) {
                 songPositionSliderCaretPositionChanged(evt);
+            }
+            public void inputMethodTextChanged(java.awt.event.InputMethodEvent evt) {
             }
         });
 
@@ -818,6 +843,17 @@ public class VampPlayerGUI extends javax.swing.JFrame {
     private void deleteFromQueueRightClickMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteFromQueueRightClickMenuItemActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_deleteFromQueueRightClickMenuItemActionPerformed
+
+  private void playlistNamesTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_playlistNamesTableMouseClicked
+    if ( playlistNamesTable.getSelectedRow() >= 0 ) {
+      updatePlaylistSongsUI( playlists.get( playlistNamesTable.getSelectedRow() ) );
+    }
+  }//GEN-LAST:event_playlistNamesTableMouseClicked
+
+  private void addPlaylistToQueueRightClickMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addPlaylistToQueueRightClickMenuItemActionPerformed
+    queue.clone( playlists.get( playlistNamesTable.getSelectedRow() ) );
+    this.updateQueueUI();
+  }//GEN-LAST:event_addPlaylistToQueueRightClickMenuItemActionPerformed
 
     /**
      * @param args the command line arguments

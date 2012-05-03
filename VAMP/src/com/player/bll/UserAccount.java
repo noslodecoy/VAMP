@@ -1,5 +1,9 @@
 package com.player.bll;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -47,14 +51,18 @@ public class UserAccount {
     tx.commit();
   }
 
-  
-  public static boolean userExists( String username ) {
+    public static boolean userExists( String username ) {
     SessionFactory sessionFactory = new Configuration().configure( "database/hibernate.cfg.xml" ).buildSessionFactory();
     Session session = sessionFactory.openSession();
     Query query = session.createQuery( "FROM UserAccount WHERE username = :username");
     query.setParameter( "username", username );
-    return ( query.list().size() > 0 );
-  }
+    if (username != null) {
+            return ( query.list().size() > 0 );
+        }
+    else {
+            return true;
+        }
+    }
   
   public boolean validate() {
     return ( this.username != null && this.password != null );
@@ -95,5 +103,52 @@ public class UserAccount {
   public void setEmail( String email ) {
     this.email = email;
   }
+  
+  public List<Playlist> getPlaylists() {
+    SessionFactory sessionFactory = new Configuration().configure( "database/hibernate.cfg.xml" ).buildSessionFactory();
+    Session songsSession = sessionFactory.openSession();
+    Query query = songsSession.createQuery( "FROM Playlist WHERE user_id = :user" );
+    query.setParameter( "user", this.getId() );
+    return (List)query.list();
+  }
+  
+  public Object[][] getPlaylistsVector( ArrayList<Playlist> playlists ) {
+    int arraySize = playlists.size();
+    Object[][] objectToReturn = new Object[arraySize][1];
+    for ( int i = 0; i < arraySize; i++ ) {
+      objectToReturn[i] = new Object[]{
+        playlists.get(i).getName()
+      };
+    }
+    return objectToReturn;
+  }
+  
+  
+
+  
+  public boolean isValidPassword(String pwd) {
+    String passReq="((?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{6,16})";  
+    CharSequence input = pwd;  
+    Pattern pattern = Pattern.compile(passReq);  
+    Matcher matcher = pattern.matcher(input);  
+    return matcher.matches();  
+    }
+    
+    public boolean isValidUsername(String username) {
+    String userReq="^[a-zA-Z][a-zA-Z0-9]{2,15}$";  
+    CharSequence input = username;  
+    Pattern pattern = Pattern.compile(userReq,Pattern.CASE_INSENSITIVE);  
+    Matcher matcher = pattern.matcher(input);  
+    return matcher.matches();  
+    }
+    
+    public boolean isValidEmail(String emailAddress)
+    {  
+    String emailReq="^[\\w\\-]([\\.\\w])+[\\w]+@([\\w\\-]+\\.)+[A-Z]{2,4}$";  
+    CharSequence input = emailAddress;  
+    Pattern pattern = Pattern.compile(emailReq,Pattern.CASE_INSENSITIVE);  
+    Matcher matcher = pattern.matcher(input);  
+    return matcher.matches();  
+    }
   
 }

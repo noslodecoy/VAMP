@@ -1,39 +1,81 @@
 package com.player.bll;
 
+// Version 2
+
 import java.util.*;
+import org.hibernate.Query;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+import org.hibernate.cfg.Configuration;
 
 public class Playlist implements VampMediaCollection {
   
   LinkedList<Song> playlist;
   private String name;
+  private SessionFactory sf;
+  private Session session;
+  private UserAccount user;
+  private long id;
+  private List<PlaylistSong> pSongs;
 
-  public Playlist( int userId, int playlistId ) {
-    playlist = new LinkedList();
-    // TODO: add code to load song information from database record.
-    // It should look something like the following (the session may want to be
-    // in the UserAccount class and passed to this class.
-    //
-    // SessionFactory sessionFactory = new Configuration().configure( "database/songs.cfg.xml" ).buildSessionFactory();
-    // Session newSession = sessionFactory.openSession();
-    // Transaction newTransaction = newSession.beginTransaction();
-    // library = (TreeSet)newSession.createQuery( "sql query here" ).list();
+  public Playlist() {
   }
-  
-  public Playlist( String nameToUse ) {
+    
+  public Playlist( UserAccount user, String nameToUse ) {
+    this.user = user;
     playlist = new LinkedList();
     name = nameToUse;
-  }
-
-  public void setName( String newName ) {
-    name = newName;
+    sf = new Configuration().configure( "database/hibernate.cfg.xml" ).buildSessionFactory();
+    session = sf.openSession();
+    Transaction tx = session.beginTransaction();
+    session.save( this );
+    tx.commit();
   }
   
   public String getName() {
     return name;
   }
   
+  public void setName( String name ) {
+    this.name = name;
+  }
+  
+  public void setUser( UserAccount user ) {
+    this.user = user;
+  }
+  
+  public UserAccount getUser() {
+    return user;
+  }
+  
+  public void setId( long id ) {
+    this.id = id;
+    getSongs();
+  }
+  
+  public long getId() {
+    return id;
+  }
+  
+  public void getSongs() {
+    sf = new Configuration().configure( "database/hibernate.cfg.xml" ).buildSessionFactory();
+    Session songsSession = sf.openSession();
+    Query query = songsSession.createQuery( "FROM PlaylistSong WHERE playlist_id = :playlistId" );
+    query.setParameter( "playlistId", this.getId() );
+    pSongs = query.list();
+  }
+  
   public Song get( int i ) {
-    return playlist.get( i );
+    return pSongs.get( i ).getSong();
+  }
+  
+  public ArrayList<Song> getAll() {
+    ArrayList<Song> allSongs = new ArrayList();
+    for ( PlaylistSong pS : pSongs ){
+      allSongs.add( pS.getSong() );
+    }
+    return allSongs;
   }
   
   public int size() {
@@ -41,30 +83,43 @@ public class Playlist implements VampMediaCollection {
   }
   
   public void add( Song songToAdd ) {
-    playlist.add( songToAdd );
+    PlaylistSong newPSong = new PlaylistSong( this, songToAdd );
+    Transaction tx = session.beginTransaction();
+    session.save( newPSong );
+    tx.commit();
+    pSongs.add( newPSong );
   }
 
   public void add( int i, Song songToAdd ) {
     playlist.add( i, songToAdd );
   }
   
-  public void addAll( List listToAdd ) {
-    playlist.addAll( listToAdd );
+  public void addAll( List<Song> listToAdd ) {
+    for( Song s : listToAdd ) {
+      add( s );
+    }
   }
   
   public boolean contains( Song songToCheck ) {
     return playlist.contains( songToCheck );
   }
   
-  public void remove( Song songToRemove ) {
-    playlist.remove( songToRemove );
+  public void remove( PlaylistSong s ) {
+    pSongs.remove( s );
+    session.delete( s );
+    Transaction tx = session.beginTransaction();
+    tx.commit();
+  }
+
+  public void remove( int i ) {
+    remove( pSongs.get( i ) );
   }
 
     public Object[][] getDataVector() {
-    int arraySize = playlist.size();
+    int arraySize = pSongs.size();
     Object[][] objectToReturn = new Object[arraySize][5];
     for ( int i = 0; i < arraySize; i++ ) {
-      Song song = playlist.get( i );
+      Song song = pSongs.get( i ).getSong();
       objectToReturn[i] = new Object[]{
         song.getTitle(),
         song.getArtist(),

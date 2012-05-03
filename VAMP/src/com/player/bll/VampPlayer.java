@@ -6,14 +6,14 @@ import javazoom.jl.player.Player;
 
 public class VampPlayer {
 
-    private Playlist playlist;
+    private Queue playlist;
     private int playlistIndex;
     private boolean isPlaying;
     private Mp3Task mp3Task;
     
     private long startTime;
 
-    public VampPlayer(Playlist playlistToUse) {
+    public VampPlayer(Queue playlistToUse) {
         playlist = playlistToUse;
         playlistIndex = 0;
         isPlaying = false;
@@ -106,7 +106,7 @@ public class VampPlayer {
       }
     }
 
-    public Playlist getPlaylist() {
+    public Queue getPlaylist() {
         return playlist;
     }
 
