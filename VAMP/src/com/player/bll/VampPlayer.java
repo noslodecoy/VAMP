@@ -1,8 +1,8 @@
 package com.player.bll;
 
-//import java.io.BufferedInputStream;
-//import java.io.FileInputStream;
-//import javazoom.jl.player.Player;
+import java.io.BufferedInputStream;
+import java.io.FileInputStream;
+import javazoom.jl.player.Player;
 
 public class VampPlayer {
 
@@ -15,7 +15,6 @@ public class VampPlayer {
 
     public VampPlayer(Queue playlistToUse) {
         playlist = playlistToUse;
-        pSongs = ps;
         playlistIndex = 0;
         isPlaying = false;
         startTime = 0;
@@ -30,8 +29,8 @@ public class VampPlayer {
     }
 
     public Song getCurrentSong() {
-      if ( pSongs.size() > 0 && getPosition() < pSongs.size() && getPosition() >= 0 ) {
-        return pSongs.get(playlistIndex);
+      if ( playlist.size() > 0 && getPosition() < playlist.size() && getPosition() >= 0 ) {
+        return playlist.get( playlistIndex );
       }
       return null;
     }
@@ -147,9 +146,7 @@ public class VampPlayer {
         }
       }
     }
-    public Song get(int i){
-        return pSongs.get(i);
-    }
+    
     
     public int getTime() {
       if ( getTask() != null ) {

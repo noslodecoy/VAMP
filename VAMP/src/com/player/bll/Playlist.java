@@ -9,8 +9,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 
-public class Playlist implements java.io.Serializable {
-    private static final long serialVersionUID = 1L;
+public class Playlist implements VampMediaCollection {
   
   LinkedList<Song> playlist;
   private String name;
@@ -112,70 +111,6 @@ public class Playlist implements java.io.Serializable {
     remove( pSongs.get( i ) );
   }
 
-    public Playlist get(int i) {
-        return playlists.get(i);
-    }
-
-    public boolean contains(Playlist p) {
-        return playlists.contains(p);
-    }
-
-    public int size() {
-        return playlists.size();
-    }
-
-//    public void addAll(Collection<Playlist> collectionToAdd) {
-//        for (Playlist p : collectionToAdd) {
-//            add(p);
-//        }
-//    }
-//
-//    public void addAll(List<Playlist> listToAdd) {
-//        for (Playlist p : listToAdd) {
-//            add(p);
-//        }
-//    }
-    
-    public void addAllPlaylistSongs(List<PlaylistSongs> listToAdd) {
-        for (PlaylistSongs p : listToAdd) {
-            pSongs.add(p);
-        }
-    }
-    public void addAllPlaylistSongs(Collection<PlaylistSongs> collectionToAdd){
-        for (PlaylistSongs p : collectionToAdd) {
-            pSongs.add(p);
-        }
-    }
-    
-
-    public Collection<Playlist> getAll() {
-        return Collections.unmodifiableCollection(playlists);
-    }
-
-    public Playlist getPlaylistId() {
-        return this.playlistId;
-    }
-
-    public void setPlaylistId(Playlist playlistId) {
-        this.playlistId = playlistId;
-    }
-
-    public String getName() {
-        return this.name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public UserAccount getUserId() {
-        return this.userId;
-    }
-
-    public void setUserId(UserAccount userId) {
-        this.userId = userId;
-    }
-    
     public Object[][] getDataVector() {
     int arraySize = pSongs.size();
     Object[][] objectToReturn = new Object[arraySize][5];
@@ -186,13 +121,9 @@ public class Playlist implements java.io.Serializable {
         song.getArtist(),
         String.valueOf( song.getFormatedLength() ),
         song.getAlbum(),
-        String.valueOf( song.getTrack() )
+        String.valueOf( song.getTrackNumber() )
       };
     }
     return objectToReturn;
-    }
-
-    
-
-    
+  }
 }

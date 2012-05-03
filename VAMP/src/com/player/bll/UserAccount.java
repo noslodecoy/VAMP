@@ -11,7 +11,7 @@ import org.hibernate.cfg.Configuration;
 
 public class UserAccount {
   
-  public int userId;
+  public long id;
   public String username;
   public String password;
   public String password2; 
@@ -29,7 +29,7 @@ public class UserAccount {
             .setParameter( "password", password )
             .uniqueResult();
     if (returnedUser != null ) {
-      this.userId = returnedUser.getUserId();
+      this.id = returnedUser.getId();
       this.username = returnedUser.getUsername();
       this.password = returnedUser.getPassword();
       this.email = returnedUser.getEmail();
@@ -93,12 +93,12 @@ public class UserAccount {
       return (cpwd.equals(pwd)); 
   }
   
-  public int getUserId() {
-    return userId;
+  public long getId() {
+    return id;
   }
   
-  public void setUserId( int id ) {
-    this.userId = id;
+  public void setId( long id ) {
+    this.id = id;
   }
   
   public String getUsername() {

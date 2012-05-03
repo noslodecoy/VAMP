@@ -48,7 +48,7 @@ public class Queue implements VampMediaCollection {
         song.getArtist(),
         String.valueOf( song.getFormatedLength() ),
         song.getAlbum(),
-        String.valueOf( song.getTrack() )
+        String.valueOf( song.getTrackNumber() )
       };
     }
     return objectToReturn;
