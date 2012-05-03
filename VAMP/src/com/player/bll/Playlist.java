@@ -26,10 +26,8 @@ public class Playlist implements VampMediaCollection {
     this.user = user;
     playlist = new LinkedList();
     name = nameToUse;
-    sf = new Configuration().configure( "database/hibernate.cfg.xml" ).buildSessionFactory();
-    session = sf.openSession();
-    Transaction tx = session.beginTransaction();
-    session.save( this );
+    Transaction tx = DataAccess.getSession().beginTransaction();
+    DataAccess.getSession().save( this );
     tx.commit();
   }
   
@@ -53,15 +51,13 @@ public class Playlist implements VampMediaCollection {
     this.id = id;
     getSongs();
   }
-  
+
   public long getId() {
     return id;
   }
   
   public void getSongs() {
-    sf = new Configuration().configure( "database/hibernate.cfg.xml" ).buildSessionFactory();
-    Session songsSession = sf.openSession();
-    Query query = songsSession.createQuery( "FROM PlaylistSong WHERE playlist_id = :playlistId" );
+    Query query = DataAccess.getSession().createQuery( "FROM PlaylistSong WHERE playlist_id = :playlistId" );
     query.setParameter( "playlistId", this.getId() );
     pSongs = query.list();
   }
@@ -84,8 +80,8 @@ public class Playlist implements VampMediaCollection {
   
   public void add( Song songToAdd ) {
     PlaylistSong newPSong = new PlaylistSong( this, songToAdd );
-    Transaction tx = session.beginTransaction();
-    session.save( newPSong );
+    Transaction tx = DataAccess.getSession().beginTransaction();
+    DataAccess.getSession().save( newPSong );
     tx.commit();
     pSongs.add( newPSong );
   }
@@ -106,8 +102,8 @@ public class Playlist implements VampMediaCollection {
   
   public void remove( PlaylistSong s ) {
     pSongs.remove( s );
-    session.delete( s );
-    Transaction tx = session.beginTransaction();
+    DataAccess.getSession().delete( s );
+    Transaction tx = DataAccess.getSession().beginTransaction();
     tx.commit();
   }
 
