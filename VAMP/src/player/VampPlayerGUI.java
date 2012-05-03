@@ -892,6 +892,8 @@ public class VampPlayerGUI extends javax.swing.JFrame {
 
     private void deleteFromQueueRightClickMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteFromQueueRightClickMenuItemActionPerformed
         // TODO add your handling code here:
+        queue.remove(queue.get(playerQueueTable.getSelectedRow()));
+        updateQueueUI(); 
     }//GEN-LAST:event_deleteFromQueueRightClickMenuItemActionPerformed
 
   private void playlistNamesTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_playlistNamesTableMouseClicked
