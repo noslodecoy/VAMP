@@ -154,7 +154,6 @@ public class CreateUserAccountGUI extends javax.swing.JFrame {
 
     private void createNewAccountButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createNewAccountButtonActionPerformed
         
-        // TODO Validate User Name, Password, and Email Address         
         String userName = userNameTextField.getText();
         String password = String.valueOf( jPasswordField1.getPassword() );
         String password2 = String.valueOf( jPasswordField2.getPassword() );

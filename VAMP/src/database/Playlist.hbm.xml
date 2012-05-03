@@ -3,15 +3,12 @@
 <!-- Generated May 2, 2012 10:25:42 AM by Hibernate Tools 3.2.1.GA -->
 <hibernate-mapping>
   <class catalog="VAMP" name="com.player.bll.Playlist" table="Playlist">
-    <id name="playlistId" type="java.lang.Integer">
-      <column name="playlist_id"/>
-      <generator class="identity"/>
+    <id name="id" column="playlist_id">
+      <generator class="native"/>
     </id>
     <property name="name" type="string">
       <column length="45" name="name"/>
     </property>
-    <many-to-one cascade="none" class="com.player.bll.UserAccount" name="userId" not-null="true">
-      <column name="user_id"/>
-    </many-to-one>
+    <many-to-one name="user" class="com.player.bll.UserAccount" column="user_id" cascade="none" not-null="true" />
   </class>
 </hibernate-mapping>

@@ -132,8 +132,6 @@ public class VAMPLoginScreen extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void loginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginButtonActionPerformed
-        // TODO add your handling code here:
-
         String userName = userNameTextField.getText();
         String password = String.valueOf( passwordField.getPassword() );
         System.out.println( "username: " + userName + ", password: " + password );

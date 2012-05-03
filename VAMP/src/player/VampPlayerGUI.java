@@ -7,31 +7,25 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.io.File;
-import javax.swing.JButton;
-import javax.swing.JFileChooser;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JSlider;
-import javax.swing.JTable;
-import javax.swing.JTextField;
+import java.util.ArrayList;
+import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
 public class VampPlayerGUI extends javax.swing.JFrame {
 
     UserAccount user;
     Library library;
-    PlaylistSongs ps;
-    Playlist queue;
+    Queue queue;
     VampPlayer player;
+    ArrayList<Playlist> playlists;
+    Playlist selectedPlaylist;
 
     public VampPlayerGUI() {
         user = new UserAccount();
         initComponents();
         library = new Library();
-        
-        queue = new Playlist(user);
-        ps = new PlaylistSongs();
-        player = new VampPlayer(queue,ps);
+        queue = new Queue();
+        player = new VampPlayer(queue);
 
         new Thread() {
 
@@ -45,13 +39,12 @@ public class VampPlayerGUI extends javax.swing.JFrame {
                 }
             }
         }.start();
-
     }
 
     public void updatePlayerData() {
         if (player.getCurrentSong() != null) {
             titleOfCurrentTrackPlaying.setText(player.getCurrentSong().getArtist() + " - " + player.getCurrentSong().getTitle());
-            songTimeLabel.setText(String.valueOf(player.getTime()));
+            songTimeLabel.setText( player.getFormatedTime() );
             songPositionSlider.setValue((int) (player.getProgressPercent() * 1000));
         }
     }
@@ -64,9 +57,11 @@ public class VampPlayerGUI extends javax.swing.JFrame {
         setUserAccount(user);
         welcomeUserLabel.setText("Welcome, " + user.getUsername() + "!");
         library = new Library(user);
+        playlists = (ArrayList)user.getPlaylists();
 
         setVisible(true);
         updateLibraryUI();
+        updatePlaylistsUI();
     }
 
     public void updateLibraryUI() {
@@ -89,6 +84,20 @@ public class VampPlayerGUI extends javax.swing.JFrame {
         model.setDataVector(queue.getDataVector(), new String[]{
                     "Title", "Artist", "Track Length", "Album", "Track Number"
                 });
+    }
+    
+    public void updatePlaylistsUI() {
+        DefaultTableModel model = (DefaultTableModel) playlistNamesTable.getModel();
+        model.setDataVector( user.getPlaylistsVector( playlists ), new String[]{
+          "Playlists"
+        });
+    }
+    
+    public void updatePlaylistSongsUI( Playlist p ) {
+        DefaultTableModel model = (DefaultTableModel) playlistSongsTable.getModel();
+        model.setDataVector( p.getDataVector(), new String[]{
+          "Title", "Artist", "Track Length", "Album", "Track Number"
+        });
     }
     
     public void createPlaylist() {
@@ -153,7 +162,44 @@ public class VampPlayerGUI extends javax.swing.JFrame {
         library.remove(s);
         updateLibraryUI();
     }
+    
+    public void createPlaylist() {
+        final JFrame frame = new JFrame("Create Playlist");
+        JLabel label = new JLabel("Enter Playlist Name");
+        final JTextField jText = new JTextField();
+        final JButton ok = new JButton("Enter");
+        final JButton cancel = new JButton("Cancel");
 
+        frame.setSize(400, 350);
+        frame.setLocation(200, 200);
+        Container c = frame.getContentPane();
+        c.setLayout(new GridLayout(2, 2));
+        c.add(label);
+        c.add(jText);
+        c.add(ok);
+        c.add(cancel);
+            
+        frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+        frame.pack();
+        frame.setVisible(true);
+        
+        ok.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                final Playlist p = new Playlist( user, jText.getText() );
+                frame.setVisible(false);
+                playlists = (ArrayList)user.getPlaylists();
+                updatePlaylistsUI();
+            }
+        });
+        cancel.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                frame.dispose();
+            }
+        });
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -232,6 +278,11 @@ public class VampPlayerGUI extends javax.swing.JFrame {
         playlistSongsRightClickPopupMenu.add(addSongToPlayerQueueRightClickMenuItem);
 
         newPlaylistRightClickMenuItem.setText("New Playlist");
+        newPlaylistRightClickMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                newPlaylistRightClickMenuItemActionPerformed(evt);
+            }
+        });
         playlistNamesRightClickPopupMenu.add(newPlaylistRightClickMenuItem);
 
         deletePlaylistRightClickMenuItem.setText("Delete Playlist");
@@ -240,6 +291,11 @@ public class VampPlayerGUI extends javax.swing.JFrame {
         playlistNamesRightClickPopupMenu.add(jSeparator3);
 
         addPlaylistToQueueRightClickMenuItem.setText("Queue Playlist");
+        addPlaylistToQueueRightClickMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addPlaylistToQueueRightClickMenuItemActionPerformed(evt);
+            }
+        });
         playlistNamesRightClickPopupMenu.add(addPlaylistToQueueRightClickMenuItem);
         playlistNamesRightClickPopupMenu.add(jSeparator4);
 
@@ -248,6 +304,11 @@ public class VampPlayerGUI extends javax.swing.JFrame {
         playlistNamesRightClickPopupMenu.add(renamePlaylistRightClickMenuItem);
 
         addSongToPlaylistRightClickMenuItem.setText("Add to Playlist");
+        addSongToPlaylistRightClickMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addSongToPlaylistRightClickMenuItemActionPerformed(evt);
+            }
+        });
         libraryRightClickPopupMenu.add(addSongToPlaylistRightClickMenuItem);
         libraryRightClickPopupMenu.add(jSeparator5);
 
@@ -463,6 +524,9 @@ public class VampPlayerGUI extends javax.swing.JFrame {
             }
         ));
         playlistNamesTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                playlistNamesTableMouseClicked(evt);
+            }
             public void mouseReleased(java.awt.event.MouseEvent evt) {
                 playlistNamesTableMouseReleased(evt);
             }
@@ -642,10 +706,10 @@ public class VampPlayerGUI extends javax.swing.JFrame {
             }
         });
         songPositionSlider.addInputMethodListener(new java.awt.event.InputMethodListener() {
-            public void inputMethodTextChanged(java.awt.event.InputMethodEvent evt) {
-            }
             public void caretPositionChanged(java.awt.event.InputMethodEvent evt) {
                 songPositionSliderCaretPositionChanged(evt);
+            }
+            public void inputMethodTextChanged(java.awt.event.InputMethodEvent evt) {
             }
         });
 
@@ -875,6 +939,35 @@ public class VampPlayerGUI extends javax.swing.JFrame {
     private void deleteFromQueueRightClickMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteFromQueueRightClickMenuItemActionPerformed
         ps.remove(ps.get(playerQueueTable.getSelectedRow()));
     }//GEN-LAST:event_deleteFromQueueRightClickMenuItemActionPerformed
+
+  private void playlistNamesTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_playlistNamesTableMouseClicked
+    if ( playlistNamesTable.getSelectedRow() >= 0 ) {
+      selectedPlaylist = playlists.get( playlistNamesTable.getSelectedRow() );
+      updatePlaylistSongsUI( selectedPlaylist );
+    }
+  }//GEN-LAST:event_playlistNamesTableMouseClicked
+
+  private void addPlaylistToQueueRightClickMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addPlaylistToQueueRightClickMenuItemActionPerformed
+    queue.clone( playlists.get( playlistNamesTable.getSelectedRow() ) );
+    this.updateQueueUI();
+  }//GEN-LAST:event_addPlaylistToQueueRightClickMenuItemActionPerformed
+
+  private void newPlaylistRightClickMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newPlaylistRightClickMenuItemActionPerformed
+    createPlaylist();
+  }//GEN-LAST:event_newPlaylistRightClickMenuItemActionPerformed
+
+  private void addSongToPlaylistRightClickMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addSongToPlaylistRightClickMenuItemActionPerformed
+    if ( selectedPlaylist != null ) {
+      System.out.println( "Addingt song to playlist" );
+      selectedPlaylist.add( library.get(libraryTable.getSelectedRow()) );
+      playlists = (ArrayList) user.getPlaylists();
+      updatePlaylistsUI();
+      updatePlaylistSongsUI(selectedPlaylist);
+    } else {
+      JOptionPane.showMessageDialog(this, "Please Select a Playlist First.",
+      "No Playlist Selected", JOptionPane.ERROR_MESSAGE);
+    }
+  }//GEN-LAST:event_addSongToPlaylistRightClickMenuItemActionPerformed
 
     /**
      * @param args the command line arguments

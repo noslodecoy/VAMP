@@ -38,6 +38,9 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="New Playlist"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="newPlaylistRightClickMenuItemActionPerformed"/>
+          </Events>
         </MenuItem>
         <MenuItem class="javax.swing.JMenuItem" name="deletePlaylistRightClickMenuItem">
           <Properties>
@@ -51,6 +54,9 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Queue Playlist"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="addPlaylistToQueueRightClickMenuItemActionPerformed"/>
+          </Events>
         </MenuItem>
         <Component class="javax.swing.JPopupMenu$Separator" name="jSeparator4">
         </Component>
@@ -74,6 +80,9 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Add to Playlist"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="addSongToPlaylistRightClickMenuItemActionPerformed"/>
+          </Events>
         </MenuItem>
         <Component class="javax.swing.JPopupMenu$Separator" name="jSeparator5">
         </Component>
@@ -389,6 +398,7 @@
                     </Property>
                   </Properties>
                   <Events>
+                    <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="playlistNamesTableMouseClicked"/>
                     <EventHandler event="mouseReleased" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="playlistNamesTableMouseReleased"/>
                   </Events>
                 </Component>

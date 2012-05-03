@@ -6,15 +6,14 @@ package com.player.bll;
 
 public class VampPlayer {
 
-    private PlaylistSongs pSongs;
-    private Playlist playlist;
+    private Queue playlist;
     private int playlistIndex;
     private boolean isPlaying;
     private Mp3Task mp3Task;
     
     private long startTime;
 
-    public VampPlayer(Playlist playlistToUse, PlaylistSongs ps) {
+    public VampPlayer(Queue playlistToUse) {
         playlist = playlistToUse;
         pSongs = ps;
         playlistIndex = 0;
@@ -108,7 +107,7 @@ public class VampPlayer {
       }
     }
 
-    public Playlist getPlaylist() {
+    public Queue getPlaylist() {
         return playlist;
     }
 
@@ -157,6 +156,26 @@ public class VampPlayer {
         return mp3Task.getTime();
       }
       return 0;
+    }
+    
+    public String getFormatedTime() {
+      long timeMillis = getTime(); 
+      long time = timeMillis / 1000; 
+      String seconds = Integer.toString((int)(time % 60)); 
+      String minutes = Integer.toString((int)((time % 3600) / 60)); 
+      String hours = Integer.toString((int)(time / 3600)); 
+      for (int i = 0; i < 2; i++) { 
+        if (seconds.length() < 2) { 
+          seconds = "0" + seconds; 
+        } 
+        if (minutes.length() < 2) { 
+          minutes = "0" + minutes; 
+        } 
+        if (hours.length() < 2) { 
+          hours = "0" + hours; 
+        } 
+      }
+      return hours+":"+minutes+":"+seconds;
     }
     
     public double getProgressPercent() {

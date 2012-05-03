@@ -1,5 +1,7 @@
 package com.player.bll;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.*;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -20,9 +22,7 @@ public class UserAccount {
 
   public UserAccount( String username, String password ) {
     System.out.println( "USERNAME: "+username+", PASSWORD: "+password );
-    SessionFactory sessionFactory = new Configuration().configure( "database/hibernate.cfg.xml" ).buildSessionFactory();
-    Session session = sessionFactory.openSession();
-    Query query = session.createQuery( "FROM UserAccount WHERE username = :username AND password = :password");
+    Query query = DataAccess.getSession().createQuery( "FROM UserAccount WHERE username = :username AND password = :password");
     
     UserAccount returnedUser = (UserAccount)query
             .setParameter( "username", username )
@@ -41,18 +41,14 @@ public class UserAccount {
     this.password = password;
     this.password2 = password2;
     this.email = email;
-    SessionFactory sessionFactory = new Configuration().configure( "database/hibernate.cfg.xml" ).buildSessionFactory();
-    Session session = sessionFactory.openSession();
-    Transaction tx = session.beginTransaction();
-    session.save( this );
+    Transaction tx = DataAccess.getSession().beginTransaction();
+    DataAccess.getSession().save( this );
     tx.commit();
   }
 
   
   public static boolean userExists( String username ) {
-    SessionFactory sessionFactory = new Configuration().configure( "database/hibernate.cfg.xml" ).buildSessionFactory();
-    Session session = sessionFactory.openSession();
-    Query query = session.createQuery( "FROM UserAccount WHERE username = :username");
+    Query query = DataAccess.getSession().createQuery( "FROM UserAccount WHERE username = :username");
     query.setParameter( "username", username );
     if (username != null) {
             return ( query.list().size() > 0 );
@@ -128,4 +124,25 @@ public class UserAccount {
   public void setEmail( String email ) {
     this.email = email;
   }
+
+
+  
+  public List<Playlist> getPlaylists() {
+    Query query = DataAccess.getSession().createQuery( "FROM Playlist WHERE user_id = :user" );
+    query.setParameter( "user", this.getId() );
+    return (List)query.list();
+  }
+  
+  public Object[][] getPlaylistsVector( ArrayList<Playlist> playlists ) {
+    int arraySize = playlists.size();
+    Object[][] objectToReturn = new Object[arraySize][1];
+    for ( int i = 0; i < arraySize; i++ ) {
+      objectToReturn[i] = new Object[]{
+        playlists.get(i).getName()
+      };
+    }
+    return objectToReturn;
+  }
+  
+
 }

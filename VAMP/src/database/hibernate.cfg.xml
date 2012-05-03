@@ -8,8 +8,8 @@
     <property name="hibernate.connection.username">awesomesauce</property>
     <property name="hibernate.connection.password">TeamAwesomeSauce2012</property>
     <mapping resource="database/useraccount.hbm.xml"/>
-    <mapping class="" file="" jar="" package="" resource="database/MusicLibrary.hbm.xml"/>
-    <mapping resource="database/PlaylistSongs.hbm.xml"/>
+    <mapping resource="database/library.hbm.xml"/>
     <mapping resource="database/Playlist.hbm.xml"/>
+    <mapping resource="database/PlaylistSongs.hbm.xml"/>
   </session-factory>
 </hibernate-configuration>

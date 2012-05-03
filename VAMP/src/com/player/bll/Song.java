@@ -132,6 +132,25 @@ public class Song {
   public int getTrackLength() {
     return songLength;
   }
+  
+  public String getFormatedLength() {
+    long time = getLength(); 
+    String seconds = Integer.toString((int)(time % 60)); 
+    String minutes = Integer.toString((int)((time % 3600) / 60)); 
+    String hours = Integer.toString((int)(time / 3600)); 
+    for (int i = 0; i < 2; i++) { 
+      if (seconds.length() < 2) { 
+        seconds = "0" + seconds; 
+      } 
+      if (minutes.length() < 2) { 
+        minutes = "0" + minutes; 
+      } 
+      if (hours.length() < 2) { 
+        hours = "0" + hours; 
+      } 
+    }
+    return hours+":"+minutes+":"+seconds;
+  }
 
   public void setTrackLength( int length ) {
     this.songLength = length;
