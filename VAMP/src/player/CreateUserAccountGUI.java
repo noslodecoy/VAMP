@@ -4,9 +4,10 @@ import com.player.bll.UserAccount;
 import javax.swing.JOptionPane;
 
 public class CreateUserAccountGUI extends javax.swing.JFrame {
-
+    UserAccount ua;
     public CreateUserAccountGUI() {
         initComponents();
+        ua = new UserAccount();
     }
 
     /**
@@ -154,28 +155,49 @@ public class CreateUserAccountGUI extends javax.swing.JFrame {
 
     private void createNewAccountButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createNewAccountButtonActionPerformed
         
-        // TODO Validate User Name, Password, and Email Address         
         String userName = userNameTextField.getText();
-        String password = String.valueOf( jPasswordField1.getPassword() );
-        String password2 = String.valueOf( jPasswordField2.getPassword() );
-        String email = emailAddressTextField.getText(); 
-
-        if ( UserAccount.userExists( userName ) ) {
-          System.out.println("Invalid Login");
-          JOptionPane.showMessageDialog(this, "User already exists.",
-                  "Error", JOptionPane.ERROR_MESSAGE);
-        } else {
-          if ( password.equals( password2 ) ) {
-            UserAccount newAccount = new UserAccount( userName, password, email );
-            VampPlayerGUI player = new VampPlayerGUI();
-            player.newUser( newAccount );
-            this.setVisible(false);
-          } else {
+        String password = String.valueOf(jPasswordField1.getPassword());
+        String password2 = String.valueOf(jPasswordField2.getPassword());
+        String email = emailAddressTextField.getText();
+        String error="";
+        if (UserAccount.userExists(userName)) {
             System.out.println("Invalid Login");
-            JOptionPane.showMessageDialog(this, "Passwords do not match.",
-                  "Error", JOptionPane.ERROR_MESSAGE);
-          }
+            JOptionPane.showMessageDialog(this, "User already exists.",
+                    "Error", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            if (ua.isValidUsername(userName) && ua.isValidPassword(password)
+                    && ua.isValidEmail(email) && ua.passwordMatch(password, password2)) {
+                UserAccount newAccount = new UserAccount(userName, password, email);
+                VampPlayerGUI player = new VampPlayerGUI();
+                player.newUser(newAccount);
+                this.setVisible(false);
+            } else {
+                if (ua.isValidUsername(userName) == false) {
+                    error += "- Username must be 3-16 alphanumeric characters and start with a letter /n";
+                }else{
+                    error += "- Username IS VALID /n";
+                }
+                if (ua.isValidPassword(password) == false) {
+                    error += "- Password must contain at least: a number, a lowercase, an uppercase /n";
+                }else{
+                    error += "- Password IS VALID /n";
+                }
+                if (ua.isValidEmail(email) == false) {
+                    error += "- Email must be in user@host.me format /n";
+                }else{
+                    error += "- Email IS VALID /n";
+                }
+                if (ua.passwordMatch(password, password2)) {
+                    error += "- Passwords do not match. /n";
+                }else{
+                    error += "- Passwords MATCH /n";
+                }
+                System.out.println("Invalid Login");
+                JOptionPane.showMessageDialog(this, error.split("/n"),
+                        "Error", JOptionPane.INFORMATION_MESSAGE);
+            }
         }
+    
     }//GEN-LAST:event_createNewAccountButtonActionPerformed
 
     private void userNameTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_userNameTextFieldActionPerformed
