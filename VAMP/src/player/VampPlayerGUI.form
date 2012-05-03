@@ -16,16 +16,6 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="deleteSongFromPlaylistRightClickMenuItemActionPerformed"/>
           </Events>
         </MenuItem>
-        <Component class="javax.swing.JPopupMenu$Separator" name="jSeparator2">
-        </Component>
-        <MenuItem class="javax.swing.JMenuItem" name="addSongToPlayerQueueRightClickMenuItem">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Add to Queue"/>
-          </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="addSongToPlayerQueueRightClickMenuItemActionPerformed"/>
-          </Events>
-        </MenuItem>
       </SubComponents>
     </Container>
     <Container class="javax.swing.JPopupMenu" name="playlistNamesRightClickPopupMenu">
@@ -47,6 +37,9 @@
             <Property name="text" type="java.lang.String" value="Delete Playlist"/>
             <Property name="toolTipText" type="java.lang.String" value=""/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="deletePlaylistRightClickMenuItemActionPerformed"/>
+          </Events>
         </MenuItem>
         <Component class="javax.swing.JPopupMenu$Separator" name="jSeparator3">
         </Component>
@@ -67,6 +60,9 @@
             </Property>
             <Property name="toolTipText" type="java.lang.String" value=""/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="renamePlaylistRightClickMenuItemActionPerformed"/>
+          </Events>
         </MenuItem>
       </SubComponents>
     </Container>

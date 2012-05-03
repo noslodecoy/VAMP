@@ -16,6 +16,7 @@ public class UserAccount {
   public String password;
   public String password2; 
   public String email;
+  public ArrayList<Playlist> playlists;
   
   public UserAccount() {
   }
@@ -127,15 +128,32 @@ public class UserAccount {
 
 
   
-  public List<Playlist> getPlaylists() {
-    Query query = DataAccess.getSession().createQuery( "FROM Playlist WHERE user_id = :user" );
-    query.setParameter( "user", this.getId() );
-    return (List)query.list();
+  public ArrayList<Playlist> getPlaylists() {
+    if ( playlists == null ) {
+      Query query = DataAccess.getSession().createQuery( "FROM Playlist WHERE user_id = :user" );
+      query.setParameter( "user", this.getId() );
+      playlists = (ArrayList)query.list();
+    }
+    return playlists;
   }
-  
+
+  public void deletePlaylist( Playlist p ) {
+    p.empty();
+    playlists.remove( p );
+    DataAccess.getSession().delete( p );
+    Transaction tx = DataAccess.getSession().beginTransaction();
+    tx.commit();
+  }
+
+  public void createPlaylist( String name ) {
+    Playlist p = new Playlist( this, name );
+    playlists.add( p );
+  }
+
   public Object[][] getPlaylistsVector( ArrayList<Playlist> playlists ) {
     int arraySize = playlists.size();
-    Object[][] objectToReturn = new Object[arraySize][1];
+    int objectSize = ( arraySize < 10 ) ? 10 : arraySize;
+    Object[][] objectToReturn = new Object[objectSize][1];
     for ( int i = 0; i < arraySize; i++ ) {
       objectToReturn[i] = new Object[]{
         playlists.get(i).getName()

@@ -17,7 +17,6 @@ public class VampPlayerGUI extends javax.swing.JFrame {
     Library library;
     Queue queue;
     VampPlayer player;
-    ArrayList<Playlist> playlists;
     Playlist selectedPlaylist;
 
     public VampPlayerGUI() {
@@ -57,7 +56,6 @@ public class VampPlayerGUI extends javax.swing.JFrame {
         setUserAccount(user);
         welcomeUserLabel.setText("Welcome, " + user.getUsername() + "!");
         library = new Library(user);
-        playlists = (ArrayList)user.getPlaylists();
 
         setVisible(true);
         updateLibraryUI();
@@ -82,7 +80,7 @@ public class VampPlayerGUI extends javax.swing.JFrame {
     
     public void updatePlaylistsUI() {
         DefaultTableModel model = (DefaultTableModel) playlistNamesTable.getModel();
-        model.setDataVector( user.getPlaylistsVector( playlists ), new String[]{
+        model.setDataVector( user.getPlaylistsVector( user.getPlaylists() ), new String[]{
           "Playlists"
         });
     }
@@ -141,9 +139,8 @@ public class VampPlayerGUI extends javax.swing.JFrame {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                final Playlist p = new Playlist( user, jText.getText() );
+                user.createPlaylist( jText.getText() );
                 frame.setVisible(false);
-                playlists = (ArrayList)user.getPlaylists();
                 updatePlaylistsUI();
             }
         });
@@ -154,6 +151,44 @@ public class VampPlayerGUI extends javax.swing.JFrame {
             }
         });
     }
+    
+     public void renamePlaylist( final Playlist p ) {
+        final JFrame frame = new JFrame("Create Playlist");
+        JLabel label = new JLabel("Enter Playlist Name");
+        final JTextField jText = new JTextField();
+        final JButton ok = new JButton("Enter");
+        final JButton cancel = new JButton("Cancel");
+
+        frame.setSize(400, 350);
+        frame.setLocation(200, 200);
+        Container c = frame.getContentPane();
+        c.setLayout(new GridLayout(2, 2));
+        c.add(label);
+        c.add(jText);
+        c.add(ok);
+        c.add(cancel);
+            
+        frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+        frame.pack();
+        frame.setVisible(true);
+        
+        ok.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                p.rename( jText.getText() );
+                frame.setVisible(false);
+                updatePlaylistsUI();
+            }
+        });
+        cancel.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                frame.dispose();
+            }
+        });
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -165,8 +200,6 @@ public class VampPlayerGUI extends javax.swing.JFrame {
 
         playlistSongsRightClickPopupMenu = new javax.swing.JPopupMenu();
         deleteSongFromPlaylistRightClickMenuItem = new javax.swing.JMenuItem();
-        jSeparator2 = new javax.swing.JPopupMenu.Separator();
-        addSongToPlayerQueueRightClickMenuItem = new javax.swing.JMenuItem();
         playlistNamesRightClickPopupMenu = new javax.swing.JPopupMenu();
         newPlaylistRightClickMenuItem = new javax.swing.JMenuItem();
         deletePlaylistRightClickMenuItem = new javax.swing.JMenuItem();
@@ -221,15 +254,6 @@ public class VampPlayerGUI extends javax.swing.JFrame {
             }
         });
         playlistSongsRightClickPopupMenu.add(deleteSongFromPlaylistRightClickMenuItem);
-        playlistSongsRightClickPopupMenu.add(jSeparator2);
-
-        addSongToPlayerQueueRightClickMenuItem.setText("Add to Queue");
-        addSongToPlayerQueueRightClickMenuItem.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                addSongToPlayerQueueRightClickMenuItemActionPerformed(evt);
-            }
-        });
-        playlistSongsRightClickPopupMenu.add(addSongToPlayerQueueRightClickMenuItem);
 
         newPlaylistRightClickMenuItem.setText("New Playlist");
         newPlaylistRightClickMenuItem.addActionListener(new java.awt.event.ActionListener() {
@@ -241,6 +265,11 @@ public class VampPlayerGUI extends javax.swing.JFrame {
 
         deletePlaylistRightClickMenuItem.setText("Delete Playlist");
         deletePlaylistRightClickMenuItem.setToolTipText("");
+        deletePlaylistRightClickMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deletePlaylistRightClickMenuItemActionPerformed(evt);
+            }
+        });
         playlistNamesRightClickPopupMenu.add(deletePlaylistRightClickMenuItem);
         playlistNamesRightClickPopupMenu.add(jSeparator3);
 
@@ -255,6 +284,11 @@ public class VampPlayerGUI extends javax.swing.JFrame {
 
         renamePlaylistRightClickMenuItem.setText("Rename Playlist");
         renamePlaylistRightClickMenuItem.setToolTipText("");
+        renamePlaylistRightClickMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                renamePlaylistRightClickMenuItemActionPerformed(evt);
+            }
+        });
         playlistNamesRightClickPopupMenu.add(renamePlaylistRightClickMenuItem);
 
         addSongToPlaylistRightClickMenuItem.setText("Add to Playlist");
@@ -877,13 +911,11 @@ public class VampPlayerGUI extends javax.swing.JFrame {
   }//GEN-LAST:event_playerQueueTableMouseClicked
 
     private void deleteSongFromPlaylistRightClickMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteSongFromPlaylistRightClickMenuItemActionPerformed
-        // TODO add your handling code here:
+      if ( selectedPlaylist != null ) {
+        selectedPlaylist.remove( playlistSongsTable.getSelectedRow() );
+        updatePlaylistSongsUI( selectedPlaylist );
+      }
     }//GEN-LAST:event_deleteSongFromPlaylistRightClickMenuItemActionPerformed
-
-    private void addSongToPlayerQueueRightClickMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addSongToPlayerQueueRightClickMenuItemActionPerformed
-      queue.add(library.get(libraryTable.getSelectedRow()));
-      updateQueueUI();
-    }//GEN-LAST:event_addSongToPlayerQueueRightClickMenuItemActionPerformed
 
     private void playerQueueTableMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_playerQueueTableMouseReleased
         TableMouseListenerInterface rightClick = new TableRightClick();
@@ -898,13 +930,13 @@ public class VampPlayerGUI extends javax.swing.JFrame {
 
   private void playlistNamesTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_playlistNamesTableMouseClicked
     if ( playlistNamesTable.getSelectedRow() >= 0 ) {
-      selectedPlaylist = playlists.get( playlistNamesTable.getSelectedRow() );
+      selectedPlaylist =  user.getPlaylists().get( playlistNamesTable.getSelectedRow() );
       updatePlaylistSongsUI( selectedPlaylist );
     }
   }//GEN-LAST:event_playlistNamesTableMouseClicked
 
   private void addPlaylistToQueueRightClickMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addPlaylistToQueueRightClickMenuItemActionPerformed
-    queue.clone( playlists.get( playlistNamesTable.getSelectedRow() ) );
+    queue.clone(  user.getPlaylists().get( playlistNamesTable.getSelectedRow() ) );
     this.updateQueueUI();
   }//GEN-LAST:event_addPlaylistToQueueRightClickMenuItemActionPerformed
 
@@ -916,14 +948,29 @@ public class VampPlayerGUI extends javax.swing.JFrame {
     if ( selectedPlaylist != null ) {
       System.out.println( "Addingt song to playlist" );
       selectedPlaylist.add( library.get(libraryTable.getSelectedRow()) );
-      playlists = (ArrayList) user.getPlaylists();
       updatePlaylistsUI();
       updatePlaylistSongsUI(selectedPlaylist);
     } else {
-      JOptionPane.showMessageDialog(this, "Please Select a Playlist First.",
-      "No Playlist Selected", JOptionPane.ERROR_MESSAGE);
+      JOptionPane.showMessageDialog(this, "Please Select a Playlist First.", "No Playlist Selected", JOptionPane.ERROR_MESSAGE);
     }
   }//GEN-LAST:event_addSongToPlaylistRightClickMenuItemActionPerformed
+
+  private void deletePlaylistRightClickMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deletePlaylistRightClickMenuItemActionPerformed
+    selectedPlaylist = user.getPlaylists().get( playlistNamesTable.getSelectedRow() );
+    if ( selectedPlaylist != null ) {
+      user.deletePlaylist( selectedPlaylist );
+      selectedPlaylist = null;
+      updatePlaylistsUI();
+    }
+  }//GEN-LAST:event_deletePlaylistRightClickMenuItemActionPerformed
+
+  private void renamePlaylistRightClickMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_renamePlaylistRightClickMenuItemActionPerformed
+    if ( selectedPlaylist != null ) {
+      renamePlaylist( selectedPlaylist );
+    } else {
+      JOptionPane.showMessageDialog(this, "Please Select a Playlist First.", "No Playlist Selected", JOptionPane.ERROR_MESSAGE);
+    }
+  }//GEN-LAST:event_renamePlaylistRightClickMenuItemActionPerformed
 
     /**
      * @param args the command line arguments
@@ -970,7 +1017,6 @@ public class VampPlayerGUI extends javax.swing.JFrame {
     private javax.swing.JMenuItem addLibrarySongToQueueRightClickMenuItem;
     private javax.swing.JMenuItem addPlaylistToQueueRightClickMenuItem;
     private javax.swing.JMenuItem addSongToLibraryMenuItem;
-    private javax.swing.JMenuItem addSongToPlayerQueueRightClickMenuItem;
     private javax.swing.JMenuItem addSongToPlaylistRightClickMenuItem;
     private javax.swing.JMenuBar applicationMenuBar;
     private javax.swing.JMenuItem createNewAccountMenuItem;
@@ -984,7 +1030,6 @@ public class VampPlayerGUI extends javax.swing.JFrame {
     private javax.swing.JMenu fileMenuItem;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPopupMenu.Separator jSeparator1;
-    private javax.swing.JPopupMenu.Separator jSeparator2;
     private javax.swing.JPopupMenu.Separator jSeparator3;
     private javax.swing.JPopupMenu.Separator jSeparator4;
     private javax.swing.JPopupMenu.Separator jSeparator5;

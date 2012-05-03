@@ -62,6 +62,14 @@ public class Playlist implements VampMediaCollection {
     pSongs = query.list();
   }
   
+  public void empty() {
+    for( PlaylistSong pSong : pSongs ) {
+      DataAccess.getSession().delete( pSong );
+    }
+    Transaction tx = DataAccess.getSession().beginTransaction();
+    tx.commit();
+  }
+  
   public Song get( int i ) {
     return pSongs.get( i ).getSong();
   }
@@ -113,17 +121,30 @@ public class Playlist implements VampMediaCollection {
 
     public Object[][] getDataVector() {
     int arraySize = pSongs.size();
-    Object[][] objectToReturn = new Object[arraySize][5];
-    for ( int i = 0; i < arraySize; i++ ) {
-      Song song = pSongs.get( i ).getSong();
-      objectToReturn[i] = new Object[]{
-        song.getTitle(),
-        song.getArtist(),
-        String.valueOf( song.getFormatedLength() ),
-        song.getAlbum(),
-        String.valueOf( song.getTrackNumber() )
-      };
+    if ( arraySize > 0 ) {
+      Object[][] objectToReturn = new Object[arraySize][5];
+      for ( int i = 0; i < arraySize; i++ ) {
+        Song song = pSongs.get( i ).getSong();
+        if ( song != null ) {
+          objectToReturn[i] = new Object[]{
+            song.getTitle(),
+            song.getArtist(),
+            String.valueOf( song.getFormatedLength() ),
+            song.getAlbum(),
+            String.valueOf( song.getTrackNumber() )
+          };
+        }
+      }
+      return objectToReturn;
+    } else {
+      return new Object[0][5];
     }
-    return objectToReturn;
   }
+    
+    public void rename( String name ) {
+      this.setName(name);
+      DataAccess.getSession().save( this );
+      DataAccess.getSession().beginTransaction().commit();
+    }
+    
 }
