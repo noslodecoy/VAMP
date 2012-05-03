@@ -18,12 +18,9 @@ public class Library implements VampMediaCollection {
   }
 
   public Library( UserAccount user ) {
-    this.user = user;
-    sessionFactory = new Configuration().configure( "database/hibernate.cfg.xml" ).buildSessionFactory();
-    session = sessionFactory.openSession();
-    
-    Query query = session.createQuery( "FROM Song WHERE user_id = :user" );
-    query.setParameter( "user", user.getUserId() );
+    this.user = user; 
+    Query query = DataAccess.getSession().createQuery( "FROM Song WHERE user_id = :user" );
+    query.setParameter( "user", user.getId() );
     library = query.list();
 
     //library = new TreeSet();
@@ -45,17 +42,17 @@ public class Library implements VampMediaCollection {
   }
   
   public void add( Song s ) {
-    s.setUserId( user );
-    Transaction tx = session.beginTransaction();
-    session.save( s );
+    s.setUser( user );
+    Transaction tx = DataAccess.getSession().beginTransaction();
+    DataAccess.getSession().save( s );
     tx.commit();
     library.add( s );
   }
 
   public void remove( Song s ) {
     library.remove( s );
-    session.delete( s );
-    Transaction tx = session.beginTransaction();
+    DataAccess.getSession().delete( s );
+    Transaction tx = DataAccess.getSession().beginTransaction();
     tx.commit();
   }
 
@@ -99,7 +96,7 @@ public class Library implements VampMediaCollection {
       objectToReturn[i] = new Object[]{
         song.getTitle(),
         song.getArtist(),
-        String.valueOf( song.getTrackLength() ),
+        String.valueOf( song.getFormatedLength() ),
         song.getAlbum(),
         String.valueOf( song.getTrackNumber() ),
         String.valueOf( i )

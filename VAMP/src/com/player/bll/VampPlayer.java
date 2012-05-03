@@ -1,22 +1,20 @@
 package com.player.bll;
 
-//import java.io.BufferedInputStream;
-//import java.io.FileInputStream;
-//import javazoom.jl.player.Player;
+import java.io.BufferedInputStream;
+import java.io.FileInputStream;
+import javazoom.jl.player.Player;
 
 public class VampPlayer {
 
-    private PlaylistSongs pSongs;
-    private Playlist playlist;
+    private Queue playlist;
     private int playlistIndex;
     private boolean isPlaying;
     private Mp3Task mp3Task;
     
     private long startTime;
 
-    public VampPlayer(Playlist playlistToUse, PlaylistSongs ps) {
+    public VampPlayer(Queue playlistToUse) {
         playlist = playlistToUse;
-        pSongs = ps;
         playlistIndex = 0;
         isPlaying = false;
         startTime = 0;
@@ -31,8 +29,8 @@ public class VampPlayer {
     }
 
     public Song getCurrentSong() {
-      if ( pSongs.size() > 0 && getPosition() < pSongs.size() && getPosition() >= 0 ) {
-        return pSongs.get(playlistIndex);
+      if ( playlist.size() > 0 && getPosition() < playlist.size() && getPosition() >= 0 ) {
+        return playlist.get( playlistIndex );
       }
       return null;
     }
@@ -108,7 +106,7 @@ public class VampPlayer {
       }
     }
 
-    public Playlist getPlaylist() {
+    public Queue getPlaylist() {
         return playlist;
     }
 
@@ -148,15 +146,33 @@ public class VampPlayer {
         }
       }
     }
-    public Song get(int i){
-        return pSongs.get(i);
-    }
+    
     
     public int getTime() {
       if ( getTask() != null ) {
         return mp3Task.getTime();
       }
       return 0;
+    }
+    
+    public String getFormatedTime() {
+      long timeMillis = getTime(); 
+      long time = timeMillis / 1000; 
+      String seconds = Integer.toString((int)(time % 60)); 
+      String minutes = Integer.toString((int)((time % 3600) / 60)); 
+      String hours = Integer.toString((int)(time / 3600)); 
+      for (int i = 0; i < 2; i++) { 
+        if (seconds.length() < 2) { 
+          seconds = "0" + seconds; 
+        } 
+        if (minutes.length() < 2) { 
+          minutes = "0" + minutes; 
+        } 
+        if (hours.length() < 2) { 
+          hours = "0" + hours; 
+        } 
+      }
+      return hours+":"+minutes+":"+seconds;
     }
     
     public double getProgressPercent() {

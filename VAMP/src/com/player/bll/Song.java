@@ -1,6 +1,7 @@
 package com.player.bll;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Comparator;
 
 import org.jaudiotagger.audio.AudioFile;
@@ -15,20 +16,20 @@ public class Song {
   private File file;
 
   //song info from database
-  private int songId;
+  private Long id;
   private String title;
   private String artist;
   private String album;
-//  private String genre;
+  private String genre;
   private int track;
   private String filename;
   private int songLength;
-//  private long bitrate;
-//  private long mp3StartByte;
+  private long bitrate;
+  private long mp3StartByte;
   
-  private UserAccount userId;
+  private UserAccount user;
   
-//  private long numberOfFrames;
+  private long numberOfFrames;
   
   private AudioHeader header;
   private Tag tag;
@@ -89,12 +90,12 @@ public class Song {
     return tag;
   }
 
-  public void setSongId( int songId ) {
-    this.songId = songId;
+  public void setId( Long id ) {
+    this.id = id;
   }
   
-  public int getSongId() {
-    return songId;
+  public Long getId() {
+    return id;
   }
 
   public void setArtist( String artist ) {
@@ -132,30 +133,49 @@ public class Song {
   public int getTrackLength() {
     return songLength;
   }
+  
+  public String getFormatedLength() {
+    long time = getTrackLength(); 
+    String seconds = Integer.toString((int)(time % 60)); 
+    String minutes = Integer.toString((int)((time % 3600) / 60)); 
+    String hours = Integer.toString((int)(time / 3600)); 
+    for (int i = 0; i < 2; i++) { 
+      if (seconds.length() < 2) { 
+        seconds = "0" + seconds; 
+      } 
+      if (minutes.length() < 2) { 
+        minutes = "0" + minutes; 
+      } 
+      if (hours.length() < 2) { 
+        hours = "0" + hours; 
+      } 
+    }
+    return hours+":"+minutes+":"+seconds;
+  }
 
   public void setTrackLength( int length ) {
     this.songLength = length;
   }
 
-  public String getFilename() {
+  public String getFileName() {
     return filename;
   }
   
-  public void setFilename( String filename ) {
+  public void setFileName( String filename ) {
     this.filename = filename;
   }
   
-  public void setUserId( UserAccount userId ) {
-    this.userId = userId;
+  public void setUser( UserAccount user ) {
+    this.user = user;
   }
   
-  public UserAccount getUserId() {
-    return userId;
+  public UserAccount getUser() {
+    return user;
   }
   
   public File getFile() {
     if ( file == null ) {
-      file = new File( getFilename() );
+      file = new File( getFileName() );
     }
     return file;
   }
@@ -165,8 +185,8 @@ public class Song {
       return true;
     }
     return (
-      this.getTitle().equals( songToCompare.getFilename() ) &&
-      this.getArtist().equals( songToCompare.getFilename() )
+      this.getTitle().equals( songToCompare.getFileName() ) &&
+      this.getArtist().equals( songToCompare.getFileName() )
     );
   }
 

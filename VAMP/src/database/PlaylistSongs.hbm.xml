@@ -2,15 +2,12 @@
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <!-- Generated May 2, 2012 10:25:42 AM by Hibernate Tools 3.2.1.GA -->
 <hibernate-mapping>
-  <class catalog="VAMP" name="com.player.bll.PlaylistSongs" table="PlaylistSongs">
-    <id name="rowId" type="int">
-      <column name="row_id"/>
-      <generator class="assigned"/>
+  <class catalog="VAMP" name="com.player.bll.PlaylistSong" table="PlaylistSongs">
+    <id name="id" column="row_id">
+      <generator class="native"/>
     </id>
-    <property name="songId" type="int">
-      <column name="song_id" not-null="true"/>
-    </property>
-    <many-to-one cascade="none" class="com.player.bll.Playlist" name="playlistId">
+    <many-to-one name="song" class="com.player.bll.Song" column="song_id" cascade="none" not-null="true" />
+    <many-to-one cascade="none" class="com.player.bll.Playlist" name="playlist">
       <column name="playlist_id" not-null="true"/>
     </many-to-one>
   </class>
