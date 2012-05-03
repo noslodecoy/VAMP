@@ -8,31 +8,22 @@
         <Property name="useNullLayout" type="boolean" value="true"/>
       </Layout>
       <SubComponents>
-        <MenuItem class="javax.swing.JMenuItem" name="addPLaylistSongRightClickMenuItem">
+        <MenuItem class="javax.swing.JMenuItem" name="deleteSongFromPlaylistRightClickMenuItem">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Add Song"/>
-            <Property name="toolTipText" type="java.lang.String" value=""/>
+            <Property name="text" type="java.lang.String" value="Delete From Playlist"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="addPLaylistSongRightClickMenuItemActionPerformed"/>
-          </Events>
-        </MenuItem>
-        <MenuItem class="javax.swing.JMenuItem" name="deletePlaylistSongRightClickMenuItem">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Delete Song"/>
-          </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="deletePlaylistSongRightClickMenuItemActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="deleteSongFromPlaylistRightClickMenuItemActionPerformed"/>
           </Events>
         </MenuItem>
         <Component class="javax.swing.JPopupMenu$Separator" name="jSeparator2">
         </Component>
-        <MenuItem class="javax.swing.JMenuItem" name="addSongToPlayerMenuItem">
+        <MenuItem class="javax.swing.JMenuItem" name="addSongToPlayerQueueRightClickMenuItem">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Add Song to Now Playing"/>
+            <Property name="text" type="java.lang.String" value="Add to Queue"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="addSongToPlayerMenuItemActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="addSongToPlayerQueueRightClickMenuItemActionPerformed"/>
           </Events>
         </MenuItem>
       </SubComponents>
@@ -56,9 +47,9 @@
         </MenuItem>
         <Component class="javax.swing.JPopupMenu$Separator" name="jSeparator3">
         </Component>
-        <MenuItem class="javax.swing.JMenuItem" name="addPlaylistToPlayerRightClickMenuItem">
+        <MenuItem class="javax.swing.JMenuItem" name="addPlaylistToQueueRightClickMenuItem">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Load Playlist"/>
+            <Property name="text" type="java.lang.String" value="Queue Playlist"/>
           </Properties>
         </MenuItem>
         <Component class="javax.swing.JPopupMenu$Separator" name="jSeparator4">
@@ -79,25 +70,27 @@
         <Property name="useNullLayout" type="boolean" value="true"/>
       </Layout>
       <SubComponents>
-        <MenuItem class="javax.swing.JMenuItem" name="addLibrarySongRightClickMenuItem">
+        <MenuItem class="javax.swing.JMenuItem" name="addSongToPlaylistRightClickMenuItem">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Add Song"/>
+            <Property name="text" type="java.lang.String" value="Add to Playlist"/>
           </Properties>
         </MenuItem>
+        <Component class="javax.swing.JPopupMenu$Separator" name="jSeparator5">
+        </Component>
         <MenuItem class="javax.swing.JMenuItem" name="deleteLibrarySongRightClickMenuItem">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Delete Song"/>
+            <Property name="text" type="java.lang.String" value="Delete From Library"/>
             <Property name="actionCommand" type="java.lang.String" value="Remove Song"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="deleteLibrarySongRightClickMenuItemActionPerformed"/>
           </Events>
         </MenuItem>
-        <Component class="javax.swing.JPopupMenu$Separator" name="jSeparator5">
+        <Component class="javax.swing.JPopupMenu$Separator" name="jSeparator6">
         </Component>
         <MenuItem class="javax.swing.JMenuItem" name="addLibrarySongToQueueRightClickMenuItem">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Add to queue"/>
+            <Property name="text" type="java.lang.String" value="Add to Queue"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="addLibrarySongToQueueRightClickMenuItemActionPerformed"/>
@@ -182,7 +175,7 @@
               <Component id="mediaStreamPanel" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jTabbedPane" min="-2" pref="563" max="-2" attributes="0"/>
-              <EmptySpace max="32767" attributes="0"/>
+              <EmptySpace pref="16" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -209,8 +202,8 @@
           </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
-              <JTabbedPaneConstraints tabName="Player">
-                <Property name="tabTitle" type="java.lang.String" value="Player"/>
+              <JTabbedPaneConstraints tabName="Player Queue">
+                <Property name="tabTitle" type="java.lang.String" value="Player Queue"/>
               </JTabbedPaneConstraints>
             </Constraint>
           </Constraints>
@@ -220,7 +213,7 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="1" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="playerScrollPane" pref="745" max="32767" attributes="0"/>
+                      <Component id="playerScrollPane" pref="763" max="32767" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
@@ -297,7 +290,7 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="playlistNamesScrollPanel" min="-2" pref="253" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="playlistSongsScrollPanel" pref="474" max="32767" attributes="0"/>
+                      <Component id="playlistSongsScrollPanel" pref="492" max="32767" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
@@ -396,7 +389,7 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="1" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="libraryScrollPanel" pref="745" max="32767" attributes="0"/>
+                      <Component id="libraryScrollPanel" pref="763" max="32767" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
@@ -468,12 +461,11 @@
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" alignment="0" attributes="0">
-                  <Group type="103" groupAlignment="1" attributes="0">
+              <Group type="102" attributes="0">
+                  <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="1" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="songPositionSlider" max="32767" attributes="0"/>
                               <Group type="102" alignment="0" attributes="0">
                                   <Component id="rewindButton" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace type="separate" max="-2" attributes="0"/>
@@ -487,16 +479,16 @@
                                   <EmptySpace min="-2" pref="82" max="-2" attributes="0"/>
                                   <Component id="volumeLabel" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                                  <Component id="volumeSlider" max="32767" attributes="0"/>
+                                  <Component id="volumeSlider" min="-2" pref="169" max="-2" attributes="0"/>
+                                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                               </Group>
                               <Group type="102" attributes="0">
                                   <Component id="currentTrackLabel" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                  <Component id="titleOfCurrentTrackPlaying" max="32767" attributes="0"/>
-                              </Group>
-                              <Group type="102" alignment="1" attributes="0">
-                                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                                  <Component id="titleOfCurrentTrackPlaying" min="-2" pref="523" max="-2" attributes="0"/>
+                                  <EmptySpace max="32767" attributes="0"/>
                                   <Component id="songTimeLabel" min="-2" pref="65" max="-2" attributes="0"/>
+                                  <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                       </Group>
@@ -504,6 +496,7 @@
                           <EmptySpace min="86" max="32767" attributes="0"/>
                           <Component id="welcomeUserLabel" min="-2" pref="182" max="-2" attributes="0"/>
                       </Group>
+                      <Component id="songPositionSlider" alignment="1" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
@@ -519,14 +512,15 @@
                           <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
                           <Component id="currentTrackLabel" min="-2" pref="23" max="-2" attributes="0"/>
                       </Group>
-                      <Group type="102" attributes="0">
+                      <Group type="102" alignment="1" attributes="0">
                           <EmptySpace max="32767" attributes="0"/>
-                          <Component id="titleOfCurrentTrackPlaying" min="-2" pref="18" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="titleOfCurrentTrackPlaying" alignment="1" min="-2" pref="18" max="-2" attributes="0"/>
+                              <Component id="songTimeLabel" alignment="1" min="-2" max="-2" attributes="0"/>
+                          </Group>
                       </Group>
                   </Group>
-                  <EmptySpace max="32767" attributes="0"/>
-                  <Component id="songTimeLabel" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace max="-2" attributes="0"/>
+                  <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="songPositionSlider" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="1" attributes="0">
@@ -540,7 +534,7 @@
                           <Component id="volumeLabel" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
-                  <EmptySpace max="-2" attributes="0"/>
+                  <EmptySpace pref="21" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
