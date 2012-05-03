@@ -1,78 +1,137 @@
 package com.player.bll;
 
 import java.util.*;
+import org.hibernate.Query;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+import org.hibernate.cfg.Configuration;
 
-public class Playlist implements VampMediaCollection {
+public class Playlist implements java.io.Serializable {
+    private static final long serialVersionUID = 1L;
   
-  LinkedList<Song> playlist;
-  private String name;
+  private List<Playlist> playlists;
+    private Playlist playlistId;
+    private List<PlaylistSongs> pSongs;
+    private String name;
+    private UserAccount userId;
+    private SessionFactory sf;
+    private Session session;
+    
 
-  public Playlist( int userId, int playlistId ) {
-    playlist = new LinkedList();
-    // TODO: add code to load song information from database record.
-    // It should look something like the following (the session may want to be
-    // in the UserAccount class and passed to this class.
-    //
-    // SessionFactory sessionFactory = new Configuration().configure( "database/songs.cfg.xml" ).buildSessionFactory();
-    // Session newSession = sessionFactory.openSession();
-    // Transaction newTransaction = newSession.beginTransaction();
-    // library = (TreeSet)newSession.createQuery( "sql query here" ).list();
-  }
-  
-  public Playlist( String nameToUse ) {
-    playlist = new LinkedList();
-    name = nameToUse;
-  }
+    public Playlist() {
+        playlists = new LinkedList<Playlist>();
+        pSongs = new LinkedList<PlaylistSongs>();
+    }
+    
+    
+    @SuppressWarnings("unchecked")
+    public Playlist(UserAccount userId) {
+        this.userId = userId;
+        sf = new Configuration().configure("database/hibernate.cfg.xml").buildSessionFactory();
+        session = sf.openSession();
 
-  public void setName( String newName ) {
-    name = newName;
-  }
-  
-  public String getName() {
-    return name;
-  }
-  
-  public Song get( int i ) {
-    return playlist.get( i );
-  }
-  
-  public int size() {
-    return playlist.size();
-  }
-  
-  public void add( Song songToAdd ) {
-    playlist.add( songToAdd );
-  }
+        Query query = session.createQuery("FROM Playlist WHERE user_id = :user");
+        query.setParameter("user", userId.getUserId());
+        playlists = query.list();
+    }
+    
+    public void create(String p) {
+        setUserId(userId);
+        Transaction tx = session.beginTransaction();
+        session.save(p);
+        tx.commit();
+        
+    }
+    
+    public void removePlaylist(Playlist p) {
+        playlists.remove(p);
+        session.delete(p);
+        Transaction tx = session.beginTransaction();
+        tx.commit();
+    }
 
-  public void add( int i, Song songToAdd ) {
-    playlist.add( i, songToAdd );
-  }
-  
-  public void addAll( List listToAdd ) {
-    playlist.addAll( listToAdd );
-  }
-  
-  public boolean contains( Song songToCheck ) {
-    return playlist.contains( songToCheck );
-  }
-  
-  public void remove( Song songToRemove ) {
-    playlist.remove( songToRemove );
-  }
+    public void remove(int i) {
+        removePlaylist(playlists.get(i));
+    }
 
+    public Playlist get(int i) {
+        return playlists.get(i);
+    }
+
+    public boolean contains(Playlist p) {
+        return playlists.contains(p);
+    }
+
+    public int size() {
+        return playlists.size();
+    }
+
+//    public void addAll(Collection<Playlist> collectionToAdd) {
+//        for (Playlist p : collectionToAdd) {
+//            add(p);
+//        }
+//    }
+//
+//    public void addAll(List<Playlist> listToAdd) {
+//        for (Playlist p : listToAdd) {
+//            add(p);
+//        }
+//    }
+    
+    public void addAllPlaylistSongs(List<PlaylistSongs> listToAdd) {
+        for (PlaylistSongs p : listToAdd) {
+            pSongs.add(p);
+        }
+    }
+    public void addAllPlaylistSongs(Collection<PlaylistSongs> collectionToAdd){
+        for (PlaylistSongs p : collectionToAdd) {
+            pSongs.add(p);
+        }
+    }
+    
+
+    public Collection<Playlist> getAll() {
+        return Collections.unmodifiableCollection(playlists);
+    }
+
+    public Playlist getPlaylistId() {
+        return this.playlistId;
+    }
+
+    public void setPlaylistId(Playlist playlistId) {
+        this.playlistId = playlistId;
+    }
+
+    public String getName() {
+        return this.name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public UserAccount getUserId() {
+        return this.userId;
+    }
+
+    public void setUserId(UserAccount userId) {
+        this.userId = userId;
+    }
+    
     public Object[][] getDataVector() {
-    int arraySize = playlist.size();
+    int arraySize = playlists.size();
     Object[][] objectToReturn = new Object[arraySize][5];
     for ( int i = 0; i < arraySize; i++ ) {
-      Song song = playlist.get( i );
+      Playlist p = playlists.get( i );
       objectToReturn[i] = new Object[]{
-        song.getTitle(),
-        song.getArtist(),
-        String.valueOf( song.getLength() ),
-        song.getAlbum(),
-        String.valueOf( song.getTrack() )
+        p.getName()
       };
     }
     return objectToReturn;
-  }
+    }
+
+    
+
+    
 }

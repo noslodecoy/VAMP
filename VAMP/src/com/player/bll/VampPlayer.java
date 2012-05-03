@@ -1,11 +1,12 @@
 package com.player.bll;
 
-import java.io.BufferedInputStream;
-import java.io.FileInputStream;
-import javazoom.jl.player.Player;
+//import java.io.BufferedInputStream;
+//import java.io.FileInputStream;
+//import javazoom.jl.player.Player;
 
 public class VampPlayer {
 
+    private PlaylistSongs pSongs;
     private Playlist playlist;
     private int playlistIndex;
     private boolean isPlaying;
@@ -13,8 +14,9 @@ public class VampPlayer {
     
     private long startTime;
 
-    public VampPlayer(Playlist playlistToUse) {
+    public VampPlayer(Playlist playlistToUse, PlaylistSongs ps) {
         playlist = playlistToUse;
+        pSongs = ps;
         playlistIndex = 0;
         isPlaying = false;
         startTime = 0;
@@ -29,8 +31,8 @@ public class VampPlayer {
     }
 
     public Song getCurrentSong() {
-      if ( playlist.size() > 0 && getPosition() < playlist.size() && getPosition() >= 0 ) {
-        return playlist.get( playlistIndex );
+      if ( pSongs.size() > 0 && getPosition() < pSongs.size() && getPosition() >= 0 ) {
+        return pSongs.get(playlistIndex);
       }
       return null;
     }
@@ -146,7 +148,9 @@ public class VampPlayer {
         }
       }
     }
-    
+    public Song get(int i){
+        return pSongs.get(i);
+    }
     
     public int getTime() {
       if ( getTask() != null ) {
@@ -156,7 +160,7 @@ public class VampPlayer {
     }
     
     public double getProgressPercent() {
-      double percent = ( Double.valueOf( getTime() ) / Double.valueOf( getCurrentSong().getLength() * 1000 ) );
+      double percent = ( Double.valueOf( getTime() ) / Double.valueOf( getCurrentSong().getTrackLength() * 1000 ) );
       return percent;
     }
 }

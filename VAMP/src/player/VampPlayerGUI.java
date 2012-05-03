@@ -1,17 +1,26 @@
 package player;
 
 import com.player.bll.*;
+import java.awt.Container;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.io.File;
+import javax.swing.JButton;
 import javax.swing.JFileChooser;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JSlider;
 import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
 public class VampPlayerGUI extends javax.swing.JFrame {
 
     UserAccount user;
     Library library;
+    PlaylistSongs ps;
     Playlist queue;
     VampPlayer player;
 
@@ -19,8 +28,10 @@ public class VampPlayerGUI extends javax.swing.JFrame {
         user = new UserAccount();
         initComponents();
         library = new Library();
-        queue = new Playlist("Now Playing");
-        player = new VampPlayer(queue);
+        
+        queue = new Playlist(user);
+        ps = new PlaylistSongs();
+        player = new VampPlayer(queue,ps);
 
         new Thread() {
 
@@ -65,6 +76,12 @@ public class VampPlayerGUI extends javax.swing.JFrame {
                     "Title", "Artist", "Track Length", "Album", "Track Number"
                 });
     }
+    
+     public void updatePlaylistNames(){
+        DefaultTableModel model = (DefaultTableModel) playlistNamesTable.getModel();
+        model.setDataVector(queue.getDataVector(), new String[]{("Playlist Name")});
+        
+    }
 
     public void updateQueueUI() {
         DefaultTableModel model = (DefaultTableModel) playerQueueTable.getModel();
@@ -73,9 +90,49 @@ public class VampPlayerGUI extends javax.swing.JFrame {
                     "Title", "Artist", "Track Length", "Album", "Track Number"
                 });
     }
+    
+    public void createPlaylist() {
+        final JFrame frame = new JFrame("Create Playlist");
+        JLabel label = new JLabel("Enter Playlist Name");
+        final JTextField jText = new JTextField();
+        final JButton ok = new JButton("Enter");
+        final JButton cancel = new JButton("Cancel");
+
+        frame.setSize(400, 350);
+        frame.setLocation(200, 200);
+        Container c = frame.getContentPane();
+        c.setLayout(new GridLayout(2, 2));
+        c.add(label);
+        c.add(jText);
+        c.add(ok);
+        c.add(cancel);
+            
+        frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+        frame.pack();
+        frame.setVisible(true);
+        
+        ok.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                final Playlist p = new Playlist();
+                if (jText.getText() != null) {
+                    p.create(jText.getText());
+                }
+                frame.setVisible(false);
+                updatePlaylistNames();
+            }
+        });
+        cancel.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                frame.dispose();
+            }
+        });
+    }
 
     public void addSongToQueueUI(Song song) {
-        queue.add(song);
+        ps.add(song);
         updateQueueUI();
     }
 
@@ -86,7 +143,7 @@ public class VampPlayerGUI extends javax.swing.JFrame {
         if (ret == JFileChooser.APPROVE_OPTION) {
             File selectedFile = fc.getSelectedFile();
             Song newSong = new Song(selectedFile);
-            newSong.setUser(user);
+            newSong.setUserId(user);
             library.add(newSong);
             updateLibraryUI();
         }
@@ -802,11 +859,11 @@ public class VampPlayerGUI extends javax.swing.JFrame {
   }//GEN-LAST:event_playerQueueTableMouseClicked
 
     private void deleteSongFromPlaylistRightClickMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteSongFromPlaylistRightClickMenuItemActionPerformed
-        // TODO add your handling code here:
+        ps.remove(ps.get(playlistSongsTable.getSelectedRow()));
     }//GEN-LAST:event_deleteSongFromPlaylistRightClickMenuItemActionPerformed
 
     private void addSongToPlayerQueueRightClickMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addSongToPlayerQueueRightClickMenuItemActionPerformed
-      queue.add(library.get(libraryTable.getSelectedRow()));
+      ps.add(library.get(libraryTable.getSelectedRow()));
       updateQueueUI();
     }//GEN-LAST:event_addSongToPlayerQueueRightClickMenuItemActionPerformed
 
@@ -816,7 +873,7 @@ public class VampPlayerGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_playerQueueTableMouseReleased
 
     private void deleteFromQueueRightClickMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteFromQueueRightClickMenuItemActionPerformed
-        // TODO add your handling code here:
+        ps.remove(ps.get(playerQueueTable.getSelectedRow()));
     }//GEN-LAST:event_deleteFromQueueRightClickMenuItemActionPerformed
 
     /**

@@ -35,7 +35,7 @@ public class Mp3Task implements Runnable {
   
   public void setSong( Song inSong ) {
     this.song = inSong;
-    if ( song.getFileName() != null ) {
+    if ( song.getFilename() != null ) {
       audioDevice = new JavaSoundAudioDevice();
       try {
         fis = new FileInputStream( song.getFile() );

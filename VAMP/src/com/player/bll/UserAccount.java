@@ -1,5 +1,6 @@
 package com.player.bll;
 
+import java.util.regex.*;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -8,7 +9,7 @@ import org.hibernate.cfg.Configuration;
 
 public class UserAccount {
   
-  public long id;
+  public int userId;
   public String username;
   public String password;
   public String password2; 
@@ -28,7 +29,7 @@ public class UserAccount {
             .setParameter( "password", password )
             .uniqueResult();
     if (returnedUser != null ) {
-      this.id = returnedUser.getId();
+      this.userId = returnedUser.getUserId();
       this.username = returnedUser.getUsername();
       this.password = returnedUser.getPassword();
       this.email = returnedUser.getEmail();
@@ -53,23 +54,55 @@ public class UserAccount {
     Session session = sessionFactory.openSession();
     Query query = session.createQuery( "FROM UserAccount WHERE username = :username");
     query.setParameter( "username", username );
-    return ( query.list().size() > 0 );
+    if (username != null) {
+            return ( query.list().size() > 0 );
+        }
+    else {
+            return true;
+        }
   }
   
   public boolean validate() {
     return ( this.username != null && this.password != null );
   }
   
-  public boolean passwordMatch() {
-      return ( this.password.equals( this.password2 ) ); 
+  public boolean isValidPassword(String pwd) {
+    String passReq="((?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{6,16})";  
+    CharSequence input = pwd;  
+    Pattern pattern = Pattern.compile(passReq);  
+    Matcher matcher = pattern.matcher(input);  
+    return matcher.matches();  
+    }
+    
+    public boolean isValidUsername(String username) {
+    String userReq="^[a-zA-Z][a-zA-Z0-9]{2,15}$";  
+    CharSequence input = username;  
+    Pattern pattern = Pattern.compile(userReq,Pattern.CASE_INSENSITIVE);  
+    Matcher matcher = pattern.matcher(input);  
+    return matcher.matches();  
+    }
+    
+    public boolean isValidEmail(String emailAddress)
+    {  
+    String emailReq="^[\\w\\-]([\\.\\w])+[\\w]+@([\\w\\-]+\\.)+[A-Z]{2,4}$";  
+    CharSequence input = emailAddress;  
+    Pattern pattern = Pattern.compile(emailReq,Pattern.CASE_INSENSITIVE);  
+    Matcher matcher = pattern.matcher(input);  
+    return matcher.matches();  
+    }
+  
+  public boolean passwordMatch(String pwd, String cpwd){
+      this.password = pwd;
+      this.password2 = cpwd;
+      return (cpwd.equals(pwd)); 
   }
   
-  public long getId() {
-    return id;
+  public int getUserId() {
+    return userId;
   }
   
-  public void setId( long id ) {
-    this.id = id;
+  public void setUserId( int id ) {
+    this.userId = id;
   }
   
   public String getUsername() {
@@ -95,5 +128,4 @@ public class UserAccount {
   public void setEmail( String email ) {
     this.email = email;
   }
-  
 }

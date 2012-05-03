@@ -23,7 +23,7 @@ public class Library implements VampMediaCollection {
     session = sessionFactory.openSession();
     
     Query query = session.createQuery( "FROM Song WHERE user_id = :user" );
-    query.setParameter( "user", user.getId() );
+    query.setParameter( "user", user.getUserId() );
     library = query.list();
 
     //library = new TreeSet();
@@ -45,7 +45,7 @@ public class Library implements VampMediaCollection {
   }
   
   public void add( Song s ) {
-    s.setUser( user );
+    s.setUserId( user );
     Transaction tx = session.beginTransaction();
     session.save( s );
     tx.commit();
@@ -99,9 +99,9 @@ public class Library implements VampMediaCollection {
       objectToReturn[i] = new Object[]{
         song.getTitle(),
         song.getArtist(),
-        String.valueOf( song.getLength() ),
+        String.valueOf( song.getTrackLength() ),
         song.getAlbum(),
-        String.valueOf( song.getTrack() ),
+        String.valueOf( song.getTrackNumber() ),
         String.valueOf( i )
       };
     }

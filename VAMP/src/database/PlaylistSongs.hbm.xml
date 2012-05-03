@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated May 2, 2012 10:25:42 AM by Hibernate Tools 3.2.1.GA -->
+<hibernate-mapping>
+  <class catalog="VAMP" name="com.player.bll.PlaylistSongs" table="PlaylistSongs">
+    <id name="rowId" type="int">
+      <column name="row_id"/>
+      <generator class="assigned"/>
+    </id>
+    <property name="songId" type="int">
+      <column name="song_id" not-null="true"/>
+    </property>
+    <many-to-one cascade="none" class="com.player.bll.Playlist" name="playlistId">
+      <column name="playlist_id" not-null="true"/>
+    </many-to-one>
+  </class>
+</hibernate-mapping>
