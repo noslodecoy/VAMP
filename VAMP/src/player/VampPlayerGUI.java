@@ -515,11 +515,11 @@ public class VampPlayerGUI extends javax.swing.JFrame {
         ));
         playlistNamesTable.setEnabled(false);
         playlistNamesTable.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseReleased(java.awt.event.MouseEvent evt) {
-                playlistNamesTableMouseReleased(evt);
-            }
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 playlistNamesTableMouseClicked(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                playlistNamesTableMouseReleased(evt);
             }
         });
         playlistNamesScrollPanel.setViewportView(playlistNamesTable);

@@ -1,8 +1,8 @@
 package playerTests;
 
 import com.player.bll.VampPlayer;
-import com.player.bll.Playlist;
 import com.player.bll.Song;
+import com.player.bll.Queue;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +15,7 @@ import org.junit.Ignore;
 
 public class VampPlayerTest {
 
-    Playlist playlist;
+    Queue playlist;
     VampPlayer player;
     List<Song> songs;
 
@@ -28,7 +28,7 @@ public class VampPlayerTest {
         songs.add(new Song(new File("test/testResources/The Black Keys - El Camino - 04 - Little Black Submarines.mp3")));
         songs.add(new Song(new File("test/testResources/Dr. Dog - Be The Void - 03 - These Days.mp3")));
         songs.add(new Song(new File("test/testResources/Wye Oak - Civilian - 05 - Civilian.mp3")));
-        playlist = new Playlist("untitled");
+        playlist = new Queue();
         playlist.addAll(songs);
         player = new VampPlayer(playlist);
     }

@@ -47,7 +47,7 @@ public class LibraryTest {
     SessionFactory sessionFactory = new Configuration().configure( "database/hibernate.cfg.xml" ).buildSessionFactory();
     Session session = sessionFactory.openSession();
     
-    session.createSQLQuery( "DELETE FROM MusicLibrary WHERE user_id = '"+user.getUserId()+"'").executeUpdate();
+    session.createSQLQuery( "DELETE FROM MusicLibrary WHERE user_id = '"+user.getId()+"'").executeUpdate();
     session.createSQLQuery( "DELETE FROM UserAccount WHERE username = 'staticuser';" ).executeUpdate();
     session.createSQLQuery( "DELETE FROM UserAccount WHERE username = 'testuser';" ).executeUpdate();
   }
@@ -67,8 +67,8 @@ public class LibraryTest {
     SessionFactory sessionFactory = new Configuration().configure( "database/hibernate.cfg.xml" ).buildSessionFactory();
     Session session = sessionFactory.openSession();
  
-    session.createSQLQuery( "DELETE FROM MusicLibrary WHERE user_id = '" + user.getUserId() + "'").executeUpdate();
-    session.createSQLQuery( "DELETE FROM MusicLibrary WHERE user_id = '" + testUser.getUserId() + "'").executeUpdate();
+    session.createSQLQuery( "DELETE FROM MusicLibrary WHERE user_id = '" + user.getId() + "'").executeUpdate();
+    session.createSQLQuery( "DELETE FROM MusicLibrary WHERE user_id = '" + testUser.getId() + "'").executeUpdate();
 
   }
 
