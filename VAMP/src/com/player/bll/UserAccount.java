@@ -22,7 +22,6 @@ public class UserAccount {
   }
 
   public UserAccount( String username, String password ) {
-    System.out.println( "USERNAME: "+username+", PASSWORD: "+password );
     Query query = DataAccess.getSession().createQuery( "FROM UserAccount WHERE username = :username AND password = :password");
     
     UserAccount returnedUser = (UserAccount)query
@@ -126,8 +125,6 @@ public class UserAccount {
     this.email = email;
   }
 
-
-  
   public ArrayList<Playlist> getPlaylists() {
     if ( playlists == null ) {
       Query query = DataAccess.getSession().createQuery( "FROM Playlist WHERE user_id = :user" );

@@ -64,7 +64,6 @@ public class VampPlayer {
 
     public void skipForward() {
       boolean wasPlaying = isPlaying();
-      System.out.println( "WasPlaying? :" +wasPlaying );
       stop();
       if ((playlistIndex + 1) < playlist.size()) {
           ++playlistIndex;
@@ -99,7 +98,6 @@ public class VampPlayer {
     public void skipBackward() {
 
       boolean wasPlaying = isPlaying();
-            System.out.println( "WasPlaying? :" +wasPlaying );
       stop();
       if ((playlistIndex - 1) >= 0) {
           --playlistIndex;

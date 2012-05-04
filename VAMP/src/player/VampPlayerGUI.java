@@ -929,7 +929,7 @@ public class VampPlayerGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_deleteFromQueueRightClickMenuItemActionPerformed
 
   private void playlistNamesTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_playlistNamesTableMouseClicked
-    if ( playlistNamesTable.getSelectedRow() >= 0 ) {
+    if ( playlistNamesTable.getSelectedRow() >= 0 && playlistNamesTable.getSelectedRow() < user.getPlaylists().size() ) {
       selectedPlaylist =  user.getPlaylists().get( playlistNamesTable.getSelectedRow() );
       updatePlaylistSongsUI( selectedPlaylist );
     }

@@ -178,7 +178,7 @@ public class CreateUserAccountGUI extends javax.swing.JFrame {
                     error += "- Username IS VALID /n";
                 }
                 if (ua.isValidPassword(password) == false) {
-                    error += "- Password must contain at least: a number, a lowercase, an uppercase /n";
+                    error += "- Password be 6-16 characters and must contain at least: a number, a lowercase, an uppercase /n";
                 }else{
                     error += "- Password IS VALID /n";
                 }
@@ -188,9 +188,9 @@ public class CreateUserAccountGUI extends javax.swing.JFrame {
                     error += "- Email IS VALID /n";
                 }
                 if (ua.passwordMatch(password, password2)) {
-                    error += "- Passwords do not match. /n";
-                }else{
                     error += "- Passwords MATCH /n";
+                }else{
+                    error += "- Passwords do not match. /n";
                 }
                 System.out.println("Invalid Login");
                 JOptionPane.showMessageDialog(this, error.split("/n"),
