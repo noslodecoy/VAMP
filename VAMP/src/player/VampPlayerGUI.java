@@ -122,7 +122,7 @@ public class VampPlayerGUI extends javax.swing.JFrame {
         final JButton ok = new JButton("Enter");
         final JButton cancel = new JButton("Cancel");
 
-        frame.setSize(400, 350);
+        frame.setSize(500, 350);
         frame.setLocation(200, 200);
         Container c = frame.getContentPane();
         c.setLayout(new GridLayout(2, 2));
@@ -159,7 +159,7 @@ public class VampPlayerGUI extends javax.swing.JFrame {
         final JButton ok = new JButton("Enter");
         final JButton cancel = new JButton("Cancel");
 
-        frame.setSize(400, 350);
+        frame.setSize(500, 350);
         frame.setLocation(200, 200);
         Container c = frame.getContentPane();
         c.setLayout(new GridLayout(2, 2));
@@ -327,6 +327,8 @@ public class VampPlayerGUI extends javax.swing.JFrame {
         playerQueueRightClickPopupMenu.add(deleteFromQueueRightClickMenuItem);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setMaximumSize(new java.awt.Dimension(2000, 1000));
+        setPreferredSize(new java.awt.Dimension(795, 850));
 
         jTabbedPane.setBackground(new java.awt.Color(102, 102, 102));
         jTabbedPane.setToolTipText("");
@@ -511,12 +513,13 @@ public class VampPlayerGUI extends javax.swing.JFrame {
                 "Playlists"
             }
         ));
+        playlistNamesTable.setEnabled(false);
         playlistNamesTable.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                playlistNamesTableMouseClicked(evt);
-            }
             public void mouseReleased(java.awt.event.MouseEvent evt) {
                 playlistNamesTableMouseReleased(evt);
+            }
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                playlistNamesTableMouseClicked(evt);
             }
         });
         playlistNamesScrollPanel.setViewportView(playlistNamesTable);
